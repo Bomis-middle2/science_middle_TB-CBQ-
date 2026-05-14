@@ -1,4 +1,5 @@
-<DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -178,7 +179,7 @@ color:#991b1b;
 
 .questionImage{
 width:100%;
-max-height:300px;
+max-height:320px;
 object-fit:cover;
 border-radius:18px;
 margin-bottom:18px;
@@ -245,6 +246,7 @@ z-index:1000;
 }
 
 @media(max-width:600px){
+
 .question{
 font-size:1.05rem;
 }
@@ -252,6 +254,7 @@ font-size:1.05rem;
 .optionBtn{
 font-size:0.95rem;
 }
+
 }
 </style>
 </head>
@@ -266,29 +269,42 @@ font-size:0.95rem;
 <div class="container">
 
 <div id="introScreen" class="card hidden">
+
 <h1>Food, Health and Hygiene</h1>
+
 <h2>Grade 5 Science Interactive</h2>
 
 <p>
-Test your understanding of nutrients, balanced diet, healthy habits, and hygiene using real-life competency-based questions.
+Test your understanding of nutrients, balanced diet, healthy habits, and hygiene using competency-based questions.
 </p>
 
 <ul style="margin-top:15px;padding-left:20px;line-height:1.8;">
 <li>12 competency-based MCQs</li>
 <li>45 seconds per question</li>
-<li>One retry after a wrong answer</li>
-<li>Final challenge at the end</li>
+<li>One retry after wrong answer</li>
+<li>Final challenge included</li>
 </ul>
 
 <button class="btn" onclick="startQuiz()">Start Quiz</button>
+
 </div>
 
 <div id="quizScreen" class="card hidden">
 
 <div class="topBar">
-<div class="questionBox">Question <span id="qNo">1</span>/12</div>
-<div class="scoreBox">Score: <span id="score">0</span></div>
-<div class="timerBox">Time: <span id="timer">45</span>s</div>
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+Time: <span id="timer">45</span>s
+</div>
+
 </div>
 
 <div id="challenge" class="challenge">
@@ -306,6 +322,7 @@ Test your understanding of nutrients, balanced diet, healthy habits, and hygiene
 </div>
 
 <div id="resultScreen" class="card hidden">
+
 <h1>Quiz Completed!</h1>
 
 <div class="resultScore" id="finalScore"></div>
@@ -329,7 +346,7 @@ Test your understanding of nutrients, balanced diet, healthy habits, and hygiene
 const questions = [
 
 {
-question:"Riya often skips healthy meals and prefers eating packaged chips and sugary snacks whenever she feels hungry. One day, after returning from school, she wanted to play with her friends but felt very tired and weak by evening. Select the most likely reason for this.",
+question:"Riya often skips healthy meals and prefers eating packaged chips and sugary snacks whenever she feels hungry. One day, after returning from school, she wanted to play with her friends but felt very tired and weak by evening. Select the most likely reason for this. ?",
 options:[
 "Chips digest slowly and block energy release",
 "Chips do not provide all nutrients needed for energy and strength",
@@ -337,15 +354,20 @@ options:[
 "Chips contain too much roughage"
 ],
 answer:1,
-hint:"Think about whether chips provide all nutrients.",
+hint:"Think about whether chips provide all nutrients needed.",
 explanation:"Healthy meals provide balanced nutrients needed for energy and strength."
 },
 
 {
 question:"Which of the following does NOT belong to the same group based on source?",
-options:["Milk","Eggs","Spinach","Fish"],
+options:[
+"Milk",
+"Eggs",
+"Spinach",
+"Fish"
+],
 answer:2,
-hint:"Think about the source of each food item.",
+hint:"Think carefully about the source of each food item.",
 explanation:"Spinach is plant-based while the others are animal products."
 },
 
@@ -358,8 +380,8 @@ options:[
 "To improve taste of food"
 ],
 answer:2,
-hint:"Which nutrient helps repair the body?",
-explanation:"Proteins help in body growth and repair."
+hint:"Which nutrient helps in repair of the body?",
+explanation:"Proteins help in growth and repair of body tissues."
 },
 
 {
@@ -372,7 +394,7 @@ options:[
 ],
 answer:2,
 hint:"Does the body need only one nutrient?",
-explanation:"All nutrients are important in proper amounts."
+explanation:"All nutrients are important in the right amount."
 },
 
 {
@@ -385,7 +407,7 @@ options:[
 ],
 answer:1,
 hint:"Think about the role of water in the body.",
-explanation:"Water helps in digestion and movement of nutrients."
+explanation:"Water helps in digestion and transport of nutrients."
 },
 
 {
@@ -397,8 +419,8 @@ options:[
 "She eats too much"
 ],
 answer:2,
-hint:"Can only two foods provide all nutrients?",
-explanation:"A balanced diet is needed for immunity and health."
+hint:"Can one or two foods provide all nutrients?",
+explanation:"A balanced diet is needed for immunity and good health."
 },
 
 {
@@ -411,7 +433,7 @@ options:[
 ],
 answer:1,
 hint:"Can flies spread germs?",
-explanation:"Flies can contaminate food with germs."
+explanation:"Flies can spread germs and contaminate food."
 },
 
 {
@@ -436,21 +458,21 @@ options:[
 "Drinking water is harmful"
 ],
 answer:1,
-hint:"How do germs spread?",
+hint:"How do germs spread from one person to another?",
 explanation:"Dirty bottles can spread germs and infections."
 },
 
 {
 question:"Which is BEST for long-term health?",
 options:[
-"Chips and soft drink",
+"Chips, soft drink",
 "Rice, dal, vegetables, curd",
 "Only fruits",
 "Bread and butter"
 ],
 answer:1,
 hint:"Which meal contains different nutrients?",
-explanation:"A balanced meal includes a variety of nutrients."
+explanation:"A balanced meal contains a variety of nutrients."
 },
 
 {
@@ -464,7 +486,7 @@ options:[
 ],
 answer:1,
 hint:"Does the plate contain different food groups?",
-explanation:"A balanced diet contains different nutrients in proper amounts."
+explanation:"A balanced diet contains all nutrients in the right amount."
 },
 
 {
@@ -500,11 +522,10 @@ const timerEl = document.getElementById('timer');
 const questionText = document.getElementById('questionText');
 const optionsContainer = document.getElementById('optionsContainer');
 const feedback = document.getElementById('feedback');
+const questionImage = document.getElementById('questionImage');
 
 const finalScore = document.getElementById('finalScore');
 const resultMessage = document.getElementById('resultMessage');
-
-const questionImage = document.getElementById('questionImage');
 
 const correctSound = document.getElementById('correctSound');
 const wrongSound = document.getElementById('wrongSound');
@@ -516,9 +537,12 @@ introScreen.classList.remove('hidden');
 },5000);
 
 function startQuiz(){
+
 introScreen.classList.add('hidden');
 quizScreen.classList.remove('hidden');
+
 loadQuestion();
+
 }
 
 function loadQuestion(){
@@ -527,6 +551,7 @@ clearInterval(timer);
 
 timeLeft = 45;
 timerEl.textContent = timeLeft;
+
 retryUsed = false;
 
 startTimer();
@@ -537,15 +562,15 @@ qNo.textContent = currentQuestion + 1;
 
 questionText.textContent = q.question;
 
-optionsContainer.innerHTML = '';
+optionsContainer.innerHTML = "";
 
-feedback.className='feedback';
-feedback.innerHTML='';
+feedback.className = "feedback";
+feedback.innerHTML = "";
 
 if(currentQuestion >= 9){
-document.getElementById('challenge').style.display='block';
+document.getElementById('challenge').style.display = 'block';
 }else{
-document.getElementById('challenge').style.display='none';
+document.getElementById('challenge').style.display = 'none';
 }
 
 if(q.image){
@@ -607,9 +632,9 @@ score++;
 
 scoreEl.textContent = score;
 
-feedback.className='feedback correctFeedback show';
+feedback.className = "feedback correctFeedback show";
 
-feedback.innerHTML='✅ Correct! ' + q.explanation;
+feedback.innerHTML = "✅ Correct! " + q.explanation;
 
 correctSound.play();
 
@@ -633,9 +658,9 @@ if(!retryUsed){
 
 retryUsed = true;
 
-feedback.className='feedback wrongFeedback show';
+feedback.className = "feedback wrongFeedback show";
 
-feedback.innerHTML='❌ Try Again! Hint: ' + q.hint;
+feedback.innerHTML = "❌ Try Again! Hint: " + q.hint;
 
 buttons.forEach((b,index)=>{
 if(index !== selected){
@@ -645,9 +670,9 @@ b.disabled=false;
 
 }else{
 
-feedback.className='feedback wrongFeedback show';
+feedback.className = "feedback wrongFeedback show";
 
-feedback.innerHTML='❌ Correct Answer: <b>' + q.options[q.answer] + '</b><br>' + q.explanation;
+feedback.innerHTML = "❌ Correct Answer: <b>" + q.options[q.answer] + "</b><br>" + q.explanation;
 
 buttons[q.answer].classList.add('correct');
 
@@ -671,9 +696,9 @@ const buttons = document.querySelectorAll('.optionBtn');
 
 buttons[q.answer].classList.add('correct');
 
-feedback.className='feedback wrongFeedback show';
+feedback.className = "feedback wrongFeedback show";
 
-feedback.innerHTML='⏰ Time Up! Correct Answer: <b>' + q.options[q.answer] + '</b><br>' + q.explanation;
+feedback.innerHTML = "⏰ Time Up! Correct Answer: <b>" + q.options[q.answer] + "</b><br>" + q.explanation;
 
 setTimeout(()=>{
 nextQuestion();
@@ -703,11 +728,11 @@ quizScreen.classList.add('hidden');
 
 resultScreen.classList.remove('hidden');
 
-finalScore.textContent = score + ' / ' + questions.length;
+finalScore.textContent = score + " / " + questions.length;
 
 if(score >= 10){
 
-resultMessage.textContent='🌟 Excellent work! You have strong understanding of healthy food and hygiene.';
+resultMessage.textContent = "🌟 Excellent work! You have a strong understanding of healthy food and hygiene.";
 
 clapSound.play();
 
@@ -715,11 +740,11 @@ createConfettiBurst();
 
 }else if(score >= 7){
 
-resultMessage.textContent='👍 Good job! You understand most concepts well.';
+resultMessage.textContent = "👍 Good job! You understand most concepts well.";
 
 }else{
 
-resultMessage.textContent='📘 Keep practicing food and hygiene concepts.';
+resultMessage.textContent = "📘 Keep practicing healthy habits and nutrition concepts.";
 
 }
 
@@ -728,7 +753,6 @@ resultMessage.textContent='📘 Keep practicing food and hygiene concepts.';
 function restartQuiz(){
 
 currentQuestion = 0;
-
 score = 0;
 
 scoreEl.textContent = 0;
@@ -779,7 +803,7 @@ const cross = document.createElement('div');
 
 cross.classList.add('cross');
 
-cross.innerHTML='✖';
+cross.innerHTML = '✖';
 
 document.body.appendChild(cross);
 
@@ -793,3 +817,4 @@ cross.remove();
 
 </body>
 </html>
+```
