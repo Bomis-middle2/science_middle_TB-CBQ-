@@ -19,21 +19,22 @@ overflow-x:hidden;
 min-height:100vh;
 color:#222;
 
-background-color:#eef9f0;
+background-color:#cfe8d5;
 
 background-image:
 
 linear-gradient(
-rgba(255,255,255,0.82),
-rgba(255,255,255,0.86)
+rgba(210,235,220,0.72),
+rgba(220,240,230,0.76)
 ),
 
-url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1000' viewBox='0 0 1400 1000'%3E%3Cg opacity='0.24'%3E%3Ctext x='80' y='120' font-size='78'%3E🧬%3C/text%3E%3Ctext x='320' y='200' font-size='70'%3E🔬%3C/text%3E%3Ctext x='620' y='130' font-size='76'%3E🦠%3C/text%3E%3Ctext x='950' y='210' font-size='72'%3E🌿%3C/text%3E%3Ctext x='180' y='430' font-size='74'%3E🧫%3C/text%3E%3Ctext x='470' y='350' font-size='78'%3E🧠%3C/text%3E%3Ctext x='760' y='430' font-size='72'%3E🫀%3C/text%3E%3Ctext x='1080' y='350' font-size='78'%3E🧪%3C/text%3E%3Ctext x='220' y='700' font-size='78'%3E🧬%3C/text%3E%3Ctext x='620' y='650' font-size='74'%3E🔬%3C/text%3E%3Ctext x='980' y='700' font-size='78'%3E🌱%3C/text%3E%3C/g%3E%3C/svg%3E");
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1000' viewBox='0 0 1400 1000'%3E%3Cg opacity='0.34'%3E%3Ctext x='80' y='120' font-size='78'%3E🧬%3C/text%3E%3Ctext x='320' y='200' font-size='70'%3E🔬%3C/text%3E%3Ctext x='620' y='130' font-size='76'%3E🦠%3C/text%3E%3Ctext x='950' y='210' font-size='72'%3E🌿%3C/text%3E%3Ctext x='180' y='430' font-size='74'%3E🧫%3C/text%3E%3Ctext x='470' y='350' font-size='78'%3E🧠%3C/text%3E%3Ctext x='760' y='430' font-size='72'%3E🫀%3C/text%3E%3Ctext x='1080' y='350' font-size='78'%3E🧪%3C/text%3E%3Ctext x='220' y='700' font-size='78'%3E🧬%3C/text%3E%3Ctext x='620' y='650' font-size='74'%3E🔬%3C/text%3E%3Ctext x='980' y='700' font-size='78'%3E🌱%3C/text%3E%3C/g%3E%3C/svg%3E");
 
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
-animation:bgMove 25s linear infinite;
+
+animation:bgMove 22s linear infinite;
 }
 
 @keyframes bgMove{
@@ -78,7 +79,7 @@ padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.95);
+background:rgba(255,255,255,0.94);
 padding:24px;
 border-radius:22px;
 box-shadow:0 8px 25px rgba(0,0,0,0.12);
@@ -269,11 +270,11 @@ z-index:1000;
 @media(max-width:600px){
 
 .question{
-font-size:1.02rem;
+font-size:1rem;
 }
 
 .optionBtn{
-font-size:0.94rem;
+font-size:0.92rem;
 }
 
 }
@@ -312,11 +313,11 @@ Question <span id="qNo">1</span>/12
 </div>
 
 <div class="scoreBox">
-Score: <span id="score">0</span>
+💎 Gems: <span id="score">0</span>
 </div>
 
 <div class="timerBox">
-Time: <span id="timer">45</span>s
+⏳ <span id="timer">45</span>s
 </div>
 
 </div>
@@ -334,6 +335,12 @@ Time: <span id="timer">45</span>s
 <div id="hintBox" class="hintBox"></div>
 
 <div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
 
 </div>
 
@@ -540,6 +547,7 @@ const optionsContainer=document.getElementById('optionsContainer');
 const feedback=document.getElementById('feedback');
 const hintBox=document.getElementById('hintBox');
 const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
 
 const finalScore=document.getElementById('finalScore');
 const resultMessage=document.getElementById('resultMessage');
@@ -582,6 +590,8 @@ feedback.className="feedback";
 feedback.innerHTML="";
 
 hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
 
 if(currentQuestion>=9){
 document.getElementById('challenge').style.display='block';
@@ -650,7 +660,8 @@ scoreEl.textContent=score;
 
 feedback.className="feedback correctFeedback show";
 
-feedback.innerHTML="✅ Correct!<br><br>"+q.explanation;
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
 
 correctSound.play();
 
@@ -658,9 +669,7 @@ createConfetti();
 
 clearInterval(timer);
 
-setTimeout(()=>{
-nextQuestion();
-},2500);
+showNextButton();
 
 }else{
 
@@ -675,7 +684,9 @@ if(!retryUsed){
 retryUsed=true;
 
 hintBox.style.display="block";
-hintBox.innerHTML="💡 Hint: "+q.hint;
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
 
 buttons.forEach((b,index)=>{
 if(index!==selected){
@@ -689,17 +700,38 @@ buttons[q.answer].classList.add('correct');
 
 feedback.className="feedback wrongFeedback show";
 
-feedback.innerHTML="❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+feedback.innerHTML=
+"❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
 
 clearInterval(timer);
 
-setTimeout(()=>{
+showNextButton();
+
+}
+
+}
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
 nextQuestion();
-},3500);
 
-}
-
-}
+};
 
 }
 
@@ -713,11 +745,12 @@ buttons[q.answer].classList.add('correct');
 
 feedback.className="feedback wrongFeedback show";
 
-feedback.innerHTML="⏰ Time Up!<br><br>Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"+q.explanation;
 
-setTimeout(()=>{
-nextQuestion();
-},3500);
+showNextButton();
 
 }
 
@@ -743,11 +776,16 @@ quizScreen.classList.add('hidden');
 
 resultScreen.classList.remove('hidden');
 
-finalScore.textContent=score+" / "+questions.length;
+finalScore.innerHTML =
+"💎 Gems Collected: <br><br><span style='font-size:3rem;color:#0d6efd;'>"
++ score +
+"</span> / " +
+questions.length;
 
 if(score>=10){
 
-resultMessage.textContent="🌟 Excellent work! You understand organisation in organisms very well.";
+resultMessage.textContent=
+"🌟 Excellent work! You understand organisation in organisms very well.";
 
 clapSound.play();
 
@@ -755,11 +793,13 @@ createConfettiBurst();
 
 }else if(score>=7){
 
-resultMessage.textContent="👍 Good job! You understand most concepts well.";
+resultMessage.textContent=
+"👍 Good job! You understand most concepts well.";
 
 }else{
 
-resultMessage.textContent="📘 Keep practicing the concepts of organisation in organisms.";
+resultMessage.textContent=
+"📘 Keep practicing the concepts of organisation in organisms.";
 
 }
 
