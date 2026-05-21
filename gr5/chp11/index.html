@@ -1,1 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garbage Management</title>
 
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+color:#222;
+
+background-color:#d9f7df;
+
+background-image:
+
+linear-gradient(
+rgba(220,245,225,0.78),
+rgba(210,235,215,0.82)
+),
+
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2200' height='1600' viewBox='0 0 2200 1600'%3E%3Cg opacity='0.42'%3E%3Ctext x='40' y='90' font-size='72'%3E♻️%3C/text%3E%3Ctext x='180' y='160' font-size='66'%3E🌿%3C/text%3E%3Ctext x='320' y='100' font-size='72'%3E🗑️%3C/text%3E%3Ctext x='470' y='180' font-size='70'%3E🌎%3C/text%3E%3Ctext x='620' y='110' font-size='72'%3E🍃%3C/text%3E%3Ctext x='760' y='170' font-size='68'%3E💧%3C/text%3E%3Ctext x='920' y='90' font-size='74'%3E♻️%3C/text%3E%3Ctext x='1080' y='170' font-size='72'%3E🌿%3C/text%3E%3Ctext x='1240' y='110' font-size='72'%3E🪱%3C/text%3E%3Ctext x='1400' y='170' font-size='70'%3E🍂%3C/text%3E%3Ctext x='1580' y='100' font-size='72'%3E🌱%3C/text%3E%3Ctext x='90' y='350' font-size='74'%3E♻️%3C/text%3E%3Ctext x='250' y='430' font-size='70'%3E🗑️%3C/text%3E%3Ctext x='430' y='360' font-size='76'%3E🌎%3C/text%3E%3Ctext x='610' y='430' font-size='70'%3E🍃%3C/text%3E%3Ctext x='770' y='350' font-size='72'%3E💧%3C/text%3E%3Ctext x='930' y='430' font-size='70'%3E🪱%3C/text%3E%3Ctext x='1110' y='350' font-size='74'%3E🍂%3C/text%3E%3Ctext x='1290' y='430' font-size='70'%3E🌱%3C/text%3E%3Ctext x='1450' y='360' font-size='72'%3E♻️%3C/text%3E%3Ctext x='1620' y='430' font-size='72'%3E🌿%3C/text%3E%3Ctext x='70' y='650' font-size='72'%3E🗑️%3C/text%3E%3Ctext x='230' y='730' font-size='68'%3E🌎%3C/text%3E%3Ctext x='390' y='650' font-size='74'%3E🍃%3C/text%3E%3Ctext x='560' y='730' font-size='70'%3E💧%3C/text%3E%3Ctext x='720' y='650' font-size='74'%3E🪱%3C/text%3E%3Ctext x='900' y='730' font-size='70'%3E🍂%3C/text%3E%3Ctext x='1060' y='650' font-size='72'%3E🌱%3C/text%3E%3Ctext x='1220' y='730' font-size='70'%3E♻️%3C/text%3E%3Ctext x='1390' y='650' font-size='72'%3E🌿%3C/text%3E%3Ctext x='1560' y='730' font-size='72'%3E🗑️%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+animation:bgMove 20s linear infinite;
+}
+
+@keyframes bgMove{
+0%{
+background-position:0 0;
+}
+100%{
+background-position:220px 120px;
+}
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:pop 1s ease;
+}
+
+@keyframes pop{
+0%{
+transform:scale(0.5);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.container{
+max-width:900px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.96);
+padding:24px;
+border-radius:22px;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+text-align:center;
+color:#166534;
+}
+
+.btn{
+background:#198754;
+color:white;
+border:none;
+padding:14px 24px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+margin-top:20px;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#146c43;
+transform:scale(1.03);
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.scoreBox,
+.timerBox,
+.questionBox{
+background:#eefdf3;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:14px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f3fff5;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+border:2px solid transparent;
+transition:0.3s;
+}
+
+.optionBtn:hover{
+background:#dff7e5;
+}
+
+.correct{
+background:#d1ffd8 !important;
+border-color:#1f9d47 !important;
+}
+
+.wrong{
+background:#ffd8d8 !important;
+border-color:#d62828 !important;
+}
+
+.feedback{
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+display:none;
+line-height:1.6;
+font-weight:bold;
+}
+
+.feedback.show{
+display:block;
+}
+
+.correctFeedback{
+background:#d8ffe0;
+color:#166534;
+}
+
+.wrongFeedback{
+background:#ffe2e2;
+color:#991b1b;
+}
+
+.hintBox{
+margin-top:16px;
+padding:12px;
+background:#fff7d6;
+border-left:5px solid #ffbf00;
+border-radius:10px;
+display:none;
+font-weight:bold;
+line-height:1.5;
+}
+
+.questionImage{
+width:100%;
+max-height:320px;
+object-fit:contain;
+background:white;
+border-radius:18px;
+margin-bottom:18px;
+padding:10px;
+}
+
+.hidden{
+display:none;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+background:gold;
+clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-20px) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(100vh) rotate(720deg);
+opacity:0;
+}
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
+color:red;
+animation:fade 1s forwards;
+z-index:1000;
+}
+
+@keyframes fade{
+0%{opacity:1;}
+100%{opacity:0;}
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:0.94rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Garbage Management</h1>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore" style="text-align:center;margin-top:20px;"></h2>
+
+<div style="text-align:center;">
+<button class="btn" onclick="location.reload()">Play Again</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+
+{
+question:"A family throws vegetable peels, plastic wrappers, and glass bottles into the same dustbin every day. What is the BEST practice they should follow?",
+options:[
+"Burn all the waste together",
+"Throw all waste in open areas",
+"Segregate waste into biodegradable and non-biodegradable waste",
+"Wash all waste and store it at home"
+],
+answer:2,
+hint:"Different types of waste need different methods of disposal.",
+explanation:"Segregating waste helps in proper recycling, composting, and safe disposal."
+},
+
+{
+question:"A banana peel thrown on the ground decomposes within a few weeks, but a plastic bottle remains for many years. Why?",
+options:[
+"Plastic absorbs more water",
+"Banana peel is biodegradable while plastic is non-biodegradable",
+"Plastic is lighter than banana peel",
+"Banana peel contains chemicals only"
+],
+answer:1,
+hint:"Think about which materials microorganisms can break down easily.",
+explanation:"Biodegradable waste decomposes naturally, while plastic does not."
+},
+
+{
+question:"A city produces large amounts of garbage every day. What is the MOST important first step in effective waste management?",
+options:[
+"Burning all the waste immediately",
+"Mixing all waste together",
+"Segregating waste at the source",
+"Throwing waste into rivers"
+],
+answer:2,
+hint:"Proper waste treatment becomes easier when waste is separated first.",
+explanation:"Segregation helps separate recyclable and biodegradable waste."
+},
+
+{
+question:"A student carried water to school in a reusable steel bottle instead of buying plastic water bottles daily. Which of the 5Rs does this action BEST represent?",
+options:[
+"Recycle",
+"Reduce",
+"Reclaim",
+"Incinerate"
+],
+answer:1,
+hint:"The student is decreasing the use of disposable plastic.",
+explanation:"Using reusable bottles reduces plastic waste generation."
+},
+
+{
+question:"A farmer converts kitchen waste and dry leaves into nutrient-rich manure using earthworms. This process is called:",
+options:[
+"Incineration",
+"Landfilling",
+"Vermicomposting",
+"Recycling plastic"
+],
+answer:2,
+hint:"Earthworms play an important role in this method.",
+explanation:"Vermicomposting uses earthworms to make compost."
+},
+
+{
+question:"A factory burns waste materials at very high temperatures to reduce the amount of garbage. Which waste management method is being used?",
+options:[
+"Recycling",
+"Vermicomposting",
+"Incineration",
+"Reuse"
+],
+answer:2,
+hint:"This method produces heat and smoke.",
+explanation:"Incineration burns waste at high temperatures."
+},
+
+{
+question:"A student notices that glass bottles remain unchanged for many years in a dumping area. What does this show about glass waste?",
+options:[
+"It decomposes very quickly",
+"It is biodegradable",
+"It takes an extremely long time to decompose",
+"It changes into soil immediately"
+],
+answer:2,
+hint:"Some materials cannot be broken down easily by microorganisms.",
+explanation:"Glass is non-biodegradable and decomposes very slowly."
+},
+
+{
+question:"Why are different coloured bins used in waste management?",
+image:"assets/waste-bins.png",
+options:[
+"To make roads colourful",
+"To separate different types of waste for proper disposal",
+"To increase waste production",
+"To store water separately"
+],
+answer:1,
+hint:"Different wastes need different treatment methods.",
+explanation:"Different coloured bins help in waste segregation."
+},
+
+{
+question:"What is the MAIN benefit shown in this process?",
+image:"assets/vermicomposting-cycle.png",
+options:[
+"Production of plastic materials",
+"Conversion of biodegradable waste into useful manure",
+"Increase in harmful gases",
+"Faster production of glass waste"
+],
+answer:1,
+hint:"Organic waste is being converted into something useful for plants.",
+explanation:"Vermicomposting converts biodegradable waste into nutrient-rich manure."
+},
+
+{
+question:"A town dumps untreated waste into a nearby river. What is the MOST likely long-term effect?",
+options:[
+"Cleaner drinking water",
+"Increase in water pollution and spread of diseases",
+"Faster growth of fish population only",
+"Reduction in waste generation"
+],
+answer:1,
+hint:"Polluted water affects both humans and aquatic life.",
+explanation:"Untreated waste pollutes water and spreads diseases."
+},
+
+{
+question:"Why is recycling materials like paper, glass, and metal important for the environment?",
+options:[
+"It increases the amount of garbage",
+"It wastes natural resources faster",
+"It helps conserve natural resources and reduces pollution",
+"It prevents all waste generation completely"
+],
+answer:2,
+hint:"Recycling reduces the need for fresh raw materials.",
+explanation:"Recycling conserves resources and reduces pollution."
+},
+
+{
+question:"A society decides to replace plastic decorations during festivals with reusable cloth decorations. Which statement BEST explains this decision?",
+options:[
+"Cloth decorations increase waste generation",
+"Reusable items help reduce environmental pollution",
+"Plastic decorations are biodegradable",
+"Reusable materials cannot be recycled"
+],
+answer:1,
+hint:"Reusing materials is one of the important 5Rs.",
+explanation:"Reusable decorations reduce plastic waste and pollution."
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+function startQuiz(){
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+loadQuestion();
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+startTimer();
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+feedback.className="feedback";
+feedback.innerHTML="";
+hintBox.style.display="none";
+nextBtn.classList.add('hidden');
+
+if(q.image){
+questionImage.src=q.image;
+questionImage.classList.remove('hidden');
+}else{
+questionImage.classList.add('hidden');
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className="feedback correctFeedback show";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+document.getElementById('correctSound').play();
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+document.getElementById('wrongSound').play();
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+if(index!==selected){
+b.disabled=false;
+}
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+nextBtn.textContent="Submit Quiz";
+}else{
+nextBtn.textContent="Next Question";
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"+q.explanation;
+
+showNextButton();
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+document.getElementById('finalScore').innerHTML=
+"Your Score: "+score+" / "+questions.length;
+
+document.getElementById('clapSound').play();
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<18;i++){
+
+const confetti=document.createElement('div');
+
+confetti.classList.add('confetti');
+
+confetti.style.left=Math.random()*100+'vw';
+
+document.body.appendChild(confetti);
+
+setTimeout(()=>{
+confetti.remove();
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+cross.remove();
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
