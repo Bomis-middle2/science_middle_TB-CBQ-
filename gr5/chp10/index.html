@@ -1,1 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Human Body</title>
 
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+color:#222;
+
+background-color:#dcefff;
+
+background-image:
+
+linear-gradient(
+rgba(220,240,255,0.78),
+rgba(210,230,245,0.82)
+),
+
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2200' height='1600' viewBox='0 0 2200 1600'%3E%3Cg opacity='0.42'%3E%3Ctext x='40' y='90' font-size='72'%3E🧠%3C/text%3E%3Ctext x='180' y='160' font-size='66'%3E🦴%3C/text%3E%3Ctext x='320' y='100' font-size='72'%3E💪%3C/text%3E%3Ctext x='470' y='180' font-size='70'%3E🧬%3C/text%3E%3Ctext x='620' y='110' font-size='72'%3E🔬%3C/text%3E%3Ctext x='760' y='170' font-size='68'%3E❤️%3C/text%3E%3Ctext x='920' y='90' font-size='74'%3E🧠%3C/text%3E%3Ctext x='1080' y='170' font-size='72'%3E🦴%3C/text%3E%3Ctext x='1240' y='110' font-size='72'%3E💪%3C/text%3E%3Ctext x='1400' y='170' font-size='70'%3E🧬%3C/text%3E%3Ctext x='1580' y='100' font-size='72'%3E🔬%3C/text%3E%3Ctext x='90' y='350' font-size='74'%3E❤️%3C/text%3E%3Ctext x='250' y='430' font-size='70'%3E🧠%3C/text%3E%3Ctext x='430' y='360' font-size='76'%3E🦴%3C/text%3E%3Ctext x='610' y='430' font-size='70'%3E💪%3C/text%3E%3Ctext x='770' y='350' font-size='72'%3E🧬%3C/text%3E%3Ctext x='930' y='430' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1110' y='350' font-size='74'%3E❤️%3C/text%3E%3Ctext x='1290' y='430' font-size='70'%3E🦴%3C/text%3E%3Ctext x='1450' y='360' font-size='72'%3E💪%3C/text%3E%3Ctext x='1620' y='430' font-size='72'%3E🧠%3C/text%3E%3Ctext x='70' y='650' font-size='72'%3E🧬%3C/text%3E%3Ctext x='230' y='730' font-size='68'%3E🔬%3C/text%3E%3Ctext x='390' y='650' font-size='74'%3E❤️%3C/text%3E%3Ctext x='560' y='730' font-size='70'%3E🦴%3C/text%3E%3Ctext x='720' y='650' font-size='74'%3E💪%3C/text%3E%3Ctext x='900' y='730' font-size='70'%3E🧠%3C/text%3E%3Ctext x='1060' y='650' font-size='72'%3E🧬%3C/text%3E%3Ctext x='1220' y='730' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1390' y='650' font-size='72'%3E❤️%3C/text%3E%3Ctext x='1560' y='730' font-size='72'%3E🦴%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+animation:bgMove 18s linear infinite;
+}
+
+@keyframes bgMove{
+0%{
+background-position:0 0;
+}
+100%{
+background-position:220px 120px;
+}
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:pop 1s ease;
+}
+
+@keyframes pop{
+0%{
+transform:scale(0.5);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.container{
+max-width:900px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.96);
+padding:24px;
+border-radius:22px;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+text-align:center;
+color:#0d4c92;
+}
+
+.btn{
+background:#0d6efd;
+color:white;
+border:none;
+padding:14px 24px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+margin-top:20px;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#084298;
+transform:scale(1.03);
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.scoreBox,
+.timerBox,
+.questionBox{
+background:#eef5ff;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:14px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f3f7ff;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+border:2px solid transparent;
+transition:0.3s;
+}
+
+.optionBtn:hover{
+background:#dfeeff;
+}
+
+.correct{
+background:#d1ffd8 !important;
+border-color:#1f9d47 !important;
+}
+
+.wrong{
+background:#ffd8d8 !important;
+border-color:#d62828 !important;
+}
+
+.feedback{
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+display:none;
+line-height:1.6;
+font-weight:bold;
+}
+
+.feedback.show{
+display:block;
+}
+
+.correctFeedback{
+background:#d8ffe0;
+color:#166534;
+}
+
+.wrongFeedback{
+background:#ffe2e2;
+color:#991b1b;
+}
+
+.hintBox{
+margin-top:16px;
+padding:12px;
+background:#fff7d6;
+border-left:5px solid #ffbf00;
+border-radius:10px;
+display:none;
+font-weight:bold;
+line-height:1.5;
+}
+
+.questionImage{
+width:100%;
+max-height:320px;
+object-fit:contain;
+background:white;
+border-radius:18px;
+margin-bottom:18px;
+padding:10px;
+}
+
+.gifContainer{
+display:flex;
+gap:16px;
+justify-content:center;
+flex-wrap:wrap;
+margin-bottom:18px;
+}
+
+.gifCard{
+background:white;
+padding:10px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.12);
+}
+
+.gifCard img{
+width:260px;
+max-width:100%;
+border-radius:12px;
+}
+
+.hidden{
+display:none;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+background:gold;
+clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-20px) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(100vh) rotate(720deg);
+opacity:0;
+}
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
+color:red;
+animation:fade 1s forwards;
+z-index:1000;
+}
+
+@keyframes fade{
+0%{opacity:1;}
+100%{opacity:0;}
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:0.94rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Human Body</h1>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+</div>
+
+<div id="gifContainer" class="gifContainer hidden"></div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore" style="text-align:center;margin-top:20px;"></h2>
+
+<div style="text-align:center;">
+<button class="btn" onclick="location.reload()">Play Again</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+
+{
+question:"Aarush touched a very hot utensil and quickly pulled his hand away even before thinking about it. Which part of the nervous system helped in this immediate response?",
+options:[
+"Cerebrum",
+"Spinal cord",
+"Cerebellum",
+"Skull"
+],
+answer:1,
+hint:"Reflex actions happen very quickly without waiting for the brain to think.",
+explanation:"The spinal cord controls reflex actions."
+},
+
+{
+question:"A person fractured a leg bone during a football match. Why was a plaster applied around the leg?",
+options:[
+"To increase blood flow only",
+"To keep the broken bones fixed for healing",
+"To make muscles stronger",
+"To stop digestion temporarily"
+],
+answer:1,
+hint:"Bones need support to join properly after breaking.",
+explanation:"A plaster keeps the broken bone fixed in the correct position."
+},
+
+{
+question:"A child can bend the arm forward and backward easily but cannot rotate it completely in all directions. Which type of joint is present at the elbow?",
+options:[
+"Pivot joint",
+"Ball and socket joint",
+"Hinge joint",
+"Gliding joint"
+],
+answer:2,
+hint:"Think about how a door opens and closes.",
+explanation:"The hinge joint allows movement in one direction."
+},
+
+{
+question:"A gymnast can balance her body while walking on a narrow beam. Which part of the brain mainly helps in maintaining balance and coordination?",
+options:[
+"Cerebrum",
+"Cerebellum",
+"Medulla oblongata",
+"Spinal cord"
+],
+answer:1,
+hint:"This part is often called the small brain.",
+explanation:"The cerebellum controls body balance and coordination."
+},
+
+{
+question:"While running, a child’s breathing and heartbeat increase automatically. Which type of muscles mainly controls these involuntary actions?",
+options:[
+"Skeletal muscles",
+"Smooth muscles",
+"Cardiac muscles",
+"Voluntary muscles only"
+],
+answer:2,
+hint:"Think about the muscle found only in the heart.",
+explanation:"Cardiac muscles work continuously and involuntarily."
+},
+
+{
+question:"A person finds it difficult to lift heavy objects after injuring the muscles of the arm. What does this show about muscles?",
+options:[
+"Muscles only give body shape",
+"Muscles help in movement and lifting objects",
+"Muscles protect the brain only",
+"Muscles do not work with bones"
+],
+answer:1,
+hint:"Bones and muscles work together for movement.",
+explanation:"Muscles help in body movement, posture, and lifting."
+},
+
+{
+question:"A doctor advised a patient to consume calcium-rich food for stronger bones. Why is calcium important?",
+options:[
+"It increases skin colour",
+"It helps bones remain strong and healthy",
+"It controls digestion only",
+"It improves smell sensation"
+],
+answer:1,
+hint:"Bones need minerals for strength.",
+explanation:"Calcium strengthens bones and teeth."
+},
+
+{
+question:"Which labelled part controls thinking, memory, intelligence, and learning?",
+image:"assets/human-brain.png",
+options:[
+"Cerebellum",
+"Medulla oblongata",
+"Cerebrum",
+"Spinal cord"
+],
+answer:2,
+hint:"This is the largest part of the brain.",
+explanation:"The cerebrum controls thinking, memory, and learning."
+},
+
+{
+question:"Which observation is correct based on the image?",
+gifs:[
+"assets/hinge-joint.gif",
+"assets/ball-socket.gif"
+],
+options:[
+"Ball and socket joints allow movement in all directions",
+"Hinge joints allow circular movement",
+"Gliding joints are found in the skull",
+"Pivot joints are present in the knee"
+],
+answer:0,
+hint:"Compare movement at the shoulder and elbow.",
+explanation:"Ball and socket joints allow movement in all directions."
+},
+
+{
+question:"A child’s skull protects the brain from injuries. What would MOST likely happen if the skull were absent?",
+options:[
+"The brain would remain completely safe",
+"Internal organs would stop working instantly",
+"The delicate brain would be more easily damaged",
+"Muscles would stop moving permanently"
+],
+answer:2,
+hint:"The skull acts like a hard protective box.",
+explanation:"The skull protects the delicate brain from injury."
+},
+
+{
+question:"A person suffers damage to sensory nerves in the hand. Which function is MOST likely to be affected?",
+options:[
+"Ability to digest food",
+"Ability to feel touch and pain",
+"Ability to pump blood",
+"Ability to produce red blood cells"
+],
+answer:1,
+hint:"Sensory nerves carry messages to the brain.",
+explanation:"Sensory nerves help us feel touch, pain, and pressure."
+},
+
+{
+question:"A hiker slips and injures the leg while climbing a mountain. Which organ systems work together to help the person walk again after recovery?",
+options:[
+"Digestive and excretory systems",
+"Skeletal, muscular, and nervous systems",
+"Respiratory and reproductive systems",
+"Circulatory system only"
+],
+answer:1,
+hint:"Walking requires bones, muscles, and control signals.",
+explanation:"These systems work together for movement and recovery."
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+const gifContainer=document.getElementById('gifContainer');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+function startQuiz(){
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+loadQuestion();
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+startTimer();
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+feedback.className="feedback";
+feedback.innerHTML="";
+hintBox.style.display="none";
+nextBtn.classList.add('hidden');
+
+gifContainer.innerHTML="";
+gifContainer.classList.add('hidden');
+
+if(q.gifs){
+
+gifContainer.classList.remove('hidden');
+
+q.gifs.forEach(gif=>{
+
+gifContainer.innerHTML += `
+<div class="gifCard">
+<img src="${gif}">
+</div>
+`;
+
+});
+
+}
+
+if(q.image){
+questionImage.src=q.image;
+questionImage.classList.remove('hidden');
+}else{
+questionImage.classList.add('hidden');
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className="feedback correctFeedback show";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+document.getElementById('correctSound').play();
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+document.getElementById('wrongSound').play();
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+if(index!==selected){
+b.disabled=false;
+}
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+nextBtn.textContent="Submit Quiz";
+}else{
+nextBtn.textContent="Next Question";
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"+q.explanation;
+
+showNextButton();
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+document.getElementById('finalScore').innerHTML=
+"Your Score: "+score+" / "+questions.length;
+
+document.getElementById('clapSound').play();
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<18;i++){
+
+const confetti=document.createElement('div');
+
+confetti.classList.add('confetti');
+
+confetti.style.left=Math.random()*100+'vw';
+
+document.body.appendChild(confetti);
+
+setTimeout(()=>{
+confetti.remove();
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+cross.remove();
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
