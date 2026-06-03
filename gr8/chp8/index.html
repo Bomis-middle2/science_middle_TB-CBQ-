@@ -1,1 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structure of an Atom</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+color:#222;
+
+background-color:#d7e8ff;
+
+background-image:
+
+linear-gradient(
+rgba(220,235,255,0.80),
+rgba(205,225,245,0.84)
+),
+
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2400' height='1800' viewBox='0 0 2400 1800'%3E%3Cg opacity='0.45'%3E%3Ctext x='40' y='100' font-size='72'%3E⚛️%3C/text%3E%3Ctext x='180' y='180' font-size='68'%3E🔬%3C/text%3E%3Ctext x='340' y='120' font-size='72'%3E🧪%3C/text%3E%3Ctext x='520' y='200' font-size='70'%3Ee⁻%3C/text%3E%3Ctext x='700' y='120' font-size='72'%3Ep⁺%3C/text%3E%3Ctext x='860' y='200' font-size='70'%3En⁰%3C/text%3E%3Ctext x='1040' y='120' font-size='72'%3E⚛️%3C/text%3E%3Ctext x='1220' y='200' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1400' y='120' font-size='72'%3E🧪%3C/text%3E%3Ctext x='1580' y='200' font-size='70'%3Ee⁻%3C/text%3E%3Ctext x='1760' y='120' font-size='72'%3Ep⁺%3C/text%3E%3Ctext x='1940' y='200' font-size='70'%3En⁰%3C/text%3E%3Ctext x='80' y='450' font-size='74'%3E⚛️%3C/text%3E%3Ctext x='280' y='550' font-size='72'%3E🧪%3C/text%3E%3Ctext x='480' y='450' font-size='70'%3E🔬%3C/text%3E%3Ctext x='680' y='550' font-size='72'%3Ee⁻%3C/text%3E%3Ctext x='880' y='450' font-size='72'%3Ep⁺%3C/text%3E%3Ctext x='1080' y='550' font-size='70'%3En⁰%3C/text%3E%3Ctext x='1280' y='450' font-size='72'%3E⚛️%3C/text%3E%3Ctext x='1480' y='550' font-size='72'%3E🧪%3C/text%3E%3Ctext x='1680' y='450' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1880' y='550' font-size='72'%3Ee⁻%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+animation:bgMove 18s linear infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0 0;}
+100%{background-position:220px 120px;}
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:pop 1s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(0.5);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+.container{
+max-width:900px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.96);
+padding:24px;
+border-radius:22px;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+text-align:center;
+color:#0d4c92;
+}
+
+.btn{
+background:#0d6efd;
+color:white;
+border:none;
+padding:14px 24px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+margin-top:20px;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.scoreBox,.timerBox,.questionBox{
+background:#eef5ff;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:14px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f3f7ff;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+border:2px solid transparent;
+}
+
+.optionBtn:hover{
+background:#dfeeff;
+}
+
+.correct{
+background:#d1ffd8 !important;
+border-color:#1f9d47 !important;
+}
+
+.wrong{
+background:#ffd8d8 !important;
+border-color:#d62828 !important;
+}
+
+.feedback{
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+display:none;
+line-height:1.6;
+font-weight:bold;
+}
+
+.feedback.show{
+display:block;
+}
+
+.correctFeedback{
+background:#d8ffe0;
+color:#166534;
+}
+
+.wrongFeedback{
+background:#ffe2e2;
+color:#991b1b;
+}
+
+.hintBox{
+margin-top:16px;
+padding:12px;
+background:#fff7d6;
+border-left:5px solid #ffbf00;
+border-radius:10px;
+display:none;
+font-weight:bold;
+}
+
+.questionImage{
+width:100%;
+max-height:320px;
+object-fit:contain;
+background:white;
+border-radius:18px;
+margin-bottom:18px;
+padding:10px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Structure of an Atom</h1>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore" style="text-align:center;margin-top:20px;"></h2>
+
+<div style="text-align:center;">
+<button class="btn" onclick="location.reload()">Play Again</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+
+{
+question:"A neutral atom contains 17 protons. Which statement must be true about this atom?",
+options:[
+"It contains 17 neutrons",
+"It contains 17 electrons",
+"It contains 34 electrons",
+"It contains no neutrons"
+],
+answer:1,
+hint:"A neutral atom has equal positive and negative charges.",
+explanation:"For an atom to remain neutral, the number of electrons equals the number of protons."
+},
+
+{
+question:"A scientist discovers an atom with the same number of protons as Carbon but a different number of neutrons. What is this atom called?",
+options:[
+"Isobar",
+"Molecule",
+"Isotope",
+"Compound"
+],
+answer:2,
+hint:"Same element means same atomic number.",
+explanation:"Atoms having the same number of protons but different numbers of neutrons are isotopes."
+},
+
+{
+question:"A student says, 'Most of the mass of an atom is present in the electron cloud.' Why is this statement incorrect?",
+options:[
+"Electrons have no mass",
+"Most of the mass is concentrated in the nucleus",
+"Electrons are positively charged",
+"Nucleus contains only electrons"
+],
+answer:1,
+hint:"Think about where protons and neutrons are located.",
+explanation:"Protons and neutrons are present in the nucleus and contribute almost all the mass."
+},
+
+{
+question:"During Rutherford's experiment, most alpha particles passed straight through the gold foil. What conclusion did Rutherford draw?",
+options:[
+"Atoms are completely solid",
+"Atoms contain only electrons",
+"Most of the atom is empty space",
+"Nucleus occupies the entire atom"
+],
+answer:2,
+hint:"If particles pass through easily, there must be very little obstruction.",
+explanation:"Rutherford concluded that most of an atom is empty space."
+},
+
+{
+question:"An atom has electronic configuration 2, 8, 1. In which shell is the valence electron present?",
+options:[
+"K shell",
+"L shell",
+"M shell",
+"N shell"
+],
+answer:2,
+hint:"The valence electron is present in the outermost shell.",
+explanation:"The configuration 2,8,1 means the outermost electron is in the third shell."
+},
+
+{
+question:"A radioactive material emits radiation continuously without any external force. Which property of radioactive substances does this demonstrate?",
+options:[
+"Artificial change",
+"Chemical reaction",
+"Spontaneous decay",
+"Photosynthesis"
+],
+answer:2,
+hint:"Radioactive nuclei break down on their own.",
+explanation:"Radioactivity is a spontaneous process in which unstable nuclei emit radiation."
+},
+
+{
+question:"Which statement BEST explains why isotopes of an element show similar chemical properties?",
+options:[
+"They have different atomic numbers",
+"They have different masses",
+"They have the same number of electrons",
+"They have the same number of neutrons"
+],
+answer:2,
+hint:"Chemical properties depend mainly on electron arrangement.",
+explanation:"Isotopes have the same atomic number and electronic configuration, so they behave chemically in the same way."
+},
+
+{
+question:"Which scientist's model FIRST proposed that electrons revolve around a central nucleus?",
+image:"assets/atomic-models.png",
+options:[
+"Dalton",
+"Thomson",
+"Rutherford",
+"Bohr"
+],
+answer:2,
+hint:"Think about the scientist who discovered the nucleus.",
+explanation:"Rutherford proposed the nuclear model in which electrons revolve around a small positively charged nucleus."
+},
+
+{
+question:"The diagram shows an atom with electrons arranged in shells. Which conclusion is correct?",
+image:"assets/electron-shells.png",
+options:[
+"Electrons are present inside the nucleus",
+"Electrons occupy specific energy levels around the nucleus",
+"Neutrons revolve around electrons",
+"Protons move freely in the atom"
+],
+answer:1,
+hint:"Bohr's model introduced fixed energy levels.",
+explanation:"According to Bohr's theory, electrons revolve around the nucleus in fixed energy levels or shells."
+},
+
+{
+question:"An atom contains 20 protons and 22 neutrons. What is its mass number?",
+options:[
+"20",
+"22",
+"42",
+"44"
+],
+answer:2,
+hint:"Mass number = Protons + Neutrons.",
+explanation:"Mass number = 20 + 22 = 42."
+},
+
+{
+question:"A radioactive source emits alpha, beta, and gamma radiation. Which radiation can penetrate the greatest distance through matter?",
+options:[
+"Alpha radiation",
+"Beta radiation",
+"Gamma radiation",
+"All penetrate equally"
+],
+answer:2,
+hint:"One radiation requires thick lead or concrete shielding.",
+explanation:"Gamma radiation has the highest penetrating power and can travel through many materials."
+},
+
+{
+question:"Scientists use Carbon-14 to estimate the age of ancient fossils. Why is a radioactive isotope useful for this purpose?",
+options:[
+"It changes into oxygen immediately",
+"It decays at a measurable and predictable rate",
+"It increases fossil size",
+"It prevents decomposition"
+],
+answer:1,
+hint:"Dating methods depend on a natural clock.",
+explanation:"Radioactive isotopes decay at a fixed rate. Measuring the amount remaining helps determine age."
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+function startQuiz(){
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+loadQuestion();
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+startTimer();
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+feedback.className="feedback";
+feedback.innerHTML="";
+hintBox.style.display="none";
+nextBtn.classList.add('hidden');
+
+if(q.image){
+questionImage.src=q.image;
+questionImage.classList.remove('hidden');
+}else{
+questionImage.classList.add('hidden');
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className="feedback correctFeedback show";
+feedback.innerHTML="✅ Correct!<br><br>"+q.explanation;
+
+document.getElementById('correctSound').play();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+document.getElementById('wrongSound').play();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+hintBox.innerHTML="💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+if(index!==selected){
+b.disabled=false;
+}
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+nextBtn.textContent="Submit Quiz";
+}else{
+nextBtn.textContent="Next Question";
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+loadQuestion();
+}else{
+showResults();
+}
+
+};
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"+
+q.options[q.answer]+
+"</b><br><br>"+q.explanation;
+
+showNextButton();
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+resultScreen.classList.remove('hidden');
+
+document.getElementById('finalScore').innerHTML=
+"Your Score: "+score+" / "+questions.length;
+
+document.getElementById('clapSound').play();
+
+}
+
+</script>
+
+</body>
+</html>
 
