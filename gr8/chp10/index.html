@@ -1,1 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microorganisms</title>
 
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+color:#222;
+
+background-color:#d9f5ef;
+
+background-image:
+
+linear-gradient(
+rgba(210,240,235,0.82),
+rgba(190,225,220,0.85)
+),
+
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2400' height='1800' viewBox='0 0 2400 1800'%3E%3Cg opacity='0.45'%3E%3Ctext x='40' y='100' font-size='72'%3E🦠%3C/text%3E%3Ctext x='180' y='180' font-size='70'%3E🔬%3C/text%3E%3Ctext x='340' y='120' font-size='72'%3E🧫%3C/text%3E%3Ctext x='520' y='200' font-size='70'%3E🧬%3C/text%3E%3Ctext x='700' y='120' font-size='72'%3E🦠%3C/text%3E%3Ctext x='880' y='200' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1060' y='120' font-size='72'%3E🧫%3C/text%3E%3Ctext x='1240' y='200' font-size='70'%3E🧬%3C/text%3E%3Ctext x='1420' y='120' font-size='72'%3E🦠%3C/text%3E%3Ctext x='1600' y='200' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1780' y='120' font-size='72'%3E🧫%3C/text%3E%3Ctext x='1960' y='200' font-size='70'%3E🧬%3C/text%3E%3Ctext x='100' y='450' font-size='74'%3E🦠%3C/text%3E%3Ctext x='300' y='550' font-size='72'%3E🔬%3C/text%3E%3Ctext x='500' y='450' font-size='70'%3E🧫%3C/text%3E%3Ctext x='700' y='550' font-size='72'%3E🧬%3C/text%3E%3Ctext x='900' y='450' font-size='72'%3E🦠%3C/text%3E%3Ctext x='1100' y='550' font-size='70'%3E🔬%3C/text%3E%3Ctext x='1300' y='450' font-size='72'%3E🧫%3C/text%3E%3Ctext x='1500' y='550' font-size='72'%3E🧬%3C/text%3E%3Ctext x='1700' y='450' font-size='70'%3E🦠%3C/text%3E%3Ctext x='1900' y='550' font-size='72'%3E🔬%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+animation:bgMove 18s linear infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0 0;}
+100%{background-position:220px 120px;}
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:pop 1s ease;
+}
+
+@keyframes pop{
+0%{
+transform:scale(0.5);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.container{
+max-width:900px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.96);
+padding:24px;
+border-radius:22px;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+text-align:center;
+color:#0b5d4b;
+}
+
+.btn{
+background:#0f766e;
+color:white;
+border:none;
+padding:14px 24px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+margin-top:20px;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.scoreBox,.timerBox,.questionBox{
+background:#eefdf9;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:14px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f3fffc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+border:2px solid transparent;
+}
+
+.optionBtn:hover{
+background:#ddf7f1;
+}
+
+.correct{
+background:#d1ffd8 !important;
+border-color:#1f9d47 !important;
+}
+
+.wrong{
+background:#ffd8d8 !important;
+border-color:#d62828 !important;
+}
+
+.feedback{
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+display:none;
+line-height:1.6;
+font-weight:bold;
+}
+
+.feedback.show{
+display:block;
+}
+
+.correctFeedback{
+background:#d8ffe0;
+color:#166534;
+}
+
+.wrongFeedback{
+background:#ffe2e2;
+color:#991b1b;
+}
+
+.hintBox{
+margin-top:16px;
+padding:12px;
+background:#fff7d6;
+border-left:5px solid #ffbf00;
+border-radius:10px;
+display:none;
+font-weight:bold;
+}
+
+.questionImage{
+width:100%;
+max-height:320px;
+object-fit:contain;
+background:white;
+border-radius:18px;
+margin-bottom:18px;
+padding:10px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Microorganisms</h1>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore" style="text-align:center;margin-top:20px;"></h2>
+
+<div style="text-align:center;">
+<button class="btn" onclick="location.reload()">Play Again</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+
+{
+question:"A bakery prepared two batches of dough using the same ingredients. One batch was mixed with yeast and the other without yeast. After 2 hours, only one dough increased in size. What is the MOST scientific explanation for this observation?",
+options:[
+"Yeast absorbs water and swells",
+"Yeast releases carbon dioxide during respiration",
+"Yeast converts flour into water",
+"Yeast increases the temperature of the dough"
+],
+answer:1,
+hint:"Think about the gas trapped inside bread dough.",
+explanation:"Yeast respires and produces carbon dioxide. The gas gets trapped inside the dough, causing it to expand."
+},
+
+{
+question:"A scientist collected water samples from a pond and observed many microscopic organisms feeding on bacteria. Which group of microorganisms was MOST likely observed?",
+options:[
+"Viruses",
+"Protozoa",
+"Fungi",
+"Cyanobacteria"
+],
+answer:1,
+hint:"Look for microorganisms that act as consumers in aquatic food chains.",
+explanation:"Protozoa such as Amoeba and Paramecium feed on bacteria and other microorganisms."
+},
+
+{
+question:"A farmer grows pea plants in one field and maize in another. Soil testing shows that the pea field contains more nitrogen after harvest. Which process BEST explains this observation?",
+options:[
+"Photosynthesis",
+"Nitrogen fixation",
+"Pasteurisation",
+"Fermentation"
+],
+answer:1,
+hint:"Think about microorganisms present in root nodules.",
+explanation:"Rhizobium bacteria living in root nodules convert atmospheric nitrogen into usable nitrogen compounds."
+},
+
+{
+question:"A doctor warns against taking antibiotics without medical advice. Why is this important?",
+options:[
+"Antibiotics can kill viruses directly",
+"Excessive use may reduce their effectiveness against bacteria",
+"Antibiotics increase bacterial growth",
+"Antibiotics are used only for food preservation"
+],
+answer:1,
+hint:"Think about what happens when bacteria repeatedly encounter antibiotics.",
+explanation:"Misuse of antibiotics can lead to antibiotic resistance, making infections harder to treat."
+},
+
+{
+question:"During a community health survey, two groups of children were studied. One group had received vaccinations, while the other had not. During a disease outbreak, the vaccinated group showed fewer infections. What conclusion can be drawn?",
+options:[
+"Vaccines completely remove microorganisms from the environment",
+"Vaccines help the body develop protection against diseases",
+"Vaccines cure diseases instantly",
+"Vaccines replace good nutrition"
+],
+answer:1,
+hint:"Vaccines prepare the immune system before infection occurs.",
+explanation:"Vaccines stimulate the immune system to recognize and fight pathogens effectively."
+},
+
+{
+question:"A packet of milk is heated to a specific temperature and then cooled rapidly before packaging. Which objective is achieved through this process?",
+options:[
+"Increasing sweetness",
+"Destroying harmful microorganisms",
+"Converting milk into curd",
+"Increasing fat content"
+],
+answer:1,
+hint:"This process is called pasteurisation.",
+explanation:"Pasteurisation kills harmful microorganisms while preserving the quality of milk."
+},
+{
+question:"A city releases untreated sewage into a nearby lake. After a few weeks, fish populations decline and residents report stomach infections. Which explanation BEST connects both observations?",
+options:[
+"Sewage increases oxygen levels",
+"Harmful microorganisms contaminate the water",
+"Fish consume all microorganisms",
+"Sewage improves water quality"
+],
+answer:1,
+hint:"Think about the effect of pathogens entering water bodies.",
+explanation:"Untreated sewage introduces disease-causing microorganisms that contaminate water and harm aquatic life."
+},
+
+{
+question:"A student claims that the organisms shown are multicellular because they perform many life processes. Why is the claim incorrect?",
+image:"assets/amoeba-paramecium.png",
+options:[
+"They are plants",
+"They are made up of a single cell that performs all life functions",
+"They have no nucleus",
+"They are viruses"
+],
+answer:1,
+hint:"The number of cells determines whether an organism is unicellular or multicellular.",
+explanation:"Although Amoeba and Paramecium perform complex activities, each consists of only one cell."
+},
+
+{
+question:"A farmer continuously removes crops from a field without replenishing nutrients. Which step in the nitrogen cycle can naturally help restore soil fertility?",
+image:"assets/nitrogen-cycle.png",
+options:[
+"Denitrification",
+"Nitrogen fixation",
+"Food preservation",
+"Pasteurisation"
+],
+answer:1,
+hint:"Identify the process that adds usable nitrogen compounds to the soil.",
+explanation:"Nitrogen-fixing bacteria convert atmospheric nitrogen into compounds plants can use."
+},
+
+{
+question:"A company is developing a biological method to clean oil spills from oceans instead of using chemicals. Which characteristic of microorganisms makes this possible?",
+options:[
+"They produce sunlight",
+"They break down harmful substances into simpler forms",
+"They increase pollution",
+"They convert oil into plastic"
+],
+answer:1,
+hint:"Think about bioremediation.",
+explanation:"Certain microorganisms can decompose pollutants, making them useful for environmental cleanup."
+},
+
+{
+question:"A food company wants to increase the shelf life of fruit juice without changing its taste significantly. Which method would be MOST appropriate?",
+options:[
+"Pasteurisation",
+"Leaving it open to air",
+"Fermentation",
+"Composting"
+],
+answer:0,
+hint:"Look for a method that destroys harmful microbes but preserves quality.",
+explanation:"Pasteurisation reduces microbial growth while maintaining the taste and nutritional value of the juice."
+},
+
+{
+question:"Scientists discover a microorganism that rapidly converts organic waste into useful compost. How could this benefit society?",
+options:[
+"Increase landfill waste",
+"Improve waste management and soil fertility simultaneously",
+"Increase food spoilage",
+"Reduce decomposition"
+],
+answer:1,
+hint:"Consider both environmental and agricultural benefits.",
+explanation:"Such microorganisms would reduce waste accumulation and produce nutrient-rich compost that improves soil health."
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+function startQuiz(){
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+loadQuestion();
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+retryUsed=false;
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+feedback.className="feedback";
+feedback.innerHTML="";
+hintBox.style.display="none";
+nextBtn.classList.add('hidden');
+
+if(q.image){
+questionImage.src=q.image;
+questionImage.classList.remove('hidden');
+}else{
+questionImage.classList.add('hidden');
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+btn.classList.add('optionBtn');
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className="feedback correctFeedback show";
+feedback.innerHTML="✅ Correct!<br><br>"+q.explanation;
+
+document.getElementById('correctSound').play();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+document.getElementById('wrongSound').play();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+hintBox.innerHTML="💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+if(index!==selected){
+b.disabled=false;
+}
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+nextBtn.textContent="Submit Quiz";
+}else{
+nextBtn.textContent="Next Question";
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+loadQuestion();
+}else{
+showResults();
+}
+
+};
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"+
+q.options[q.answer]+
+"</b><br><br>"+q.explanation;
+
+showNextButton();
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+resultScreen.classList.remove('hidden');
+
+document.getElementById('finalScore').innerHTML=
+"Your Score: "+score+" / "+questions.length;
+
+document.getElementById('clapSound').play();
+
+}
+
+</script>
+
+</body>
+</html>
