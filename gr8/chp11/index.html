@@ -1,1 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biodiversity in Nature</title>
 
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+color:#222;
+
+background-color:#d8f0d8;
+
+background-image:
+
+linear-gradient(
+rgba(205,235,205,0.82),
+rgba(185,220,185,0.86)
+),
+
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2600' height='1800' viewBox='0 0 2600 1800'%3E%3Cg opacity='0.42'%3E%3Ctext x='40' y='100' font-size='72'%3E🌳%3C/text%3E%3Ctext x='200' y='180' font-size='70'%3E🌿%3C/text%3E%3Ctext x='360' y='110' font-size='72'%3E🦋%3C/text%3E%3Ctext x='520' y='190' font-size='70'%3E🐦%3C/text%3E%3Ctext x='700' y='120' font-size='72'%3E🍃%3C/text%3E%3Ctext x='880' y='180' font-size='70'%3E🦌%3C/text%3E%3Ctext x='1060' y='110' font-size='72'%3E🌲%3C/text%3E%3Ctext x='1240' y='190' font-size='70'%3E🐿️%3C/text%3E%3Ctext x='1420' y='120' font-size='72'%3E🌳%3C/text%3E%3Ctext x='1600' y='180' font-size='70'%3E🦋%3C/text%3E%3Ctext x='1780' y='110' font-size='72'%3E🌿%3C/text%3E%3Ctext x='1960' y='190' font-size='70'%3E🐦%3C/text%3E%3Ctext x='90' y='430' font-size='74'%3E🌲%3C/text%3E%3Ctext x='270' y='520' font-size='72'%3E🍃%3C/text%3E%3Ctext x='450' y='430' font-size='70'%3E🦌%3C/text%3E%3Ctext x='630' y='520' font-size='72'%3E🐿️%3C/text%3E%3Ctext x='810' y='430' font-size='72'%3E🌳%3C/text%3E%3Ctext x='990' y='520' font-size='70'%3E🦋%3C/text%3E%3Ctext x='1170' y='430' font-size='72'%3E🌿%3C/text%3E%3Ctext x='1350' y='520' font-size='72'%3E🐦%3C/text%3E%3Ctext x='1530' y='430' font-size='70'%3E🌲%3C/text%3E%3Ctext x='1710' y='520' font-size='72'%3E🍃%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+animation:bgMove 18s linear infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0 0;}
+100%{background-position:220px 120px;}
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:pop 1s ease;
+}
+
+@keyframes pop{
+0%{
+transform:scale(0.5);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.container{
+max-width:900px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.96);
+padding:24px;
+border-radius:22px;
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+h1{
+text-align:center;
+color:#166534;
+}
+
+.btn{
+background:#198754;
+color:white;
+border:none;
+padding:14px 24px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+margin-top:20px;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.scoreBox,.timerBox,.questionBox{
+background:#eefdf3;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:14px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:14px;
+background:#f3fff5;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+border:2px solid transparent;
+}
+
+.optionBtn:hover{
+background:#dff7e5;
+}
+
+.correct{
+background:#d1ffd8 !important;
+border-color:#1f9d47 !important;
+}
+
+.wrong{
+background:#ffd8d8 !important;
+border-color:#d62828 !important;
+}
+
+.feedback{
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+display:none;
+line-height:1.6;
+font-weight:bold;
+}
+
+.feedback.show{
+display:block;
+}
+
+.correctFeedback{
+background:#d8ffe0;
+color:#166534;
+}
+
+.wrongFeedback{
+background:#ffe2e2;
+color:#991b1b;
+}
+
+.hintBox{
+margin-top:16px;
+padding:12px;
+background:#fff7d6;
+border-left:5px solid #ffbf00;
+border-radius:10px;
+display:none;
+font-weight:bold;
+}
+
+.questionImage{
+width:100%;
+max-height:320px;
+object-fit:contain;
+background:white;
+border-radius:18px;
+margin-bottom:18px;
+padding:10px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Biodiversity in Nature</h1>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore" style="text-align:center;margin-top:20px;"></h2>
+
+<div style="text-align:center;">
+<button class="btn" onclick="location.reload()">Play Again</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+
+{
+question:"A village pond contains fish, frogs, insects, algae and birds. Due to excessive pesticide use, most insects die. What is the most likely long-term effect on the pond ecosystem?",
+options:[
+"Frog population may decrease due to lack of food.",
+"Fish population will increase immediately.",
+"Biodiversity will remain unchanged.",
+"Birds will stop requiring food."
+],
+answer:0,
+hint:"Think about the food relationships among organisms.",
+explanation:"Insects are food for frogs. A reduction in insects affects frogs and other organisms dependent on them."
+},
+
+{
+question:"Two forests have the same area. Forest A has 10 species of plants while Forest B has 100 species. A disease attacks one plant species. Which forest is more likely to recover quickly?",
+options:[
+"Forest A",
+"Forest B",
+"Both equally",
+"Neither"
+],
+answer:1,
+hint:"Greater biodiversity provides stability.",
+explanation:"A diverse ecosystem is more resilient because other species can continue ecological functions."
+},
+
+{
+question:"The Asiatic Lion is naturally found only in Gir Forest, Gujarat. Why is the Asiatic Lion called an endemic species?",
+options:[
+"It migrates every year.",
+"It is found only in a particular geographical region.",
+"It is extinct elsewhere.",
+"It is a domestic animal."
+],
+answer:1,
+hint:"Focus on the meaning of endemic.",
+explanation:"Endemic species are naturally restricted to a specific geographical area."
+},
+
+{
+question:"Water hyacinth was introduced into India from another region and spread rapidly in water bodies. What environmental problem can this create?",
+options:[
+"Increase biodiversity naturally",
+"Outcompete native species for resources",
+"Improve habitat quality for all organisms",
+"Eliminate pollution"
+],
+answer:1,
+hint:"Think about competition.",
+explanation:"Exotic species often compete with native species and disturb ecological balance."
+},
+
+{
+question:"Scientists studied three animal populations. Species A is stable, Species B is rapidly decreasing, Species C has no living individuals remaining. Which species is most likely endangered?",
+options:[
+"A",
+"B",
+"C",
+"A and C"
+],
+answer:1,
+hint:"Endangered does not mean extinct.",
+explanation:"Endangered species face a high risk of extinction, while extinct species no longer exist."
+},
+
+{
+question:"If frogs disappear from the food chain, which change is most likely?",
+image:"assets/food-chain.png",
+options:[
+"Grasshopper population may increase.",
+"Snake population will increase immediately.",
+"Eagles will have more food.",
+"Grass population will decrease because snakes eat grass."
+],
+answer:0,
+hint:"Identify what frogs eat and who eats frogs.",
+explanation:"Frogs control grasshopper populations. Without frogs, grasshoppers may multiply rapidly."
+},
+{
+question:"A government has limited funds to protect biodiversity. Which area should be given highest priority?",
+options:[
+"Area with low biodiversity",
+"Biodiversity hotspot with many threatened species",
+"Empty grassland",
+"Urban area"
+],
+answer:1,
+hint:"Think about conservation priorities.",
+explanation:"Hotspots contain rich biodiversity and many threatened species needing urgent protection."
+},
+
+{
+question:"A region faces frequent soil erosion and reduced rainfall after large-scale tree cutting. Which solution is most suitable?",
+options:[
+"Increase construction activities",
+"Afforestation",
+"More mining",
+"Remove remaining vegetation"
+],
+answer:1,
+hint:"Trees play multiple ecological roles.",
+explanation:"Afforestation reduces soil erosion, improves water retention and supports biodiversity."
+},
+
+{
+question:"A group of birds travels thousands of kilometres every year to breed and find food. This behaviour is called:",
+options:[
+"Extinction",
+"Migration",
+"Adaptation",
+"Conservation"
+],
+answer:1,
+hint:"Seasonal movement of organisms.",
+explanation:"Migration is the seasonal movement of organisms between habitats."
+},
+
+{
+question:"The image shows a forest area being cleared for agriculture and buildings. Which consequence is most likely?",
+image:"assets/deforestation.png",
+options:[
+"Increase in wildlife habitat",
+"Loss of biodiversity and soil erosion",
+"Increase in endemic species",
+"Improved ecosystem balance"
+],
+answer:1,
+hint:"What happens when habitats are destroyed?",
+explanation:"Deforestation destroys habitats, reduces biodiversity and increases soil erosion."
+},
+
+{
+question:"A rare species is bred in a zoo to increase its population. This is an example of:",
+options:[
+"Afforestation",
+"In-situ conservation",
+"Ex-situ conservation",
+"Migration"
+],
+answer:2,
+hint:"The species is being protected outside its natural habitat.",
+explanation:"Ex-situ conservation protects species outside their natural habitats, such as zoos and gene banks."
+},
+
+{
+question:"A scientist discovers that the population of a species has declined by 80% in the last decade. Which resource should be consulted first to assess its conservation status?",
+options:[
+"Telephone directory",
+"Red Data Book",
+"Weather report",
+"School atlas"
+],
+answer:1,
+hint:"Think about species conservation records.",
+explanation:"The Red Data Book records species at risk of extinction and helps conservation planning."
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+function startQuiz(){
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+loadQuestion();
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+retryUsed=false;
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+feedback.className="feedback";
+feedback.innerHTML="";
+hintBox.style.display="none";
+nextBtn.classList.add('hidden');
+
+if(q.image){
+questionImage.src=q.image;
+questionImage.classList.remove('hidden');
+}else{
+questionImage.classList.add('hidden');
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+clearInterval(timer);
+showCorrectAnswer();
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className="feedback correctFeedback show";
+feedback.innerHTML="✅ Correct!<br><br>"+q.explanation;
+
+document.getElementById('correctSound').play();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+document.getElementById('wrongSound').play();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+hintBox.innerHTML="💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+if(index!==selected){
+b.disabled=false;
+}
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"+q.options[q.answer]+"</b><br><br>"+q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+nextBtn.textContent="Submit Quiz";
+}else{
+nextBtn.textContent="Next Question";
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+loadQuestion();
+}else{
+showResults();
+}
+
+};
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className="feedback wrongFeedback show";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"+
+q.options[q.answer]+
+"</b><br><br>"+q.explanation;
+
+showNextButton();
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+resultScreen.classList.remove('hidden');
+
+document.getElementById('finalScore').innerHTML=
+"Your Score: "+score+" / "+questions.length;
+
+document.getElementById('clapSound').play();
+
+}
+
+</script>
+
+</body>
+</html>
