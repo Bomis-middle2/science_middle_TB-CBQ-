@@ -1,1 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
+<title>Food and Health - Grade 6</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#f4fff7;
+overflow-x:hidden;
+min-height:100vh;
+color:#222;
+}
+
+/* BIOLOGY BACKGROUND */
+
+.bg-icons{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+overflow:hidden;
+z-index:-1;
+}
+
+.icon{
+position:absolute;
+font-size:40px;
+opacity:.06;
+animation:float 18s linear infinite;
+}
+
+@keyframes float{
+from{
+transform:translateY(110vh) rotate(0deg);
+}
+to{
+transform:translateY(-120vh) rotate(360deg);
+}
+}
+
+.icon:nth-child(1){left:5%;animation-duration:20s;}
+.icon:nth-child(2){left:15%;animation-duration:24s;}
+.icon:nth-child(3){left:30%;animation-duration:18s;}
+.icon:nth-child(4){left:45%;animation-duration:21s;}
+.icon:nth-child(5){left:60%;animation-duration:26s;}
+.icon:nth-child(6){left:75%;animation-duration:22s;}
+.icon:nth-child(7){left:90%;animation-duration:19s;}
+
+/* SPLASH */
+
+#splash{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+flex-direction:column;
+}
+
+#splash img{
+width:180px;
+max-width:80%;
+}
+
+#splash h2{
+margin-top:15px;
+color:#00a3ad;
+}
+
+/* MAIN */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:15px;
+}
+
+.card{
+background:white;
+border-radius:16px;
+padding:20px;
+box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.hidden{
+display:none;
+}
+
+h1{
+color:#00a3ad;
+margin-bottom:10px;
+text-align:center;
+}
+
+.subtitle{
+text-align:center;
+margin-bottom:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:15px;
+}
+
+.badge{
+background:#00a3ad;
+color:white;
+padding:10px 15px;
+border-radius:10px;
+font-weight:bold;
+}
+
+/* QUESTION */
+
+#questionText{
+font-size:1.15rem;
+line-height:1.5;
+margin-bottom:15px;
+}
+
+.question-image{
+width:100%;
+max-width:450px;
+display:block;
+margin:15px auto;
+border-radius:12px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.option-btn{
+border:none;
+background:#eef7f8;
+padding:15px;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+text-align:left;
+transition:.3s;
+min-height:52px;
+}
+
+.option-btn:hover{
+background:#d8f5f7;
+}
+
+.correct{
+background:#b9f6ca !important;
+}
+
+.wrong{
+background:#ffcdd2 !important;
+}
+
+/* FEEDBACK */
+
+#feedback{
+margin-top:15px;
+padding:12px;
+border-radius:10px;
+display:none;
+}
+
+.hint{
+background:#fff3cd;
+}
+
+.explanation{
+background:#e8f5e9;
+}
+
+/* BUTTONS */
+
+button{
+cursor:pointer;
+}
+
+.primary-btn{
+background:#00a3ad;
+color:white;
+border:none;
+padding:14px 22px;
+border-radius:12px;
+font-size:16px;
+margin-top:15px;
+}
+
+.primary-btn:hover{
+opacity:.9;
+}
+
+/* CONFETTI */
+
+.star{
+position:fixed;
+font-size:22px;
+animation:fall 1.5s linear forwards;
+pointer-events:none;
+z-index:999;
+}
+
+@keyframes fall{
+to{
+transform:translateY(300px) rotate(360deg);
+opacity:0;
+}
+}
+
+/* WRONG CROSS */
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
+color:red;
+font-weight:bold;
+animation:fadeCross .8s forwards;
+z-index:999;
+}
+
+@keyframes fadeCross{
+to{
+opacity:0;
+}
+}
+
+/* RESULT */
+
+.result-score{
+font-size:2rem;
+font-weight:bold;
+color:#00a3ad;
+margin:15px 0;
+}
+
+/* AUDIO BUTTON */
+
+#audioToggle{
+position:fixed;
+right:10px;
+top:10px;
+z-index:999;
+background:white;
+border:none;
+padding:10px;
+border-radius:50%;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+#questionText{
+font-size:1rem;
+}
+
+.option-btn{
+font-size:15px;
+}
+
+.badge{
+width:100%;
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-icons">
+<div class="icon">🧬</div>
+<div class="icon">🌿</div>
+<div class="icon">🔬</div>
+<div class="icon">🧫</div>
+<div class="icon">💧</div>
+<div class="icon">🌱</div>
+<div class="icon">🧪</div>
+</div>
+
+<!-- AUDIO -->
+
+<audio id="correctSound" preload="auto" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" preload="auto" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" preload="auto" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<button id="audioToggle">🔊</button>
+
+<!-- SPLASH -->
+
+<div id="splash">
+<img src="assets/innovine-logo.png" alt="Innovine">
+<h2>Innovine Learning</h2>
+</div>
+
+<div class="container">
+
+<!-- INTRO -->
+
+<div id="introScreen" class="card hidden">
+
+<h1>Food and Health</h1>
+
+<p class="subtitle">
+Grade 6 Science – Chapter 1
+</p>
+
+<p>
+Test your understanding of food, nutrients,
+food habits, balanced diet and deficiency diseases.
+</p>
+
+<br>
+
+<ul style="padding-left:20px;">
+<li>12 Competency-Based Questions</li>
+<li>45 Seconds per Question</li>
+<li>1 Retry Allowed</li>
+<li>Final Challenge Included</li>
+</ul>
+
+<center>
+<button class="primary-btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</center>
+
+</div>
+
+<!-- QUIZ -->
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topbar">
+
+<div class="badge">
+Question:
+<span id="qNumber"></span>/12
+</div>
+
+<div class="badge">
+Score:
+<span id="score">0</span>
+</div>
+
+<div class="badge">
+⏱
+<span id="timer">45</span>s
+</div>
+
+</div>
+
+<h2 id="questionText"></h2>
+
+<img
+id="questionImage"
+class="question-image hidden"
+loading="lazy"
+>
+
+<div id="optionsContainer"
+class="options"></div>
+
+<div id="feedback"></div>
+
+<button
+id="nextBtn"
+class="primary-btn hidden"
+onclick="nextQuestion()">
+Next Question
+</button>
+
+</div>
+
+<!-- RESULT -->
+
+<div id="resultScreen"
+class="card hidden">
+
+<h1>Challenge Complete!</h1>
+
+<div class="result-score"
+id="finalScore"></div>
+
+<h2 id="resultMessage"></h2>
+
+<br>
+
+<button
+class="primary-btn"
+onclick="location.reload()">
+Play Again
+</button>
+
+</div>
+
+</div>
+<script>
+
+const QUESTION_TIME = 45;
+
+let questions = [
+
+{
+question:"A family from Karnataka is preparing a traditional breakfast. Which food combination is most likely to be served?",
+options:[
+"Dal Baati and Bajra Roti",
+"Idli, Dosa and Coconut Chutney",
+"Sael Roti and Gundruk",
+"Makki ki Roti and Sarson ka Saag"
+],
+answer:1,
+hint:"Think about foods commonly prepared using rice and coconut.",
+explanation:"Karnataka and nearby southern states commonly use rice and coconut-based foods such as idli, dosa and chutney."
+},
+
+{
+question:"A student lists the following foods: Carrot, Egg, Spinach and Fish. Which pair comes from animal sources?",
+options:[
+"Carrot and Spinach",
+"Egg and Fish",
+"Fish and Carrot",
+"Spinach and Egg"
+],
+answer:1,
+hint:"Animal-source foods come directly from animals.",
+explanation:"Eggs and fish are obtained from animals, while carrot and spinach are plant sources."
+},
+
+{
+question:"Rohan participates in a long football match. Which nutrient will provide most of the immediate energy needed during the game?",
+options:[
+"Proteins",
+"Vitamins",
+"Carbohydrates",
+"Minerals"
+],
+answer:2,
+hint:"This nutrient is often called the body's main energy source.",
+explanation:"Carbohydrates provide quick energy needed for physical activities."
+},
+
+{
+question:"A student says: 'Proteins mainly help us see clearly in dim light.' What is wrong with this statement?",
+options:[
+"Proteins help digestion only",
+"Proteins help growth and repair, not vision",
+"Proteins provide no benefit to the body",
+"Proteins are only found in fruits"
+],
+answer:1,
+hint:"Which nutrient is mainly linked to body-building?",
+explanation:"Proteins help growth and repair of body tissues. Vision problems are commonly linked to Vitamin A deficiency."
+},
+
+{
+question:"A food sample turns bluish-black when iodine solution is added. What does this indicate?",
+options:[
+"Protein is present",
+"Fat is present",
+"Starch is present",
+"Sugar is present"
+],
+answer:2,
+hint:"Iodine is used to test one form of carbohydrate.",
+explanation:"A bluish-black colour with iodine confirms the presence of starch."
+},
+
+{
+question:"Study the image carefully. Which nutrient is most strongly represented by these foods?",
+image:"assets/carbohydrate.png",
+options:[
+"Vitamins",
+"Proteins",
+"Carbohydrates",
+"Minerals"
+],
+answer:2,
+hint:"These foods are major energy-giving foods.",
+explanation:"Foods such as bread, grains, potatoes and bananas are rich in carbohydrates."
+},
+
+{
+question:"A crow feeds on grains, insects and leftover food. Based on its food habits, it is best classified as:",
+options:[
+"Herbivore",
+"Carnivore",
+"Omnivore",
+"Parasite"
+],
+answer:2,
+hint:"Does it eat only plants, only animals, or both?",
+explanation:"Omnivores eat both plant and animal-based food."
+},
+
+{
+question:"Assertion: Roughage does not provide nutrients to the body. Reason: Roughage helps food move through the digestive system.",
+options:[
+"Both are correct and the reason explains the assertion",
+"Both are correct but reason does not explain",
+"Assertion is correct but reason is incorrect",
+"Assertion is incorrect but reason is correct"
+],
+answer:0,
+hint:"Think about the main role of dietary fibre.",
+explanation:"Roughage does not provide nutrients but supports healthy digestion and bowel movement."
+},
+
+{
+question:"A child has difficulty seeing in dim light. Which deficiency is most likely responsible?",
+options:[
+"Iron deficiency",
+"Vitamin A deficiency",
+"Calcium deficiency",
+"Protein deficiency"
+],
+answer:1,
+hint:"This vitamin is important for healthy eyesight.",
+explanation:"Vitamin A deficiency can cause night blindness."
+},
+
+{
+question:"Study the image carefully. Which group helps return nutrients to the soil by breaking down dead plants and animals?",
+image:"assets/animals_food_habits_under40kb.png",
+options:[
+"Herbivores",
+"Omnivores",
+"Scavengers",
+"Decomposers"
+],
+answer:3,
+hint:"Think about organisms like fungi and earthworms.",
+explanation:"Decomposers break down dead organic matter and recycle nutrients back into the ecosystem."
+},
+
+{
+question:"A school health survey found: Student A eats chips and soft drinks daily, Student B eats fruits and vegetables daily, Student C drinks milk and eats pulses regularly, Student D eats a balanced diet from all food groups. Who is MOST likely to maintain good long-term health?",
+options:[
+"Student A",
+"Student B",
+"Student C",
+"Student D"
+],
+answer:3,
+hint:"Think about the meaning of a balanced diet.",
+explanation:"A balanced diet includes all essential nutrients in the correct amounts."
+},
+
+{
+question:"FINAL CHALLENGE: A village health worker notices that many children are suffering from poor growth, weak muscles and swollen bellies. Which action would help most?",
+options:[
+"Increase sugary foods",
+"Increase protein-rich foods like pulses, eggs and milk",
+"Increase salt intake",
+"Reduce water consumption"
+],
+answer:1,
+hint:"Which nutrient helps build and repair body tissues?",
+explanation:"These are common symptoms of protein deficiency. Protein-rich foods help prevent it."
+}
+
+];
+
+/* RANDOMIZE QUESTIONS */
+
+function shuffleQuestions(arr){
+
+for(let i=arr.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[arr[i],arr[j]]=[arr[j],arr[i]];
+
+}
+
+return arr;
+
+}
+
+questions=shuffleQuestions(questions);
+
+/* VARIABLES */
+
+let currentQuestion=0;
+let score=0;
+let attempts=0;
+let timer;
+let timeLeft=QUESTION_TIME;
+let muted=false;
+
+/* ELEMENTS */
+
+const introScreen=document.getElementById("introScreen");
+const quizScreen=document.getElementById("quizScreen");
+const resultScreen=document.getElementById("resultScreen");
+
+const qNumber=document.getElementById("qNumber");
+const scoreEl=document.getElementById("score");
+const timerEl=document.getElementById("timer");
+
+const questionText=document.getElementById("questionText");
+const questionImage=document.getElementById("questionImage");
+
+const optionsContainer=document.getElementById("optionsContainer");
+
+const feedback=document.getElementById("feedback");
+
+const nextBtn=document.getElementById("nextBtn");
+
+const correctSound=document.getElementById("correctSound");
+const wrongSound=document.getElementById("wrongSound");
+const clapSound=document.getElementById("clapSound");
+
+</script>
+<script>
+
+/* SPLASH SCREEN */
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+document.getElementById("splash").style.display="none";
+introScreen.classList.remove("hidden");
+
+},5000);
+
+});
+
+/* AUDIO */
+
+document.getElementById("audioToggle")
+.addEventListener("click",function(){
+
+muted=!muted;
+
+this.innerHTML=muted ? "🔇" : "🔊";
+
+});
+
+/* START QUIZ */
+
+function startQuiz(){
+
+introScreen.classList.add("hidden");
+
+quizScreen.classList.remove("hidden");
+
+loadQuestion();
+
+}
+
+/* TIMER */
+
+function startTimer(){
+
+clearInterval(timer);
+
+timeLeft=QUESTION_TIME;
+
+timerEl.textContent=timeLeft;
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showAnswerDueToTimeout();
+
+}
+
+},1000);
+
+}
+
+/* LOAD QUESTION */
+
+function loadQuestion(){
+
+attempts=0;
+
+feedback.style.display="none";
+
+nextBtn.classList.add("hidden");
+
+const q=questions[currentQuestion];
+
+qNumber.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.classList.remove("hidden");
+
+}else{
+
+questionImage.classList.add("hidden");
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement("button");
+
+btn.className="option-btn";
+
+btn.innerHTML=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+/* CHECK ANSWER */
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+if(selected===q.answer){
+
+clearInterval(timer);
+
+btn.classList.add("correct");
+
+score++;
+
+scoreEl.textContent=score;
+
+showConfetti();
+
+if(!muted){
+
+correctSound.currentTime=0;
+correctSound.play();
+
+}
+
+disableOptions();
+
+setTimeout(()=>{
+
+nextQuestion();
+
+},1200);
+
+}
+else{
+
+attempts++;
+
+btn.classList.add("wrong");
+
+showCross();
+
+if(!muted){
+
+wrongSound.currentTime=0;
+wrongSound.play();
+
+}
+
+if(attempts===1){
+
+feedback.className="hint";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"<strong>Hint:</strong><br>"+q.hint;
+
+}
+else{
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+}
+
+}
+
+/* SHOW ANSWER */
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+disableOptions();
+
+feedback.className="explanation";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"<strong>Correct Answer:</strong> "+
+q.options[q.answer]+
+"<br><br><strong>Explanation:</strong><br>"+
+q.explanation;
+
+nextBtn.classList.remove("hidden");
+
+}
+
+/* TIMEOUT */
+
+function showAnswerDueToTimeout(){
+
+const q=questions[currentQuestion];
+
+disableOptions();
+
+feedback.className="explanation";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"<strong>Time Up!</strong><br><br>"+
+"<strong>Correct Answer:</strong> "+
+q.options[q.answer]+
+"<br><br><strong>Explanation:</strong><br>"+
+q.explanation;
+
+nextBtn.classList.remove("hidden");
+
+}
+
+/* DISABLE OPTIONS */
+
+function disableOptions(){
+
+const buttons=document.querySelectorAll(".option-btn");
+
+buttons.forEach(btn=>{
+
+btn.disabled=true;
+btn.style.cursor="not-allowed";
+
+});
+
+}
+
+/* NEXT QUESTION */
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion>=questions.length){
+
+showResults();
+
+return;
+
+}
+
+loadQuestion();
+
+}
+
+/* RESULTS */
+
+function showResults(){
+
+quizScreen.classList.add("hidden");
+
+resultScreen.classList.remove("hidden");
+
+clearInterval(timer);
+
+if(!muted){
+
+clapSound.currentTime=0;
+clapSound.play();
+
+}
+
+const percent=Math.round(
+(score/questions.length)*100
+);
+
+document.getElementById("finalScore")
+.innerHTML=
+score+
+" / "+
+questions.length+
+"<br>("+
+percent+
+"%)";
+
+let msg="";
+
+if(percent>=75){
+
+msg="🌟 Excellent Work!<br>You have a strong understanding of Food and Health.";
+
+}
+else if(percent>=40){
+
+msg="👍 Good Effort!<br>Review a few concepts and try again.";
+
+}
+else{
+
+msg="📘 Keep Practising!<br>Revise the chapter and take the challenge again.";
+
+}
+
+document.getElementById("resultMessage")
+.innerHTML=msg;
+
+}
+
+/* CONFETTI */
+
+function showConfetti(){
+
+for(let i=0;i<18;i++){
+
+const star=document.createElement("div");
+
+star.className="star";
+
+star.innerHTML="⭐";
+
+star.style.left=
+Math.random()*100+"vw";
+
+star.style.top=
+Math.random()*30+"vh";
+
+document.body.appendChild(star);
+
+setTimeout(()=>{
+
+star.remove();
+
+},1500);
+
+}
+
+}
+
+/* WRONG CROSS */
+
+function showCross(){
+
+const cross=document.createElement("div");
+
+cross.className="cross";
+
+cross.innerHTML="✖";
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},800);
+
+}
+
+</script>
+
+</body>
+</html>
