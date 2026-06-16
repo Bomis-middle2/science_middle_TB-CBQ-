@@ -1,1 +1,928 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Separation of Substances</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+135deg,
+#eaf8ff,
+#d8f3ff,
+#f4fcff
+);
+position:relative;
+}
+
+/* Science Background */
+
+body::before{
+content:"⚗️ 🧪 💧 🔬 ⚗️ 🧪 💧 🔬";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+font-size:60px;
+opacity:0.06;
+display:flex;
+justify-content:space-around;
+align-items:center;
+flex-wrap:wrap;
+pointer-events:none;
+animation:floatBg 20s linear infinite;
+}
+
+@keyframes floatBg{
+0%{
+transform:translateY(0px);
+}
+50%{
+transform:translateY(-20px);
+}
+100%{
+transform:translateY(0px);
+}
+}
+
+/* Logo Screen */
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:logoPop 1s ease;
+}
+
+@keyframes logoPop{
+from{
+transform:scale(.5);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.container{
+max-width:950px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:22px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+color:#006494;
+font-size:2.2rem;
+}
+
+h2{
+text-align:center;
+margin-top:15px;
+color:#333;
+}
+
+.btn{
+background:#006494;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+transition:.3s;
+}
+
+.btn:hover{
+background:#004f73;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.scoreBox,
+.timerBox,
+.questionBox{
+background:#e9f7ff;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+color:#005b85;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+color:#222;
+}
+
+.questionImage{
+width:100%;
+max-height:320px;
+object-fit:contain;
+background:#fff;
+border-radius:15px;
+padding:10px;
+margin-bottom:20px;
+border:2px solid #d9eef8;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f4fbff;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dff5ff;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+background:#00b4d8;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+0%{opacity:1;}
+100%{opacity:0;}
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Separation of Substances</h1>
+
+<h2>Grade 6 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.6;">
+Explore mixtures, filtration, winnowing, sieving,
+evaporation, distillation and more through
+12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage"
+class="questionImage hidden">
+
+<div id="questionText"
+class="question"></div>
+
+<div id="optionsContainer"
+class="options"></div>
+
+<div id="hintBox"
+class="hintBox"></div>
+
+<div id="feedback"
+class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+
+<button id="nextBtn"
+class="btn hidden">
+Next Question
+</button>
+
+</div>
+
+</div>
+
+<div id="resultScreen"
+class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;
+margin-top:20px;
+font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;
+margin-top:25px;">
+
+<button class="btn"
+onclick="location.reload()">
+Play Again
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound"
+src="assets/correct.mp3"></audio>
+
+<audio id="wrongSound"
+src="assets/wrong.mp3"></audio>
+
+<audio id="clapSound"
+src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+```javascript id="k2y8mx"
+{
+question:"A student observes four samples: Pure water, Air, Salt solution and Soil. Which sample is a pure substance?",
+options:[
+"Air",
+"Salt solution",
+"Soil",
+"Pure water"
+],
+answer:3,
+hint:"A pure substance contains only one kind of particle.",
+explanation:"Pure water contains only water molecules, while the others are mixtures."
+},
+
+{
+question:"A shopkeeper mixes small stones with pulses before selling them. This is an example of:",
+options:[
+"Filtration",
+"Adulteration",
+"Solubility",
+"Distillation"
+],
+answer:1,
+hint:"Think about reducing quality by adding unwanted materials.",
+explanation:"Adulteration means mixing inferior or unwanted substances with useful products."
+},
+
+{
+question:"A farmer wants to remove large stones from harvested rice grains. Which method is most suitable?",
+options:[
+"Filtration",
+"Distillation",
+"Hand-picking",
+"Condensation"
+],
+answer:2,
+hint:"The unwanted particles are clearly visible.",
+explanation:"Hand-picking is suitable when impurities are larger and can be easily seen."
+},
+
+{
+question:"A baker wants to separate wheat flour from bran. Which property makes sieving possible?",
+options:[
+"Difference in colour",
+"Difference in size of particles",
+"Difference in weight",
+"Difference in smell"
+],
+answer:1,
+hint:"One component passes through the holes while the other does not.",
+explanation:"Sieving separates substances based on particle size."
+},
+
+{
+question:"After threshing, a farmer uses wind to separate husk from grains. Why does the husk move farther away?",
+options:[
+"Husk is magnetic",
+"Husk is heavier",
+"Husk is lighter",
+"Husk dissolves in air"
+],
+answer:2,
+hint:"Wind affects lighter particles more.",
+explanation:"Winnowing separates components based on differences in weight."
+},
+
+{
+question:"Which statement best describes the process shown in the filtration setup?",
+image:"assets/filtration.png",
+options:[
+"Solids are dissolved in liquid",
+"Insoluble solids are separated from liquids",
+"Water changes into vapour",
+"Two liquids are separated"
+],
+answer:1,
+hint:"Think of separating tea leaves from tea.",
+explanation:"Filtration removes insoluble solid particles from liquids using a filter."
+},
+```javascript id="n8q2wy"
+{
+question:"A tea vendor uses a strainer while preparing tea. Which separation method is being used?",
+options:[
+"Filtration",
+"Winnowing",
+"Churning",
+"Sedimentation"
+],
+answer:0,
+hint:"The strainer acts like a filter.",
+explanation:"Filtration separates tea leaves from prepared tea."
+},
+
+{
+question:"Why is seawater kept in shallow salt pans?",
+options:[
+"To increase filtration",
+"To increase evaporation",
+"To increase sedimentation",
+"To increase solubility"
+],
+answer:1,
+hint:"Sunlight helps remove water.",
+explanation:"Water evaporates, leaving salt behind."
+},
+
+{
+question:"A bucket contains muddy water and is left undisturbed for some time. What happens first?",
+options:[
+"Filtration",
+"Condensation",
+"Sedimentation",
+"Distillation"
+],
+answer:2,
+hint:"Heavier particles settle down.",
+explanation:"Mud particles settle at the bottom before decantation can be done."
+},
+
+{
+question:"What is the main purpose of the condenser in the distillation setup?",
+image:"assets/distillation.png",
+options:[
+"To heat the liquid",
+"To filter impurities",
+"To cool vapour into liquid",
+"To stir the mixture"
+],
+answer:2,
+hint:"Vapour must change state before collection.",
+explanation:"The condenser converts vapour back into liquid during distillation."
+},
+
+{
+question:"A student adds sugar to water and stirs continuously. The sugar disappears. What has happened?",
+options:[
+"Sugar evaporated",
+"Sugar melted",
+"Sugar dissolved forming a solution",
+"Sugar was filtered"
+],
+answer:2,
+hint:"The sugar particles spread evenly throughout the water.",
+explanation:"Sugar dissolves in water to form a homogeneous solution."
+},
+
+{
+question:"A mixture contains iron filings, sand and water. Which sequence of methods would separate all three components most effectively?",
+options:[
+"Filtration → Magnet",
+"Magnet → Filtration",
+"Evaporation → Magnet",
+"Sedimentation → Churning"
+],
+answer:1,
+hint:"Remove the component with a unique property first.",
+explanation:"First use a magnet to remove iron filings. Then use filtration to separate sand from water."
+}
+
+];
+```javascript id="j4r9tp"
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function startQuiz(){
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+```javascript id="z7w2mn"
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=Math.round(
+(score/questions.length)*100
+);
+
+let message="";
+
+if(percentage>=75){
+
+message="🎉 Good Job! You have mastered the concepts of separation of substances.";
+
+}else if(percentage>=40){
+
+message="📘 Review this chapter and try again.";
+
+}else{
+
+message="💪 Let's practise more and strengthen your understanding.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const bubble=document.createElement('div');
+
+bubble.classList.add('confetti');
+
+bubble.style.left=
+Math.random()*100+'vw';
+
+bubble.style.background=
+[
+'#00b4d8',
+'#48cae4',
+'#90e0ef',
+'#0096c7'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(bubble);
+
+setTimeout(()=>{
+
+bubble.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
