@@ -1,10 +1,10 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Components of Food - CBQ Interactive</title>
+
+<title>Food and Health</title>
 
 <style>
 
@@ -16,26 +16,9 @@ box-sizing:border-box;
 
 body{
 font-family:Arial,sans-serif;
-overflow-x:hidden;
+background:#f7f9fc;
 min-height:100vh;
-color:#222;
-
-background:#fff9e6;
-
-background-image:
-linear-gradient(
-rgba(255,249,230,0.88),
-rgba(255,244,204,0.90)
-),
-url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2000' height='1400'%3E%3Cg opacity='0.18'%3E%3Ctext x='40' y='80' font-size='60'%3E🍎%3C/text%3E%3Ctext x='200' y='160' font-size='60'%3E🥕%3C/text%3E%3Ctext x='360' y='80' font-size='60'%3E🥛%3C/text%3E%3Ctext x='520' y='160' font-size='60'%3E🍌%3C/text%3E%3Ctext x='700' y='80' font-size='60'%3E🥚%3C/text%3E%3Ctext x='880' y='160' font-size='60'%3E🌽%3C/text%3E%3Ctext x='1060' y='80' font-size='60'%3E🍎%3C/text%3E%3Ctext x='1220' y='160' font-size='60'%3E🥕%3C/text%3E%3Ctext x='1380' y='80' font-size='60'%3E🥛%3C/text%3E%3Ctext x='1540' y='160' font-size='60'%3E🍌%3C/text%3E%3C/g%3E%3C/svg%3E");
-
-background-size:cover;
-animation:bgMove 20s linear infinite;
-}
-
-@keyframes bgMove{
-0%{background-position:0 0;}
-100%{background-position:220px 120px;}
+overflow-x:hidden;
 }
 
 #logoScreen{
@@ -50,18 +33,6 @@ z-index:9999;
 
 #logoScreen img{
 width:180px;
-animation:pop 1s ease;
-}
-
-@keyframes pop{
-0%{
-transform:scale(0.5);
-opacity:0;
-}
-100%{
-transform:scale(1);
-opacity:1;
-}
 }
 
 .container{
@@ -71,139 +42,135 @@ padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.95);
+background:white;
 padding:24px;
-border-radius:22px;
-box-shadow:0 8px 25px rgba(0,0,0,0.15);
+border-radius:20px;
+box-shadow:0 4px 15px rgba(0,0,0,.15);
 }
 
 h1{
 text-align:center;
-color:#8b4513;
+color:#1b4ea1;
 }
 
 h2{
 text-align:center;
-margin-top:10px;
+margin-top:15px;
 }
 
 .btn{
-background:#ff9800;
+background:#1b4ea1;
 color:white;
 border:none;
 padding:14px 24px;
 border-radius:12px;
 cursor:pointer;
 font-size:1rem;
-margin-top:20px;
-transition:0.3s;
 }
 
 .btn:hover{
-background:#f57c00;
-transform:scale(1.03);
+opacity:.9;
 }
 
 .topBar{
 display:flex;
 justify-content:space-between;
-flex-wrap:wrap;
 gap:10px;
+flex-wrap:wrap;
 margin-bottom:20px;
 }
 
 .scoreBox,
 .timerBox,
 .questionBox{
-background:#fff3cd;
-padding:10px 16px;
-border-radius:12px;
+background:#eef4ff;
+padding:10px 15px;
+border-radius:10px;
 font-weight:bold;
 }
 
 .question{
-font-size:1.15rem;
+font-size:1.1rem;
 line-height:1.6;
 margin-bottom:20px;
 }
 
 .options{
 display:grid;
-gap:14px;
+gap:12px;
 }
 
 .optionBtn{
 padding:14px;
 border:none;
-border-radius:14px;
-background:#fff8e1;
+border-radius:12px;
+background:#f5f5f5;
 cursor:pointer;
-font-size:1rem;
 text-align:left;
-border:2px solid transparent;
-transition:0.3s;
+font-size:1rem;
 }
 
 .optionBtn:hover{
-background:#ffe8b0;
+background:#e8eefc;
 }
 
 .correct{
-background:#d1ffd8 !important;
-border-color:#1f9d47 !important;
+background:#d4f7d9 !important;
+border:2px solid green;
 }
 
 .wrong{
-background:#ffd8d8 !important;
-border-color:#d62828 !important;
-}
-
-.feedback{
-margin-top:18px;
-padding:14px;
-border-radius:12px;
-display:none;
-line-height:1.6;
-font-weight:bold;
-}
-
-.feedback.show{
-display:block;
-}
-
-.correctFeedback{
-background:#d8ffe0;
-color:#166534;
-}
-
-.wrongFeedback{
-background:#ffe2e2;
-color:#991b1b;
-}
-
-.hintBox{
-margin-top:16px;
-padding:12px;
-background:#fff7d6;
-border-left:5px solid #ffbf00;
-border-radius:10px;
-display:none;
-font-weight:bold;
-line-height:1.5;
+background:#ffd9d9 !important;
+border:2px solid red;
 }
 
 .questionImage{
 width:100%;
-max-height:320px;
+max-height:300px;
 object-fit:contain;
+margin-bottom:20px;
+border-radius:12px;
 background:white;
-border-radius:18px;
-margin-bottom:18px;
 padding:10px;
+}
+
+.feedback{
+display:none;
+margin-top:15px;
+padding:15px;
+border-radius:10px;
+font-weight:bold;
+line-height:1.5;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:12px;
+background:#fff4d4;
+border-left:5px solid orange;
+border-radius:8px;
 }
 
 .hidden{
 display:none;
+}
+
+.audioBtn{
+background:#666;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:8px;
+cursor:pointer;
 }
 
 .confetti{
@@ -218,11 +185,11 @@ z-index:999;
 
 @keyframes fall{
 0%{
-transform:translateY(-20px) rotate(0deg);
+transform:translateY(-20px);
 opacity:1;
 }
 100%{
-transform:translateY(100vh) rotate(720deg);
+transform:translateY(100vh);
 opacity:0;
 }
 }
@@ -232,10 +199,9 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:70px;
+font-size:80px;
 color:red;
 animation:fade 1s forwards;
-z-index:1000;
 }
 
 @keyframes fade{
@@ -243,28 +209,8 @@ z-index:1000;
 100%{opacity:0;}
 }
 
-.audioBtn{
-background:#6c757d;
-color:white;
-border:none;
-padding:10px 16px;
-border-radius:10px;
-cursor:pointer;
-}
-
-@media(max-width:600px){
-
-.question{
-font-size:1rem;
-}
-
-.optionBtn{
-font-size:0.94rem;
-}
-
-}
-
 </style>
+
 </head>
 
 <body>
@@ -277,16 +223,14 @@ font-size:0.94rem;
 
 <div id="introScreen" class="card">
 
-<h1>Components of Food</h1>
+<h1>Food and Health</h1>
 
 <h2>Grade 6 Science</h2>
 
-<p style="margin-top:20px;text-align:center;">
-Answer 12 competency-based questions and test your understanding of food, nutrients and food habits.
-</p>
-
-<div style="text-align:center;margin-top:25px;">
-<button class="btn" onclick="startQuiz()">Start Quiz</button>
+<div style="text-align:center;margin-top:40px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
 </div>
 
 </div>
@@ -323,7 +267,7 @@ Score: <span id="score">0</span>
 
 <div id="feedback" class="feedback"></div>
 
-<div style="text-align:center;">
+<div style="text-align:center;margin-top:20px;">
 <button id="nextBtn" class="btn hidden">
 Next Question
 </button>
@@ -338,10 +282,10 @@ Next Question
 <h2 id="finalScore"></h2>
 
 <p id="resultMessage"
-style="text-align:center;margin-top:20px;font-size:1.1rem;">
+style="text-align:center;margin-top:20px;">
 </p>
 
-<div style="text-align:center;">
+<div style="text-align:center;margin-top:20px;">
 <button class="btn" onclick="location.reload()">
 Play Again
 </button>
@@ -358,8 +302,6 @@ Play Again
 <script>
 
 const questions = [
-```
-```javascript
 {
 question:"A family from Karnataka is preparing a traditional breakfast. Which food combination is most likely to be served?",
 options:[
@@ -438,7 +380,6 @@ answer:2,
 hint:"These foods are major energy-giving foods.",
 explanation:"Foods such as bread, grains, potatoes and bananas are rich in carbohydrates."
 },
-```javascript id="f9ozh7"
 {
 question:"A crow feeds on grains, insects and leftover food. Based on its food habits, it is best classified as:",
 options:[
@@ -519,7 +460,6 @@ explanation:"These are common symptoms of protein deficiency (Kwashiorkor). Prot
 }
 
 ];
-```javascript id="u0zv4t"
 let currentQuestion=0;
 let score=0;
 let retryUsed=false;
@@ -550,14 +490,14 @@ setTimeout(()=>{
 document.getElementById('logoScreen').style.display='none';
 },5000);
 
-document.getElementById('muteBtn').addEventListener('click',()=>{
+document.getElementById('muteBtn').onclick=()=>{
 
 soundEnabled=!soundEnabled;
 
 document.getElementById('muteBtn').textContent=
 soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
 
-});
+};
 
 function playSound(audio){
 
@@ -588,9 +528,10 @@ timerEl.textContent=timeLeft;
 
 retryUsed=false;
 
-feedback.className="feedback";
 feedback.innerHTML="";
+feedback.style.display="none";
 
+hintBox.innerHTML="";
 hintBox.style.display="none";
 
 nextBtn.classList.add('hidden');
@@ -606,10 +547,13 @@ optionsContainer.innerHTML="";
 if(q.image){
 
 questionImage.src=q.image;
+questionImage.style.display="block";
 questionImage.classList.remove('hidden');
 
 }else{
 
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
 questionImage.classList.add('hidden');
 
 }
@@ -619,6 +563,7 @@ q.options.forEach((option,index)=>{
 const btn=document.createElement('button');
 
 btn.classList.add('optionBtn');
+
 btn.textContent=option;
 
 btn.onclick=()=>checkAnswer(index,btn);
@@ -667,7 +612,10 @@ score++;
 
 scoreEl.textContent=score;
 
-feedback.className="feedback correctFeedback show";
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
 
 feedback.innerHTML=
 "✅ Correct!<br><br>"+q.explanation;
@@ -711,7 +659,10 @@ b.disabled=false;
 
 buttons[q.answer].classList.add('correct');
 
-feedback.className="feedback wrongFeedback show";
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
 
 feedback.innerHTML=
 "❌ Correct Answer: <b>"
@@ -739,7 +690,10 @@ buttons.forEach(b=>b.disabled=true);
 
 buttons[q.answer].classList.add('correct');
 
-feedback.className="feedback wrongFeedback show";
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
 
 feedback.innerHTML=
 "⏰ Time Up!<br><br>Correct Answer: <b>"
@@ -782,7 +736,6 @@ showResults();
 };
 
 }
-```javascript id="w8l9qf"
 function showResults(){
 
 quizScreen.classList.add('hidden');
@@ -810,7 +763,7 @@ message="💪 Let's practise more and improve your understanding.";
 }
 
 document.getElementById('finalScore').innerHTML=
-`Your Score: ${score} / ${questions.length}<br>
+`Your Score: ${score} / ${questions.length}<br><br>
 Percentage: ${percentage}%`;
 
 document.getElementById('resultMessage').innerHTML=
