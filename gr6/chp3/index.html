@@ -1,1 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Living Organisms and Their Characteristics</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+135deg,
+#eefcf0,
+#d8f3dc,
+#f4fff6
+);
+position:relative;
+}
+
+/* Biology Theme Background */
+
+body::before{
+content:"🌿 🍃 🌱 🦋 🌿 🍃 🌱 🐛";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+font-size:65px;
+opacity:0.06;
+display:flex;
+justify-content:space-around;
+align-items:center;
+flex-wrap:wrap;
+pointer-events:none;
+animation:floatNature 25s linear infinite;
+}
+
+@keyframes floatNature{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-25px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:logoPop 1s ease;
+}
+
+@keyframes logoPop{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:22px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+color:#2d6a4f;
+font-size:2.2rem;
+}
+
+h2{
+text-align:center;
+margin-top:15px;
+color:#333;
+}
+
+.btn{
+background:#2d6a4f;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+transition:.3s;
+}
+
+.btn:hover{
+background:#1b4332;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.scoreBox,
+.timerBox,
+.questionBox{
+background:#e9f8ec;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+color:#1b4332;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+color:#222;
+}
+
+.questionImage{
+width:100%;
+max-height:340px;
+object-fit:contain;
+background:#fff;
+border-radius:15px;
+padding:10px;
+margin-bottom:20px;
+border:2px solid #d8f3dc;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f4fff6;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#d8f3dc;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+background:#52b788;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Living Organisms and Their Characteristics</h1>
+
+<h2>Grade 6 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.6;">
+Explore movement, growth, respiration,
+sensitivity, reproduction and life cycles
+through 12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+{
+question:"A robot can move, make sounds, and respond to commands. Why is it still considered non-living?",
+options:[
+"It cannot move from place to place",
+"It cannot perform all life processes on its own",
+"It is made of metal",
+"It uses electricity"
+],
+answer:1,
+hint:"Think about characteristics like growth and reproduction.",
+explanation:"Although a robot can move and respond, it cannot grow, reproduce, or carry out life processes independently."
+},
+
+{
+question:"A sunflower turns towards sunlight during the day. Which statement is correct?",
+options:[
+"It shows locomotion",
+"It shows movement but not locomotion",
+"It shows respiration only",
+"It shows reproduction"
+],
+answer:1,
+hint:"Did the plant change its place?",
+explanation:"The sunflower moves by turning towards light but does not move from one place to another."
+},
+
+{
+question:"A child quickly removes her hand after touching a hot vessel. Which characteristic of living organisms is shown?",
+options:[
+"Growth",
+"Reproduction",
+"Sensitivity",
+"Nutrition"
+],
+answer:2,
+hint:"The body is responding to a stimulus.",
+explanation:"Living organisms respond to changes in their surroundings. This response is called sensitivity."
+},
+
+{
+question:"Which statement best describes respiration?",
+options:[
+"Taking food into the body",
+"Releasing energy from food",
+"Removing waste materials",
+"Producing young ones"
+],
+answer:1,
+hint:"Think about how living things obtain energy.",
+explanation:"Respiration releases energy from food needed for life activities."
+},
+
+{
+question:"Which of the following is living?",
+options:[
+"Dry leaf lying on the ground",
+"Seed waiting for suitable conditions",
+"Wooden chair",
+"Plastic bottle"
+],
+answer:1,
+hint:"One option can become active again under suitable conditions.",
+explanation:"Seeds may remain dormant but are living because they can germinate and grow."
+},
+
+{
+question:"The plant shown traps insects when they touch its leaves. Which characteristic of living organisms does this demonstrate most clearly?",
+image:"assets/venus-flytrap.png",
+options:[
+"Growth",
+"Sensitivity",
+"Reproduction",
+"Excretion"
+],
+answer:1,
+hint:"The plant reacts to a stimulus.",
+explanation:"The Venus flytrap responds when an insect touches it, showing sensitivity."
+},
+const questions = [
+{
+question:"A puppy weighs 2 kg at birth and 15 kg after one year. Which characteristic is illustrated?",
+options:[
+"Respiration",
+"Excretion",
+"Growth",
+"Nutrition"
+],
+answer:2,
+hint:"The size of the organism has changed.",
+explanation:"Growth refers to an increase in size and development over time."
+},
+
+{
+question:"Why is reproduction important for living organisms?",
+options:[
+"To obtain energy",
+"To remove wastes",
+"To continue the species",
+"To move from place to place"
+],
+answer:2,
+hint:"Think about what happens if organisms never produce offspring.",
+explanation:"Reproduction ensures the continuation of a species."
+},
+
+{
+question:"A seed germinates and develops into a mature plant. Which condition is NOT essential for germination?",
+options:[
+"Water",
+"Air",
+"Suitable temperature",
+"Flowers"
+],
+answer:3,
+hint:"Flowers develop much later.",
+explanation:"Seeds need water, air, and suitable temperature for germination. Flowers appear later."
+},
+
+{
+question:"According to the life cycle shown, which stage comes immediately after the larva stage?",
+image:"assets/mosquito-life-cycle.png",
+options:[
+"Egg",
+"Adult mosquito",
+"Pupa",
+"Froglet"
+],
+answer:2,
+hint:"Look for the stage before the adult emerges.",
+explanation:"The mosquito develops from egg → larva → pupa → adult."
+},
+
+{
+question:"A scientist discovers an object that moves on its own, uses energy, and responds to light. However, it never grows or reproduces. How should it be classified?",
+options:[
+"Living",
+"Non-living",
+"Plant",
+"Microorganism"
+],
+answer:1,
+hint:"A living thing must show all major life processes.",
+explanation:"Movement and response alone do not make something living. Growth and reproduction are also essential."
+},
+
+{
+question:"A student observes the following: Frog produces young ones, Mimosa plant folds leaves when touched, Human sweats during exercise, Bird flies from tree to tree. Which set correctly matches the characteristics shown?",
+options:[
+"Reproduction, Sensitivity, Excretion, Locomotion",
+"Growth, Sensitivity, Nutrition, Respiration",
+"Reproduction, Growth, Excretion, Sensitivity",
+"Nutrition, Respiration, Growth, Locomotion"
+],
+answer:0,
+hint:"Match each observation with the correct life process.",
+explanation:"Frog → Reproduction, Mimosa → Sensitivity, Human sweating → Excretion, Bird flying → Locomotion."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function startQuiz(){
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=Math.round(
+(score/questions.length)*100
+);
+
+let message="";
+
+if(percentage>=75){
+
+message="🎉 Excellent! You have a strong understanding of living organisms and their characteristics.";
+
+}else if(percentage>=40){
+
+message="📘 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="💪 Keep practising! You can improve with a little more revision.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const leaf=document.createElement('div');
+
+leaf.classList.add('confetti');
+
+leaf.style.left=
+Math.random()*100+'vw';
+
+leaf.style.background=
+[
+'#2d6a4f',
+'#40916c',
+'#52b788',
+'#74c69d'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(leaf);
+
+setTimeout(()=>{
+
+leaf.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
 
