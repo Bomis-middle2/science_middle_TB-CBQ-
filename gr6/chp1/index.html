@@ -468,34 +468,18 @@ min-height:54px;
 
 <div class="intro-text">
 
-Grade 6 Science
+<h2>Grade 6 Science</h2>
 
-<br><br>
+<h1>Chapter 1</h1>
 
-✔ Sources of Food<br>
-✔ Nutrients and Functions<br>
-✔ Balanced Diet<br>
-✔ Food Habits in Animals<br>
-✔ Deficiency Diseases
+<h1>Food and Health</h1>
 
-<br><br>
-
-⏱ 45 Seconds per Question
-
-<br>
-
-💡 Hint after First Wrong Attempt
-
-<br>
-
-📘 Explanation after Second Wrong Attempt
-
-<br>
-
-🏆 Final Challenge Included
+<p>
+12 Competency-Based Questions
+</p>
 
 </div>
-
+  
 <button
 class="btn"
 onclick="startQuiz()">
@@ -570,7 +554,7 @@ Next Question
 <!-- RESULT -->
 
 <div
-class="card"
+class="card hidden"
 id="resultScreen">
 
 <h1>Quiz Complete!</h1>
@@ -1058,7 +1042,7 @@ document.getElementById("questionCard")
 .classList.add("hidden");
 
 document.getElementById("resultScreen")
-.style.display="block";
+.classList.remove("hidden");
 
 if(audioEnabled){
 
