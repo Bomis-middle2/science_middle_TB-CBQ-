@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +27,7 @@ background:linear-gradient(
 position:relative;
 }
 
-/* Science Background */
+/* Science Laboratory Theme */
 
 body::before{
 content:"⚗️ 🧪 💧 🔬 ⚗️ 🧪 💧 🔬";
@@ -49,17 +48,15 @@ animation:floatBg 20s linear infinite;
 
 @keyframes floatBg{
 0%{
-transform:translateY(0px);
+transform:translateY(0);
 }
 50%{
 transform:translateY(-20px);
 }
 100%{
-transform:translateY(0px);
+transform:translateY(0);
 }
 }
-
-/* Logo Screen */
 
 #logoScreen{
 position:fixed;
@@ -336,72 +333,51 @@ Score: <span id="score">0</span>
 
 </div>
 
-<img id="questionImage"
-class="questionImage hidden">
+<img id="questionImage" class="questionImage hidden">
 
-<div id="questionText"
-class="question"></div>
+<div id="questionText" class="question"></div>
 
-<div id="optionsContainer"
-class="options"></div>
+<div id="optionsContainer" class="options"></div>
 
-<div id="hintBox"
-class="hintBox"></div>
+<div id="hintBox" class="hintBox"></div>
 
-<div id="feedback"
-class="feedback"></div>
+<div id="feedback" class="feedback"></div>
 
 <div style="text-align:center;margin-top:20px;">
-
-<button id="nextBtn"
-class="btn hidden">
+<button id="nextBtn" class="btn hidden">
 Next Question
 </button>
-
 </div>
 
 </div>
 
-<div id="resultScreen"
-class="card hidden">
+<div id="resultScreen" class="card hidden">
 
 <h1>Quiz Completed!</h1>
 
 <h2 id="finalScore"></h2>
 
 <p id="resultMessage"
-style="text-align:center;
-margin-top:20px;
-font-size:1.1rem;">
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
 </p>
 
-<div style="text-align:center;
-margin-top:25px;">
-
-<button class="btn"
-onclick="location.reload()">
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
 Play Again
 </button>
-
 </div>
 
 </div>
 
 </div>
 
-<audio id="correctSound"
-src="assets/correct.mp3"></audio>
-
-<audio id="wrongSound"
-src="assets/wrong.mp3"></audio>
-
-<audio id="clapSound"
-src="assets/freesound_community-claps-44774.mp3"></audio>
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
 
 const questions = [
-javascript id="k2y8mx"
 {
 question:"A student observes four samples: Pure water, Air, Salt solution and Soil. Which sample is a pure substance?",
 options:[
@@ -480,7 +456,7 @@ answer:1,
 hint:"Think of separating tea leaves from tea.",
 explanation:"Filtration removes insoluble solid particles from liquids using a filter."
 },
-javascript id="n8q2wy"
+javascript
 {
 question:"A tea vendor uses a strainer while preparing tea. Which separation method is being used?",
 options:[
@@ -561,7 +537,7 @@ explanation:"First use a magnet to remove iron filings. Then use filtration to s
 }
 
 ];
-javascript id="j4r9tp"
+javascript
 let currentQuestion=0;
 let score=0;
 let retryUsed=false;
@@ -835,7 +811,7 @@ showResults();
 };
 
 }
-javascript id="z7w2mn"
+javascript
 function showResults(){
 
 quizScreen.classList.add('hidden');
@@ -926,3 +902,4 @@ cross.remove();
 
 </body>
 </html>
+
