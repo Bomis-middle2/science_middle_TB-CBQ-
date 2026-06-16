@@ -1,1 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Plants and Their Parts</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+135deg,
+#f4fff4,
+#d8f3dc,
+#ecfdf5
+);
+position:relative;
+}
+
+/* Advanced Plant Theme */
+
+body::before{
+content:"🌿 🌱 🍃 🌾 🌿 🌱 🍃 🌸";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+font-size:70px;
+opacity:0.05;
+display:flex;
+justify-content:space-around;
+align-items:center;
+flex-wrap:wrap;
+pointer-events:none;
+animation:plantFloat 28s linear infinite;
+}
+
+body::after{
+content:"🌱 🍃 🌿 🌾";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+font-size:55px;
+opacity:0.04;
+display:flex;
+justify-content:space-evenly;
+align-items:center;
+flex-wrap:wrap;
+pointer-events:none;
+animation:plantFloatReverse 35s linear infinite;
+}
+
+@keyframes plantFloat{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-30px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+@keyframes plantFloatReverse{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(25px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:logoPop 1s ease;
+}
+
+@keyframes logoPop{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:20px auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:22px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+color:#2d6a4f;
+font-size:2.2rem;
+}
+
+h2{
+text-align:center;
+margin-top:15px;
+color:#333;
+}
+
+.btn{
+background:#2d6a4f;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+transition:.3s;
+}
+
+.btn:hover{
+background:#1b4332;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.scoreBox,
+.timerBox,
+.questionBox{
+background:#e9f8ec;
+padding:10px 16px;
+border-radius:12px;
+font-weight:bold;
+color:#1b4332;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.6;
+margin-bottom:20px;
+color:#222;
+}
+
+.questionImage{
+width:100%;
+max-height:340px;
+object-fit:contain;
+background:#fff;
+border-radius:15px;
+padding:10px;
+margin-bottom:20px;
+border:2px solid #d8f3dc;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f4fff6;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#d8f3dc;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+background:#52b788;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Plants and Their Parts</h1>
+
+<h2>Grade 6 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.6;">
+Explore roots, stems, leaves,
+photosynthesis, pollination,
+germination and plant adaptations
+through 12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"The Eco Club wants to plant a species that can provide shade to students for many years and also become a nesting place for birds. Which type of plant should they select?",
+options:[
+"Herb",
+"Shrub",
+"Tree",
+"Creeper"
+],
+answer:2,
+hint:"Think about plants with thick woody trunks and long life spans.",
+explanation:"Trees grow tall, live for many years, and provide shade and shelter."
+},
+
+{
+question:"A student writes: Roots absorb water from the soil. Leaves prepare food. Flowers anchor the plant in the soil. Stem supports the plant. Which statement is incorrect?",
+options:[
+"Statement 1",
+"Statement 2",
+"Statement 3",
+"Statement 4"
+],
+answer:2,
+hint:"Which plant part actually keeps the plant fixed in the soil?",
+explanation:"Roots anchor the plant. Flowers are mainly involved in reproduction."
+},
+
+{
+question:"A gardener notices that a young plant starts drooping after insects damage most of its roots. What is the most likely reason?",
+options:[
+"The roots cannot absorb enough water",
+"The flowers stop pollination",
+"The fruits stop growing",
+"The stem becomes shorter"
+],
+answer:0,
+hint:"Which important material do roots supply to the rest of the plant?",
+explanation:"Damaged roots cannot absorb enough water, causing the plant to wilt."
+},
+
+{
+question:"A student observes the root system shown in the image. Which crop is most likely to have this type of root system?",
+image:"assets/root-system.png",
+options:[
+"Wheat",
+"Mango",
+"Pea",
+"Rose"
+],
+answer:0,
+hint:"Think about grasses and cereal crops.",
+explanation:"Wheat has a fibrous root system with many roots of similar size."
+},
+
+{
+question:"A coastal village is planting mangroves in muddy areas where oxygen in the soil is very limited. Why are mangroves more successful than most garden plants in such conditions?",
+options:[
+"They have larger leaves",
+"They produce more flowers",
+"They possess pneumatophores that absorb oxygen",
+"They do not need water"
+],
+answer:2,
+hint:"Some roots grow above the soil surface.",
+explanation:"Pneumatophores help mangroves absorb oxygen from the air."
+},
+
+{
+question:"A farmer cuts a ginger rhizome into several pieces and plants them separately. Many new plants grow. What conclusion can be drawn?",
+options:[
+"Ginger is a fruit",
+"Ginger is a modified stem",
+"Ginger is a leaf",
+"Ginger is a flower"
+],
+answer:1,
+hint:"Rhizomes grow underground and can produce new shoots.",
+explanation:"Ginger is a modified underground stem called a rhizome."
+},
+{
+question:"A student grows two identical plants.\n\nPlant A receives sunlight and grows 15 cm in 7 days.\nPlant B receives no sunlight and grows only 3 cm.\n\nWhich conclusion is best supported by the data?",
+options:[
+"Sunlight is not important",
+"Water is unnecessary",
+"Sunlight is needed for healthy growth and food production",
+"Plants grow equally in all conditions"
+],
+answer:2,
+hint:"Compare the growth of both plants.",
+explanation:"Plant A grew better because sunlight is required for photosynthesis."
+},
+
+{
+question:"A plant receives water and sunlight but very little carbon dioxide. What is most likely to happen?",
+image:"assets/photosynthesis-diagram.png",
+options:[
+"Food production decreases",
+"Root growth stops immediately",
+"Flowers bloom faster",
+"Seeds germinate automatically"
+],
+answer:0,
+hint:"One important raw material for photosynthesis is missing.",
+explanation:"Carbon dioxide is necessary for photosynthesis."
+},
+
+{
+question:"Assertion: Plants lose water through transpiration.\n\nReason: Water vapour escapes through stomata present on leaves.",
+options:[
+"Both are correct and the reason explains the assertion",
+"Both are correct but the reason does not explain the assertion",
+"Assertion is correct but reason is wrong",
+"Both are wrong"
+],
+answer:0,
+hint:"Think about how water leaves the leaf.",
+explanation:"Water vapour escapes through stomata, causing transpiration."
+},
+
+{
+question:"A garden has many flowering plants but very few bees and butterflies visit it. What effect is most likely?",
+options:[
+"More fruits will form",
+"Fewer fruits and seeds will develop",
+"Leaves will stop growing",
+"Roots will absorb less water"
+],
+answer:1,
+hint:"Pollinators help transfer pollen.",
+explanation:"Without pollinators, pollination decreases and fewer fruits and seeds are formed."
+},
+
+{
+question:"Three students set up an experiment:\n\nTray A: Water + Air\nTray B: Air only\nTray C: Water only\n\nWhich tray is most likely to show healthy germination?",
+options:[
+"Tray A",
+"Tray B",
+"Tray C",
+"All trays"
+],
+answer:0,
+hint:"Seeds require more than one condition to germinate.",
+explanation:"Seeds need both water and air for successful germination."
+},
+
+{
+question:"A scientist discovers an unknown plant with the following characteristics: Fibrous roots, parallel venation, long narrow leaves, underground food-storing stem, and produces grains. Which conclusion is best supported by all the evidence?",
+options:[
+"It belongs to a monocot group",
+"It belongs to a dicot group",
+"It is a shrub",
+"It is an aquatic plant"
+],
+answer:0,
+hint:"Use all the clues together rather than focusing on one feature.",
+explanation:"Fibrous roots, parallel venation, and grain-producing plants are typical features of monocots such as rice and wheat."
+}
+
+];
+javascript
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=Math.round(
+(score/questions.length)*100
+);
+
+let message="";
+
+if(percentage>=75){
+
+message="🌟 Excellent! You have mastered plant structure, functions and adaptations.";
+
+}else if(percentage>=40){
+
+message="🌱 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🍀 Keep practising! A little more revision will help you grow your understanding.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const leaf=document.createElement('div');
+
+leaf.classList.add('confetti');
+
+leaf.style.left=
+Math.random()*100+'vw';
+
+leaf.style.background=
+[
+'#2d6a4f',
+'#40916c',
+'#52b788',
+'#74c69d'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(leaf);
+
+setTimeout(()=>{
+
+leaf.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
 
