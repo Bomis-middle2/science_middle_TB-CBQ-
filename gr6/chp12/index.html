@@ -1,1 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Forests, Rocks and Minerals</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#dff6e3 0%,
+#eefcf0 30%,
+#f5f7fa 65%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* FOREST + GEOLOGY THEME */
+
+.sky{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-4;
+}
+
+.cloud{
+position:absolute;
+font-size:60px;
+opacity:.15;
+animation:cloudMove linear infinite;
+}
+
+.cloud1{
+top:5%;
+left:-10%;
+animation-duration:45s;
+}
+
+.cloud2{
+top:18%;
+left:-15%;
+animation-duration:60s;
+}
+
+.cloud3{
+top:30%;
+left:-12%;
+animation-duration:50s;
+}
+
+@keyframes cloudMove{
+
+from{
+transform:translateX(0);
+}
+
+to{
+transform:translateX(130vw);
+}
+
+}
+
+.mountain{
+position:fixed;
+bottom:120px;
+left:0;
+width:100%;
+height:180px;
+opacity:.12;
+background:
+linear-gradient(
+135deg,
+transparent 20%,
+#64748b 20%,
+#64748b 40%,
+transparent 40%
+),
+linear-gradient(
+225deg,
+transparent 30%,
+#94a3b8 30%,
+#94a3b8 55%,
+transparent 55%
+);
+z-index:-3;
+}
+
+.floating{
+position:fixed;
+font-size:42px;
+opacity:.13;
+pointer-events:none;
+z-index:-2;
+animation:float 18s ease-in-out infinite;
+}
+
+.tree1{
+left:8%;
+bottom:160px;
+}
+
+.tree2{
+left:28%;
+bottom:120px;
+animation-delay:2s;
+}
+
+.deer{
+right:20%;
+bottom:130px;
+animation-delay:4s;
+}
+
+.rock{
+right:8%;
+bottom:210px;
+animation-delay:1s;
+}
+
+.pickaxe{
+left:70%;
+bottom:170px;
+animation-delay:5s;
+}
+
+.sun{
+right:10%;
+top:12%;
+animation-delay:3s;
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.forest{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:140px;
+background:
+linear-gradient(
+to top,
+rgba(34,197,94,.18),
+rgba(34,197,94,.08),
+transparent
+);
+z-index:-3;
+}
+
+/* LOGO */
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:logoPop 1s ease;
+}
+
+@keyframes logoPop{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* LAYOUT */
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.90);
+backdrop-filter:blur(8px);
+padding:25px;
+border-radius:24px;
+box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.2rem;
+color:#14532d;
+}
+
+h2{
+text-align:center;
+margin-top:15px;
+color:#333;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+transition:.3s;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#e0f2fe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.7;
+margin-bottom:20px;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+line-height:1.6;
+font-weight:bold;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sky">
+<div class="cloud cloud1">☁️</div>
+<div class="cloud cloud2">☁️</div>
+<div class="cloud cloud3">☁️</div>
+</div>
+
+<div class="mountain"></div>
+
+<div class="floating tree1">🌲</div>
+<div class="floating tree2">🌳</div>
+<div class="floating deer">🦌</div>
+<div class="floating rock">🪨</div>
+<div class="floating pickaxe">⛏️</div>
+<div class="floating sun">☀️</div>
+
+<div class="forest"></div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Forests, Rocks and Minerals</h1>
+
+<h2>Grade 6 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.7;">
+Explore forests, wildlife conservation,
+rocks, minerals, fossil fuels and sustainable
+resource management through 12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"A village near a forest plans to cut down a large number of trees to expand farming land. A science teacher warns that this may create environmental problems. Which problem is most likely to occur first?",
+options:[
+"Increase in biodiversity",
+"Loss of habitat for wildlife",
+"Formation of new minerals",
+"Increase in rainfall"
+],
+answer:1,
+hint:"Many animals depend on forests for shelter and food.",
+explanation:"Deforestation destroys habitats, forcing animals to migrate or reducing their populations."
+},
+
+{
+question:"A company wants to manufacture paper but also reduce damage to forests. Which option is most sustainable?",
+options:[
+"Cut trees without replanting.",
+"Use recycled paper and plant new trees.",
+"Burn forest waste.",
+"Increase mining activities."
+],
+answer:1,
+hint:"Think about how resources can be replaced.",
+explanation:"Recycling paper and replanting trees helps maintain forest resources for future generations."
+},
+
+{
+question:"A wildlife sanctuary reports a sudden decrease in herbivore populations. What is the most likely long-term effect on the ecosystem?",
+options:[
+"Carnivore populations may decline.",
+"Trees will stop growing.",
+"Rainfall will increase.",
+"Rocks will weather faster."
+],
+answer:0,
+hint:"Consider the food chain.",
+explanation:"Carnivores depend on herbivores for food. A decline in herbivores can reduce carnivore populations."
+},
+
+{
+question:"A geologist discovers a rock containing visible layers formed by the deposition of sand and mud over many years. Which type of rock is it?",
+image:"assets/types-of-rocks-diagram.png",
+options:[
+"Igneous",
+"Sedimentary",
+"Metamorphic",
+"Volcanic ash"
+],
+answer:1,
+hint:"Look for the rock type formed by deposition and compaction.",
+explanation:"Sedimentary rocks form from layers of sediments deposited over time."
+},
+
+{
+question:"A rock located near a volcano cooled rapidly after lava reached Earth's surface. Which rock is most likely formed?",
+options:[
+"Marble",
+"Shale",
+"Basalt",
+"Limestone"
+],
+answer:2,
+hint:"Think about rocks formed from cooling lava.",
+explanation:"Basalt is an igneous rock formed when lava cools and solidifies."
+},
+
+{
+question:"A student notices that aluminium is used in kitchen utensils, aircraft parts and beverage cans. Why is aluminium obtained from minerals rather than directly from soil?",
+options:[
+"Metals occur within mineral ores.",
+"Soil contains no minerals.",
+"Metals are manufactured artificially.",
+"Aluminium grows naturally."
+],
+answer:0,
+hint:"Think about the source of metals.",
+explanation:"Metals such as aluminium are extracted from mineral ores through processing."
+},
+{
+question:"A city decides to build more coal-based power plants to meet increasing electricity demand. What is the biggest concern?",
+options:[
+"Coal can be replenished quickly.",
+"Coal is a renewable resource.",
+"Coal reserves are limited and cause pollution.",
+"Coal improves air quality."
+],
+answer:2,
+hint:"Consider how coal is formed.",
+explanation:"Coal takes millions of years to form and releases pollutants when burned."
+},
+
+{
+question:"A transport company wants to reduce dependence on petroleum. Which alternative best supports sustainability?",
+options:[
+"Use more diesel vehicles.",
+"Use renewable energy-based transport.",
+"Burn additional fossil fuels.",
+"Increase crude oil extraction."
+],
+answer:1,
+hint:"Think about resources that can be replenished.",
+explanation:"Renewable energy sources reduce dependence on non-renewable petroleum."
+},
+
+{
+question:"Four students make the following statements: Solar energy can be replenished naturally. Coal forms within a few months. Wind energy is renewable. Petroleum takes millions of years to form. Which statements are correct?",
+options:[
+"1 and 2",
+"2 and 3",
+"1, 3 and 4",
+"All four"
+],
+answer:2,
+hint:"Think about how long each resource takes to form.",
+explanation:"Solar and wind energy are renewable, while coal and petroleum require millions of years to form."
+},
+
+{
+question:"A school plans to install an energy source that will continue to be available without being exhausted. Which option should the school choose?",
+image:"assets/renewable-vs-nonrenewable.png",
+options:[
+"Coal",
+"Petroleum",
+"Solar Energy",
+"Natural Gas"
+],
+answer:2,
+hint:"Look for a resource replenished naturally.",
+explanation:"Solar energy is renewable and can be used repeatedly without depletion."
+},
+
+{
+question:"A town uses groundwater faster than it is replenished. Which action would best help conserve resources?",
+options:[
+"Increase water extraction.",
+"Promote rainwater harvesting.",
+"Build more borewells.",
+"Use more fossil fuels."
+],
+answer:1,
+hint:"Think about replenishing natural resources.",
+explanation:"Rainwater harvesting helps recharge groundwater and ensures sustainable use."
+},
+
+{
+question:"A region experiences large-scale deforestation, increased mining, excessive use of coal and declining wildlife populations. Which conclusion is most reasonable?",
+options:[
+"Natural resources are being used sustainably.",
+"Biodiversity and environmental quality are likely to decline.",
+"Renewable resources are increasing.",
+"Forest cover is expanding."
+],
+answer:1,
+hint:"Look at the combined impact of all activities.",
+explanation:"Deforestation, mining and excessive fossil-fuel use damage ecosystems and reduce biodiversity."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=Math.round(
+(score/questions.length)*100
+);
+
+let message="";
+
+if(percentage>=75){
+
+message="🌲 Excellent! You have a strong understanding of forests, rocks, minerals, fossil fuels and sustainable resource management.";
+
+}else if(percentage>=40){
+
+message="🪨 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🌱 Keep learning! A little more revision will strengthen your understanding of natural resources and conservation.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#f59e0b'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
