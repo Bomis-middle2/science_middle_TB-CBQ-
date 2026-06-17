@@ -1,1 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Nutrition in Plants</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#e8fff0 0%,
+#f4fff7 35%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* PLANT THEME BACKGROUND */
+
+.sky{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
+}
+
+.sunray{
+position:absolute;
+width:2px;
+height:300px;
+background:rgba(255,215,0,.18);
+transform:rotate(25deg);
+animation:pulse 3s infinite;
+}
+
+.sunray:nth-child(1){left:10%;top:-20px;}
+.sunray:nth-child(2){left:18%;top:-20px;}
+.sunray:nth-child(3){left:26%;top:-20px;}
+
+@keyframes pulse{
+50%{opacity:.4;}
+}
+
+.leaf{
+position:fixed;
+font-size:42px;
+opacity:.18;
+pointer-events:none;
+animation:floatLeaf 15s linear infinite;
+z-index:-3;
+}
+
+.leaf1{left:8%;top:15%;}
+.leaf2{left:25%;top:50%;animation-delay:2s;}
+.leaf3{right:20%;top:20%;animation-delay:4s;}
+.leaf4{right:8%;top:60%;animation-delay:6s;}
+
+@keyframes floatLeaf{
+
+0%{
+transform:translateY(0px) rotate(0deg);
+}
+
+50%{
+transform:translateY(-20px) rotate(10deg);
+}
+
+100%{
+transform:translateY(0px) rotate(0deg);
+}
+
+}
+
+.grass{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:140px;
+background:
+linear-gradient(
+to top,
+rgba(34,197,94,.18),
+rgba(34,197,94,.08),
+transparent
+);
+z-index:-4;
+}
+
+.plants{
+position:fixed;
+bottom:20px;
+width:100%;
+text-align:center;
+font-size:42px;
+opacity:.15;
+letter-spacing:20px;
+z-index:-3;
+}
+
+/* LOGO */
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* MAIN */
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.92);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#166534;
+}
+
+h2{
+text-align:center;
+margin-top:12px;
+color:#444;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+line-height:1.6;
+font-weight:bold;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sky">
+<div class="sunray"></div>
+<div class="sunray"></div>
+<div class="sunray"></div>
+</div>
+
+<div class="leaf leaf1">🍃</div>
+<div class="leaf leaf2">🌿</div>
+<div class="leaf leaf3">🍀</div>
+<div class="leaf leaf4">🌱</div>
+
+<div class="grass"></div>
+
+<div class="plants">
+🌱 🌿 🌱 🌿 🌱 🌿 🌱 🌿
+</div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Nutrition in Plants</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore photosynthesis, nutrition, crop rotation,
+parasitic plants, insectivorous plants and symbiotic relationships
+through 15 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/15
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"A student places two identical potted plants in different locations.\n\nPlant A → Sunlight + Water\nPlant B → Water only\n\nAfter three weeks, Plant B becomes weak and yellow.\n\nWhat is the best explanation?",
+options:[
+"Plant B did not get enough oxygen.",
+"Plant B could not perform photosynthesis without sunlight.",
+"Plant B absorbed too much water.",
+"Plant B produced excess glucose."
+],
+answer:1,
+hint:"Plants need more than water to make food.",
+explanation:"Sunlight is essential for photosynthesis. Without sunlight, plants cannot prepare food."
+},
+
+{
+question:"A leaf is tested with iodine solution after being exposed to sunlight.\n\nThe leaf turns blue-black.\n\nWhat does this observation show?",
+options:[
+"Chlorophyll is absent.",
+"Water has evaporated.",
+"Starch has been produced.",
+"Oxygen is absent."
+],
+answer:2,
+hint:"Iodine is used to test a food substance made during photosynthesis.",
+explanation:"A blue-black colour indicates starch, which is formed from glucose produced during photosynthesis."
+},
+
+{
+question:"A scientist discovers an organism that:\n\n• Contains chlorophyll\n• Uses sunlight\n• Produces its own food\n\nHow should it be classified?",
+options:[
+"Parasite",
+"Saprophyte",
+"Autotroph",
+"Consumer"
+],
+answer:2,
+hint:"Think about organisms that prepare their own food.",
+explanation:"Organisms that prepare their own food are called autotrophs."
+},
+
+{
+question:"A plant leaf is covered with black paper on one side and left in sunlight for several hours.\n\nAfter the iodine test, only the uncovered part turns blue-black.\n\nWhat can be concluded?",
+image:"assets/photosynthesis-experiment.png",
+options:[
+"Water is required for photosynthesis.",
+"Sunlight is required for photosynthesis.",
+"Oxygen causes starch formation.",
+"Roots make food."
+],
+answer:1,
+hint:"Compare the covered and uncovered portions.",
+explanation:"Only the portion receiving sunlight formed starch."
+},
+
+{
+question:"A farmer grows the same crop in a field year after year.\n\nAfter several years, crop growth becomes poor.\n\nWhat is the most likely reason?",
+options:[
+"Excess oxygen in soil",
+"Depletion of nutrients from soil.",
+"Excess chlorophyll",
+"Too much photosynthesis"
+],
+answer:1,
+hint:"Plants continuously use minerals from soil.",
+explanation:"Repeated cultivation removes nutrients and reduces soil fertility."
+},
+
+{
+question:"A farmer alternates wheat with pea plants every year.\n\nWhy is this beneficial?",
+options:[
+"Pea plants reduce rainfall.",
+"Pea plants fix nitrogen in the soil.",
+"Pea plants increase sunlight.",
+"Pea plants absorb all nutrients."
+],
+answer:1,
+hint:"Think about Rhizobium bacteria.",
+explanation:"Leguminous plants help replenish soil nitrogen."
+},
+{
+question:"A plant lacks chlorophyll and obtains food from a living host plant through special roots.\n\nWhich type of nutrition does it show?",
+options:[
+"Saprophytic",
+"Insectivorous",
+"Parasitic",
+"Autotrophic"
+],
+answer:2,
+hint:"The host plant is harmed.",
+explanation:"Parasitic plants obtain food from living hosts."
+},
+
+{
+question:"A plant grows in nitrogen-deficient soil but still remains healthy by trapping insects.\n\nWhich plant is most likely being described?",
+image:"assets/venus-flytrap.png",
+options:[
+"Mango",
+"Rose",
+"Venus Flytrap",
+"Neem"
+],
+answer:2,
+hint:"Think about insect-eating plants.",
+explanation:"Insectivorous plants obtain nitrogen by digesting insects."
+},
+
+{
+question:"A lichen consists of an alga and a fungus living together.\n\nThe alga prepares food while the fungus provides water and shelter.\n\nThis relationship is an example of:",
+options:[
+"Parasitism",
+"Predation",
+"Symbiosis",
+"Competition"
+],
+answer:2,
+hint:"Both organisms benefit.",
+explanation:"In symbiosis, both organisms gain advantages."
+},
+
+{
+question:"A student says:\n\n'Plants obtain all their food directly from the soil.'\n\nWhich evidence best proves the statement is incorrect?",
+options:[
+"Plants absorb water through roots.",
+"Plants absorb minerals from soil.",
+"Plants manufacture glucose using carbon dioxide, water and sunlight.",
+"Plants require fertilizers."
+],
+answer:2,
+hint:"Where is food actually produced?",
+explanation:"Plants make their own food through photosynthesis."
+},
+
+{
+question:"A parasitic plant and a green mango plant are growing side by side.\n\nWhich statement correctly compares them?",
+options:[
+"Both depend completely on other organisms for food.",
+"Both make food using chlorophyll.",
+"The mango plant is autotrophic while the parasite depends on a host.",
+"Neither requires sunlight."
+],
+answer:2,
+hint:"Compare their mode of nutrition.",
+explanation:"Green plants prepare food, whereas parasites depend on hosts."
+},
+
+{
+question:`A student grows four identical plants:
+
+Plant A → Water: Yes | Sunlight: Yes
+Plant B → Water: Yes | Sunlight: No
+Plant C → Water: No | Sunlight: Yes
+Plant D → Water: No | Sunlight: No
+
+Which plant is expected to show the best growth?`,
+options:[
+"A",
+"B",
+"C",
+"D"
+],
+answer:0,
+hint:"Think about requirements for photosynthesis and survival.",
+explanation:"Plants require both sunlight and water for healthy growth."
+},
+{
+question:"A new plant species is discovered.\n\nScientists observe:\n\n• No chlorophyll\n• Grows near decaying leaves\n• Releases digestive substances onto dead matter\n\nWhich conclusion is most reasonable?",
+options:[
+"It is autotrophic.",
+"It is saprophytic.",
+"It is parasitic.",
+"It is insectivorous."
+],
+answer:1,
+hint:"What organisms feed on dead and decaying matter?",
+explanation:"Saprophytes obtain nutrients from dead organic material."
+},
+
+{
+question:"Which situation best demonstrates sustainable replenishment of soil nutrients?",
+options:[
+"Growing only rice every year.",
+"Increasing pesticide use.",
+"Growing legumes between crop seasons.",
+"Removing all crop residues."
+],
+answer:2,
+hint:"Think about maintaining soil fertility naturally.",
+explanation:"Legumes help restore nitrogen to the soil."
+},
+
+{
+question:"Which sequence correctly explains how a plant prepares and stores food?",
+options:[
+"Water + Carbon dioxide → Glucose → Starch",
+"Oxygen + Water → Starch → Carbon dioxide",
+"Soil + Nitrogen → Oxygen → Glucose",
+"Sunlight → Oxygen → Soil"
+],
+answer:0,
+hint:"Recall the products of photosynthesis.",
+explanation:"Photosynthesis produces glucose, which is often stored as starch."
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.textContent=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="🌿 Excellent! You have mastered photosynthesis and plant nutrition.";
+
+}else if(percentage>=40){
+
+message="🌱 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🍃 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
