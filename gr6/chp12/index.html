@@ -285,6 +285,7 @@ cursor:pointer;
 font-size:1.15rem;
 line-height:1.7;
 margin-bottom:20px;
+white-space:pre-line;
 }
 
 .questionImage{
@@ -633,7 +634,14 @@ explanation:"Renewable energy sources reduce dependence on non-renewable petrole
 },
 
 {
-question:"Four students make the following statements: Solar energy can be replenished naturally. Coal forms within a few months. Wind energy is renewable. Petroleum takes millions of years to form. Which statements are correct?",
+question:`Four students make the following statements:
+
+1. Solar energy can be replenished naturally.
+2. Coal forms within a few months.
+3. Wind energy is renewable.
+4. Petroleum takes millions of years to form.
+
+Which statements are correct?`,
 options:[
 "1 and 2",
 "2 and 3",
@@ -781,7 +789,7 @@ const q=questions[currentQuestion];
 
 qNo.textContent=currentQuestion+1;
 
-questionText.textContent=q.question;
+questionText.innerHTML=q.question;
 
 optionsContainer.innerHTML="";
 
