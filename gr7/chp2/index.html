@@ -1,1 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Nutrition in Animals</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#eefcf3 0%,
+#f8fffb 35%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* ANIMAL THEME BACKGROUND */
+
+.sky{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
+}
+
+.cloud{
+position:absolute;
+font-size:60px;
+opacity:.12;
+animation:cloudMove linear infinite;
+}
+
+.cloud1{
+top:5%;
+left:-10%;
+animation-duration:50s;
+}
+
+.cloud2{
+top:18%;
+left:-15%;
+animation-duration:65s;
+}
+
+.cloud3{
+top:30%;
+left:-12%;
+animation-duration:55s;
+}
+
+@keyframes cloudMove{
+
+from{
+transform:translateX(0);
+}
+
+to{
+transform:translateX(130vw);
+}
+
+}
+
+.floating{
+position:fixed;
+font-size:42px;
+opacity:.15;
+pointer-events:none;
+z-index:-3;
+animation:float 15s ease-in-out infinite;
+}
+
+.grass{left:8%;bottom:140px;}
+.rabbit{left:25%;bottom:170px;animation-delay:2s;}
+.frog{left:45%;bottom:120px;animation-delay:4s;}
+.eagle{right:20%;top:15%;animation-delay:1s;}
+.tooth{right:8%;bottom:180px;animation-delay:3s;}
+.cow{right:30%;bottom:130px;animation-delay:5s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-18px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.ground{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:140px;
+background:
+linear-gradient(
+to top,
+rgba(34,197,94,.18),
+rgba(34,197,94,.08),
+transparent
+);
+z-index:-4;
+}
+
+/* LOGO */
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+/* MAIN */
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.92);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#166534;
+}
+
+h2{
+text-align:center;
+margin-top:12px;
+color:#444;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+line-height:1.6;
+font-weight:bold;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sky">
+<div class="cloud cloud1">☁️</div>
+<div class="cloud cloud2">☁️</div>
+<div class="cloud cloud3">☁️</div>
+</div>
+
+<div class="floating grass">🌿</div>
+<div class="floating rabbit">🐇</div>
+<div class="floating frog">🐸</div>
+<div class="floating eagle">🦅</div>
+<div class="floating tooth">🦷</div>
+<div class="floating cow">🐄</div>
+
+<div class="ground"></div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Nutrition in Animals</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore food chains, digestion, dentition,
+ruminants, parasitic nutrition and energy transfer
+through 12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"In a grassland ecosystem:\n\nGrass → Deer → Tiger → Decomposers\n\nDue to excessive hunting, the number of tigers decreases significantly.\n\nWhat is the most likely immediate effect?",
+options:[
+"Deer population will decrease.",
+"Grass population will increase.",
+"Deer population will increase.",
+"Decomposers will disappear."
+],
+answer:2,
+hint:"Think about which organism the tiger eats.",
+explanation:"Tigers prey on deer. When tiger numbers decrease, fewer deer are hunted, causing the deer population to increase."
+},
+
+{
+question:"A student observes that a forest contains thousands of plants, hundreds of rabbits, but only a few foxes.\n\nWhy are foxes fewer in number?",
+options:[
+"Foxes cannot digest food properly.",
+"Energy available decreases at higher trophic levels.",
+"Rabbits produce more food than plants.",
+"Foxes do not require energy."
+],
+answer:1,
+hint:"Look at the energy pyramid concept.",
+explanation:"Only a small amount of energy is transferred from one trophic level to the next. Therefore, fewer organisms can be supported at higher trophic levels."
+},
+
+{
+question:"A leech attaches itself to cattle and feeds on blood without immediately killing the animal.\n\nThis relationship is an example of:",
+options:[
+"Holozoic nutrition",
+"Saprozoic nutrition",
+"Parasitic nutrition",
+"Mutualistic nutrition"
+],
+answer:2,
+hint:"One organism benefits while the other is harmed.",
+explanation:"Leech obtains food from a host and harms it, making it a parasite."
+},
+
+{
+question:"Oxpecker birds sit on rhinoceroses and eat ticks present on their skin.\n\nWhy is this considered mutualistic nutrition?",
+options:[
+"Only the bird benefits.",
+"Only the rhinoceros benefits.",
+"Both organisms benefit from the association.",
+"Neither organism gets any benefit."
+],
+answer:2,
+hint:"Who gets food? Who gets rid of parasites?",
+explanation:"The bird receives food while the rhinoceros gets protection from parasites."
+},
+
+{
+question:"A person's small intestine is severely damaged and cannot absorb nutrients efficiently.\n\nWhich consequence is most likely?",
+options:[
+"Food will not enter the mouth.",
+"Nutrients will not reach body cells properly.",
+"Saliva production will stop.",
+"Teeth will stop chewing food."
+],
+answer:1,
+hint:"Which organ absorbs digested food?",
+explanation:"Absorption mainly occurs in the small intestine through villi. Damage to it reduces nutrient uptake."
+},
+
+{
+question:"A person can bite an apple easily but struggles to crush nuts and grains.\n\nWhich teeth are most likely damaged?",
+options:[
+"Incisors",
+"Canines",
+"Premolars and Molars",
+"Wisdom teeth"
+],
+answer:2,
+hint:"Which teeth are used for grinding food?",
+explanation:"Premolars and molars crush and grind food into smaller pieces."
+},
+{
+question:"A student says digestion occurs only in the stomach.\n\nWhich fact proves the statement is incorrect?",
+options:[
+"Food enters through the mouth.",
+"Most digestion and absorption occur in the small intestine.",
+"Teeth are present in the mouth.",
+"The stomach stores food temporarily."
+],
+answer:1,
+hint:"Where is digestion completed?",
+explanation:"Although digestion begins in the mouth and continues in the stomach, most digestion and absorption occur in the small intestine."
+},
+
+{
+question:"Study the food chain shown in the image.\n\nIf the frog population suddenly decreases because of a disease outbreak, which organism is most likely to increase first?",
+image:"assets/food-chain-grasshopper-frog.png",
+options:[
+"Eagle",
+"Snake",
+"Grasshopper",
+"Grass"
+],
+answer:2,
+hint:"Which organism is normally eaten by frogs?",
+explanation:"Frogs feed on grasshoppers. When frog numbers decrease, grasshoppers face less predation and their population increases."
+},
+
+{
+question:`Which sequence correctly represents holozoic nutrition?
+
+1. Ingestion
+2. Digestion
+3. Absorption
+4. Assimilation
+5. Egestion
+
+Choose the correct order.`,
+options:[
+"Digestion → Ingestion → Absorption → Egestion",
+"Ingestion → Digestion → Absorption → Assimilation → Egestion",
+"Absorption → Digestion → Ingestion → Egestion",
+"Assimilation → Ingestion → Digestion → Egestion"
+],
+answer:1,
+hint:"Food must first enter the body before it can be digested.",
+explanation:"The correct order is: Ingestion → Digestion → Absorption → Assimilation → Egestion."
+},
+
+{
+question:"A cow can survive on grass, but humans cannot obtain enough nutrition by eating grass alone.\n\nWhat is the best explanation?",
+options:[
+"Cows have larger teeth.",
+"Cows possess microbes and a specialised stomach that digests cellulose.",
+"Cows eat more frequently.",
+"Humans do not chew properly."
+],
+answer:1,
+hint:"Think about the four-chambered stomach.",
+explanation:"Ruminants contain microorganisms that help digest cellulose present in grass."
+},
+
+{
+question:"A farmer notices that one of his cows has stopped chewing cud.\n\nWhat problem is most likely to occur if this continues?",
+options:[
+"Better digestion of cellulose",
+"Incomplete digestion of plant material",
+"Increased milk production",
+"Faster absorption of nutrients"
+],
+answer:1,
+hint:"Why do cows chew food twice?",
+explanation:"Rumination helps break down cellulose-rich food. Without cud chewing, digestion becomes less efficient."
+},
+
+{
+question:"Study the dentition diagram.\n\nA student is eating sugarcane and needs to crush and grind the food thoroughly.\n\nWhich teeth shown in the diagram perform this function most effectively?",
+image:"assets/human-dentition.png",
+options:[
+"Incisors only",
+"Canines only",
+"Premolars and Molars",
+"Wisdom teeth only"
+],
+answer:2,
+hint:"Which teeth have broad surfaces for grinding?",
+explanation:"Premolars and molars are broad and flat, making them suitable for crushing and grinding food."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="🦁 Excellent! You have mastered food chains, digestion, dentition and animal nutrition.";
+
+}else if(percentage>=40){
+
+message="🐄 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🦷 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
