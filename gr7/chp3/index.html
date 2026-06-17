@@ -1,1 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Acids, Bases and Salts</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#eef8ff 0%,
+#f8fcff 40%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* CHEMISTRY BACKGROUND */
+
+.lab-bg{
+position:fixed;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+z-index:-5;
+}
+
+.bubble{
+position:absolute;
+font-size:40px;
+opacity:.15;
+animation:rise linear infinite;
+}
+
+.b1{left:8%;bottom:-50px;animation-duration:14s;}
+.b2{left:22%;bottom:-50px;animation-duration:18s;}
+.b3{left:42%;bottom:-50px;animation-duration:16s;}
+.b4{left:65%;bottom:-50px;animation-duration:20s;}
+.b5{left:85%;bottom:-50px;animation-duration:15s;}
+
+@keyframes rise{
+
+from{
+transform:translateY(0);
+opacity:.15;
+}
+
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+
+}
+
+.floating{
+position:fixed;
+font-size:42px;
+opacity:.15;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-4;
+}
+
+.lemon{left:10%;top:18%;}
+.soap{right:10%;top:22%;animation-delay:2s;}
+.flask{left:15%;bottom:18%;animation-delay:4s;}
+.tube{right:20%;bottom:22%;animation-delay:6s;}
+.rain{left:45%;top:12%;animation-delay:1s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.93);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#0d47a1;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="lab-bg">
+<div class="bubble b1">🫧</div>
+<div class="bubble b2">🫧</div>
+<div class="bubble b3">🫧</div>
+<div class="bubble b4">🫧</div>
+<div class="bubble b5">🫧</div>
+</div>
+
+<div class="floating lemon">🍋</div>
+<div class="floating soap">🧼</div>
+<div class="floating flask">⚗️</div>
+<div class="floating tube">🧪</div>
+<div class="floating rain">☔</div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Acids, Bases and Salts</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore acids, bases, indicators, neutralisation,
+pH scale and acid rain through 12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"Riya tasted (safely under supervision) a drop of lemon juice and noticed a sour taste. She concluded that lemon juice contains an acid.\n\nWhich acid is present in lemon juice?",
+options:[
+"Acetic acid",
+"Citric acid",
+"Formic acid",
+"Lactic acid"
+],
+answer:1,
+hint:"Think of citrus fruits.",
+explanation:"Lemon and orange contain citric acid, which gives them their sour taste."
+},
+
+{
+question:"A student compares vinegar and hydrochloric acid.\n\nWhich statement is correct?",
+options:[
+"Both are strong acids.",
+"Vinegar is stronger than hydrochloric acid.",
+"Hydrochloric acid is stronger than vinegar.",
+"Neither is acidic."
+],
+answer:2,
+hint:"Which acid is found in the stomach?",
+explanation:"Hydrochloric acid is a strong mineral acid, whereas acetic acid (vinegar) is a weak acid."
+},
+
+{
+question:"A cleaning solution feels slippery to touch and tastes bitter.\n\nIt is most likely a:",
+options:[
+"Salt",
+"Acid",
+"Base",
+"Neutral substance"
+],
+answer:2,
+hint:"Think about common properties of bases.",
+explanation:"Bases generally taste bitter and feel soapy or slippery."
+},
+
+{
+question:"Rohan has acidity due to excess stomach acid. The doctor advises him to take milk of magnesia.\n\nWhy?",
+options:[
+"It increases acidity.",
+"It is a neutral substance.",
+"It is a base that neutralises excess acid.",
+"It produces more hydrochloric acid."
+],
+answer:2,
+hint:"Milk of magnesia contains magnesium hydroxide.",
+explanation:"Milk of magnesia is a base that neutralises excess hydrochloric acid in the stomach."
+},
+
+{
+question:"A student dips blue litmus paper into a solution and it turns red.\n\nWhat can be concluded?",
+options:[
+"The solution is basic.",
+"The solution is acidic.",
+"The solution is neutral.",
+"The solution contains salt only."
+],
+answer:1,
+hint:"What happens to blue litmus in acids?",
+explanation:"Acids turn blue litmus red."
+},
+
+{
+question:"A student accidentally spills detergent solution on turmeric-stained cloth.\n\nThe yellow stain becomes reddish-brown.\n\nWhat does this indicate?",
+options:[
+"Detergent is acidic.",
+"Detergent is neutral.",
+"Detergent is basic.",
+"Detergent is a salt."
+],
+answer:2,
+hint:"How does turmeric behave in bases?",
+explanation:"Turmeric turns reddish-brown in basic solutions."
+},
+{
+question:`A laboratory technician mixes:
+
+Hydrochloric Acid + Sodium Hydroxide
+
+What is formed?`,
+options:[
+"Acid only",
+"Base only",
+"Salt and water",
+"Hydrogen gas only"
+],
+answer:2,
+hint:"Recall the neutralisation reaction.",
+explanation:"Acid + Base → Salt + Water (+ heat)"
+},
+
+{
+question:"Study the pH scale shown.\n\nWhich substance is the most acidic?",
+image:"assets/ph-scale.png",
+options:[
+"Water",
+"Baking soda",
+"Vinegar",
+"Lemon"
+],
+answer:3,
+hint:"Lower pH means stronger acidity.",
+explanation:"Lemon has the lowest pH among the given substances and is therefore the most acidic."
+},
+
+{
+question:"A factory releases acidic waste into a nearby lake.\n\nBefore releasing the waste, what should be added?",
+options:[
+"More acid",
+"A base",
+"Salt only",
+"Sugar solution"
+],
+answer:1,
+hint:"How are acids neutralised?",
+explanation:"Bases neutralise acidic factory effluents and reduce environmental damage."
+},
+
+{
+question:"An ant bites a child while playing in a garden.\n\nWhich substance would provide relief?",
+options:[
+"Lemon juice",
+"Vinegar",
+"Baking soda paste",
+"Orange juice"
+],
+answer:2,
+hint:"Ant sting contains formic acid.",
+explanation:"Baking soda is basic and neutralises the formic acid present in ant stings."
+},
+
+{
+question:"A city experiences increased air pollution due to factories and vehicles.\n\nWhich environmental problem is most likely to increase?",
+options:[
+"Neutralisation",
+"Acid rain",
+"Photosynthesis",
+"Soil fertility"
+],
+answer:1,
+hint:"Think about sulphur dioxide and nitrogen oxides.",
+explanation:"These gases react with water vapour to form acids, causing acid rain."
+},
+
+{
+question:"Study the image carefully.\n\nWhich statement best explains how acid rain forms?",
+image:"assets/acid-rain.png",
+options:[
+"Salt dissolves in rainwater.",
+"Sulphur dioxide and nitrogen oxides react with water in the atmosphere.",
+"Plants release acidic gases.",
+"Water becomes acidic naturally during evaporation."
+],
+answer:1,
+hint:"Focus on the gases released from factories and vehicles.",
+explanation:"Sulphur dioxide (SO₂) and nitrogen oxides (NOₓ) combine with water vapour to form sulphuric acid and nitric acid, leading to acid rain."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+document.getElementById('logoScreen').style.display='none';
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="🧪 Excellent! You have mastered acids, bases, indicators, neutralisation and acid rain.";
+
+}else if(percentage>=40){
+
+message="⚗️ Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🍋 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
