@@ -1,1 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Water: A Precious Resource</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#e0f7ff 0%,
+#f0fdff 40%,
+#ffffff 100%
+);
+position:relative;
+}
+
+.bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
+}
+
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.16;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-4;
+}
+
+.drop{left:8%;top:15%;}
+.cloud{right:12%;top:18%;animation-delay:2s;}
+.rain{left:18%;bottom:18%;animation-delay:4s;}
+.water{right:18%;bottom:22%;animation-delay:6s;}
+.river{left:50%;top:10%;animation-delay:1s;}
+.sun{right:38%;top:12%;animation-delay:3s;}
+.tap{left:40%;bottom:10%;animation-delay:5s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.spark{
+position:absolute;
+font-size:26px;
+opacity:.12;
+animation:sparkle linear infinite;
+}
+
+.s1{left:10%;top:25%;animation-duration:10s;}
+.s2{left:30%;top:70%;animation-duration:12s;}
+.s3{left:60%;top:20%;animation-duration:11s;}
+.s4{left:80%;top:65%;animation-duration:13s;}
+.s5{left:50%;top:45%;animation-duration:9s;}
+
+@keyframes sparkle{
+
+0%{
+transform:scale(.7);
+opacity:.05;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.18;
+}
+
+100%{
+transform:scale(.7);
+opacity:.05;
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.95);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.4rem;
+color:#0284c7;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#1d4ed8;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #ddd;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+<div class="spark s1">✨</div>
+<div class="spark s2">✨</div>
+<div class="spark s3">✨</div>
+<div class="spark s4">✨</div>
+<div class="spark s5">✨</div>
+</div>
+
+<div class="floatIcon drop">💧</div>
+<div class="floatIcon cloud">☁️</div>
+<div class="floatIcon rain">🌧️</div>
+<div class="floatIcon water">🚰</div>
+<div class="floatIcon river">🌊</div>
+<div class="floatIcon sun">☀️</div>
+<div class="floatIcon tap">🚿</div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Water: A Precious Resource</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore water availability, groundwater,
+water cycle, conservation, wastewater,
+sewage management and treatment through
+12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"Riya sees a globe in her classroom and says, 'Since most of Earth is covered with water, there can never be a water shortage.'\n\nWhat is the best reason why this idea is incorrect?",
+options:[
+"Most water is found in rivers and lakes.",
+"Most water is salty or frozen and cannot be easily used.",
+"Water disappears after rainfall.",
+"Water cannot move through the water cycle."
+],
+answer:1,
+hint:"Think about how much water is actually available for drinking and daily use.",
+explanation:"About 97% of Earth's water is saltwater and most freshwater is frozen in glaciers and ice caps. Only a small fraction is available for human use."
+},
+
+{
+question:"A housing society covered its entire open ground with concrete tiles. After a few years, nearby wells started drying up faster than before.\n\nWhat is the most likely reason?",
+options:[
+"Rainwater could not seep into the ground.",
+"Evaporation stopped completely.",
+"Condensation increased.",
+"The water cycle stopped."
+],
+answer:0,
+hint:"Think about what happens when rainwater falls on concrete surfaces.",
+explanation:"Concrete prevents rainwater from percolating into the soil, reducing groundwater recharge."
+},
+
+{
+question:"A student observes water vapour rising from lakes and oceans due to sunlight.\n\nWhich process is represented?",
+image:"assets/water-cycle-diagram.png",
+options:[
+"Condensation",
+"Evaporation",
+"Precipitation",
+"Infiltration"
+],
+answer:1,
+hint:"Liquid water changes into vapour.",
+explanation:"Evaporation converts liquid water into water vapour using solar heat energy."
+},
+
+{
+question:"Cloud formation suddenly decreases even though water bodies are present nearby.\n\nWhich process is most directly affected?",
+image:"assets/water-cycle-diagram.png",
+options:[
+"Condensation",
+"Transpiration",
+"Runoff",
+"Filtration"
+],
+answer:0,
+hint:"Clouds form when water vapour cools.",
+explanation:"Condensation changes water vapour into tiny droplets that form clouds."
+},
+
+{
+question:"A village recorded groundwater levels over four years.\n\nYear      Groundwater Level (m below ground)\n2021      8\n2022      10\n2023      13\n2024      17\n\nWhat can be inferred from the data?",
+options:[
+"Groundwater availability is increasing.",
+"Groundwater is being depleted.",
+"Rainfall is increasing every year.",
+"Surface water is increasing."
+],
+answer:1,
+hint:"Greater depth means water is farther below the surface.",
+explanation:"Increasing depth indicates groundwater levels are falling, showing depletion."
+},
+
+{
+question:"A region receives very little rainfall for three consecutive years. Farmers report crop failure, and reservoirs are nearly empty.\n\nWhich factor is most directly responsible?",
+options:[
+"Water treatment",
+"Drought due to uneven rainfall",
+"Condensation",
+"Groundwater recharge"
+],
+answer:1,
+hint:"Think about prolonged shortage of rainfall.",
+explanation:"Drought occurs when rainfall remains below normal for a long period."
+},
+{
+question:"A school survey finds:\n\n• 5 leaking taps\n• Overflowing water tank\n• Students leaving taps open\n\nWhich action would save the maximum amount of water immediately?",
+options:[
+"Build a new reservoir",
+"Repair leaks and stop overflow",
+"Increase water bills",
+"Buy bottled water"
+],
+answer:1,
+hint:"Preventing wastage is the quickest solution.",
+explanation:"Repairing leaks and preventing overflow directly reduce water loss."
+},
+
+{
+question:"Assertion (A):\nWastewater must be treated before being released into rivers.\n\nReason (R):\nUntreated wastewater contains harmful pollutants and disease-causing microorganisms.",
+options:[
+"Both A and R are true and R correctly explains A.",
+"Both A and R are true but R does not explain A.",
+"A is true but R is false.",
+"A is false but R is true."
+],
+answer:0,
+hint:"Think about why wastewater treatment is necessary.",
+explanation:"Untreated wastewater pollutes water bodies and spreads diseases, making treatment essential."
+},
+
+{
+question:"A factory producing textile dyes releases coloured water containing chemicals into a nearby drain.\n\nThis wastewater should be classified as:",
+options:[
+"Domestic wastewater",
+"Municipal wastewater",
+"Industrial wastewater",
+"Groundwater"
+],
+answer:2,
+hint:"Identify the source of the wastewater.",
+explanation:"Industrial wastewater originates from factories and manufacturing processes."
+},
+
+{
+question:"A town releases untreated sewage into a lake. After a few months, fish deaths increase and the water develops a foul smell.\n\nWhat is the most likely reason?",
+options:[
+"Increase in dissolved oxygen",
+"Eutrophication due to sewage pollution",
+"Excess groundwater recharge",
+"Increased evaporation"
+],
+answer:1,
+hint:"Think about what happens when nutrients from sewage enter water bodies.",
+explanation:"Nutrients from sewage cause excessive algal growth. When algae die, oxygen levels decrease, harming aquatic life."
+},
+
+{
+question:"Engineers observe that plastic bags, cloth pieces, and sticks are reaching the pumps and damaging them.\n\nWhich treatment stage is likely malfunctioning?",
+image:"assets/wastewater-treatment-plant.png",
+options:[
+"Screening",
+"Primary Treatment",
+"Secondary Treatment",
+"Final Treatment"
+],
+answer:0,
+hint:"Think about which stage removes large objects first.",
+explanation:"Screening removes large solid waste before wastewater enters later stages."
+},
+
+{
+question:"During inspection of a wastewater treatment plant, scientists find that bacteria are not active in the aeration tanks.\n\nWhich consequence is most likely?",
+options:[
+"Large objects will not be removed.",
+"Organic waste will not break down efficiently.",
+"Water will evaporate faster.",
+"Groundwater recharge will increase."
+],
+answer:1,
+hint:"What is the role of bacteria in secondary treatment?",
+explanation:"Bacteria decompose organic matter during secondary treatment. Without them, wastewater treatment becomes less effective."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+
+document.getElementById('logoScreen').style.display='none';
+
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="💧 Excellent! You have mastered water resources, groundwater, the water cycle, conservation, wastewater and treatment processes.";
+
+}else if(percentage>=40){
+
+message="🌊 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="📚 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#0ea5e9',
+'#38bdf8',
+'#22c55e',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
