@@ -1,1 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Metals and Non-Metals</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#eef5f8 0%,
+#f7fbfd 40%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* METALS THEME BACKGROUND */
+
+.bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
+}
+
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.16;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-4;
+}
+
+.gear1{left:8%;top:15%;}
+.gear2{right:10%;top:20%;animation-delay:2s;}
+.bolt1{left:18%;bottom:20%;animation-delay:4s;}
+.bolt2{right:18%;bottom:18%;animation-delay:6s;}
+.bell{left:50%;top:10%;animation-delay:1s;}
+.aircraft{right:35%;top:12%;animation-delay:3s;}
+.pickaxe{left:35%;bottom:14%;animation-delay:5s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-18px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.spark{
+position:absolute;
+font-size:26px;
+opacity:.12;
+animation:sparkle linear infinite;
+}
+
+.s1{left:10%;top:25%;animation-duration:10s;}
+.s2{left:30%;top:70%;animation-duration:12s;}
+.s3{left:60%;top:20%;animation-duration:11s;}
+.s4{left:80%;top:65%;animation-duration:13s;}
+.s5{left:50%;top:45%;animation-duration:9s;}
+
+@keyframes sparkle{
+
+0%{
+transform:scale(.7);
+opacity:.05;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.18;
+}
+
+100%{
+transform:scale(.7);
+opacity:.05;
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.94);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#37474f;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+
+<div class="spark s1">✨</div>
+<div class="spark s2">✨</div>
+<div class="spark s3">✨</div>
+<div class="spark s4">✨</div>
+<div class="spark s5">✨</div>
+
+</div>
+
+<div class="floatIcon gear1">⚙️</div>
+<div class="floatIcon gear2">⚙️</div>
+<div class="floatIcon bolt1">🔩</div>
+<div class="floatIcon bolt2">🔩</div>
+<div class="floatIcon bell">🔔</div>
+<div class="floatIcon aircraft">✈️</div>
+<div class="floatIcon pickaxe">⛏️</div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Metals and Non-Metals</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore metals, non-metals, malleability, ductility,
+conductivity, rusting and mining through
+12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:`Riya has four materials:
+
+1. Copper wire
+2. Sulphur powder
+3. Coal
+4. Aluminium foil
+
+Which pair consists only of metals?`,
+options:[
+"Copper and Sulphur",
+"Aluminium and Copper",
+"Coal and Sulphur",
+"Coal and Aluminium"
+],
+answer:1,
+hint:"Metals are usually shiny and conduct electricity.",
+explanation:"Copper and aluminium are metals. Sulphur and coal are non-metals."
+},
+
+{
+question:"A student observes a substance that is:\n\n• Shiny\n• Hard\n• Good conductor of heat\n\nThe substance is most likely:",
+options:[
+"Sulphur",
+"Wood",
+"Aluminium",
+"Rubber"
+],
+answer:2,
+hint:"Think of materials used in cooking utensils.",
+explanation:"Aluminium shows typical metallic properties."
+},
+
+{
+question:"A goldsmith converts a piece of gold into thin sheets for jewellery work.\n\nWhich property of gold makes this possible?",
+options:[
+"Sonority",
+"Ductility",
+"Malleability",
+"Corrosion"
+],
+answer:2,
+hint:"The metal is beaten into sheets.",
+explanation:"Malleability is the ability to be hammered into thin sheets."
+},
+
+{
+question:"Electricians commonly use copper wires in homes.\n\nWhy?",
+options:[
+"Copper is brittle.",
+"Copper is ductile.",
+"Copper is non-sonorous.",
+"Copper is soft."
+],
+answer:1,
+hint:"The metal must be drawn into wires.",
+explanation:"Ductility allows copper to be drawn into long wires."
+},
+
+{
+question:"Why do frying pans usually have metal bodies but wooden handles?",
+options:[
+"Wood is stronger.",
+"Metal is a poor conductor.",
+"Wood is a poor conductor of heat.",
+"Wood is sonorous."
+],
+answer:2,
+hint:"Think about safety while cooking.",
+explanation:"Wood prevents heat from reaching the hand."
+},
+
+{
+question:"Which two objects are expected to produce a ringing sound when struck?",
+image:"assets/sonorous-objects.png",
+options:[
+"Bell and steel spoon",
+"Coal and wood",
+"Wood and spoon",
+"Bell and coal"
+],
+answer:0,
+hint:"Sonorous materials produce ringing sounds.",
+explanation:"Metals are generally sonorous. The bell and steel spoon produce a ringing sound when struck."
+},
+{
+question:"When magnesium burns in air, it forms magnesium oxide.\n\nThis oxide is:",
+options:[
+"Acidic",
+"Basic",
+"Neutral",
+"Neither acidic nor basic"
+],
+answer:1,
+hint:"Metal oxides are generally basic.",
+explanation:"Magnesium oxide turns red litmus blue, showing basic nature."
+},
+
+{
+question:"Why is sodium stored under kerosene?",
+options:[
+"It reacts vigorously with water and moisture.",
+"It is very expensive.",
+"It evaporates quickly.",
+"It is a non-metal."
+],
+answer:0,
+hint:"Sodium is highly reactive.",
+explanation:"Kerosene prevents sodium from coming into contact with moisture."
+},
+
+{
+question:"Which condition is necessary for rusting of iron?",
+image:"assets/rusting-iron.png",
+options:[
+"Presence of only oxygen",
+"Presence of only water",
+"Presence of both air and water",
+"Presence of sunlight"
+],
+answer:2,
+hint:"Two factors are needed.",
+explanation:"Rusting occurs when iron is exposed to both oxygen and moisture."
+},
+
+{
+question:"An aircraft manufacturer prefers aluminium instead of iron for making aircraft bodies.\n\nWhat is the main reason?",
+options:[
+"Aluminium is heavier.",
+"Aluminium is lighter and strong.",
+"Aluminium is brittle.",
+"Aluminium is a non-metal."
+],
+answer:1,
+hint:"Aircraft need lightweight materials.",
+explanation:"Aluminium has low density and sufficient strength."
+},
+
+{
+question:"A mining company clears large forest areas to extract iron ore.\n\nWhich environmental impact is most likely?",
+options:[
+"Increased biodiversity",
+"Habitat destruction",
+"Increased rainfall",
+"Reduced soil erosion"
+],
+answer:1,
+hint:"Think about animals living in forests.",
+explanation:"Mining can destroy habitats and reduce biodiversity."
+},
+
+{
+question:"Ravi wants to store lemon pickle in an aluminium container.\n\nHis grandmother advises against it.\n\nWhy?",
+options:[
+"Aluminium reacts with acidic lemon juice.",
+"Aluminium is too expensive.",
+"Aluminium is a non-metal.",
+"Lemon juice is basic."
+],
+answer:0,
+hint:"Lemon contains citric acid.",
+explanation:"Acids can react with metals, affecting both the container and the food."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+
+document.getElementById('logoScreen').style.display='none';
+
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="⚙️ Excellent! You have mastered metals, non-metals, conductivity, rusting and their applications.";
+
+}else if(percentage>=40){
+
+message="🔩 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="⛏️ Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
