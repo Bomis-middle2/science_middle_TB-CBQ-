@@ -1,1 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Physical and Chemical Changes</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#eefcff 0%,
+#f7fdff 40%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* SCIENCE BACKGROUND */
+
+.bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
+}
+
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.16;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-4;
+}
+
+.ice{left:8%;top:15%;}
+.water{right:10%;top:20%;animation-delay:2s;}
+.steam{left:15%;bottom:18%;animation-delay:4s;}
+.flask{right:18%;bottom:22%;animation-delay:6s;}
+.fire{left:50%;top:12%;animation-delay:1s;}
+.rust{right:35%;top:10%;animation-delay:3s;}
+.lab{left:35%;bottom:12%;animation-delay:5s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.spark{
+position:absolute;
+font-size:26px;
+opacity:.12;
+animation:sparkle linear infinite;
+}
+
+.s1{left:10%;top:25%;animation-duration:10s;}
+.s2{left:30%;top:70%;animation-duration:12s;}
+.s3{left:60%;top:20%;animation-duration:11s;}
+.s4{left:80%;top:65%;animation-duration:13s;}
+.s5{left:50%;top:45%;animation-duration:9s;}
+
+@keyframes sparkle{
+
+0%{
+transform:scale(.7);
+opacity:.05;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.18;
+}
+
+100%{
+transform:scale(.7);
+opacity:.05;
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.94);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#1565c0;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+
+<div class="spark s1">✨</div>
+<div class="spark s2">✨</div>
+<div class="spark s3">✨</div>
+<div class="spark s4">✨</div>
+<div class="spark s5">✨</div>
+
+</div>
+
+<div class="floatIcon ice">🧊</div>
+<div class="floatIcon water">💧</div>
+<div class="floatIcon steam">♨️</div>
+<div class="floatIcon flask">⚗️</div>
+<div class="floatIcon fire">🔥</div>
+<div class="floatIcon rust">🔩</div>
+<div class="floatIcon lab">🧪</div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Physical and Chemical Changes</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore reversible and irreversible changes,
+physical and chemical changes, rusting,
+crystallisation and change of state through
+12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"Priya keeps ice cubes outside the freezer. After some time, they turn into water.\n\nWhat caused this change?",
+options:[
+"Cooling",
+"Heating from the surroundings",
+"Rusting",
+"Crystallisation"
+],
+answer:1,
+hint:"Ice absorbs heat from its surroundings.",
+explanation:"Heat causes ice to melt and change from solid to liquid."
+},
+
+{
+question:`Railway tracks have small gaps between metal rails.
+
+Why are these gaps provided?`,
+options:[
+"To save metal",
+"To allow expansion during hot weather",
+"To increase friction",
+"To make tracks flexible"
+],
+answer:1,
+hint:"Metals expand when heated.",
+explanation:"The gaps prevent bending or damage due to thermal expansion."
+},
+
+{
+question:"Which of the following is a reversible change?",
+options:[
+"Burning paper",
+"Cooking rice",
+"Melting chocolate",
+"Ripening mangoes"
+],
+answer:2,
+hint:"Can the original substance be obtained again?",
+explanation:"Melted chocolate can solidify again on cooling."
+},
+
+{
+question:"A baker prepares a cake by baking batter.\n\nWhy is this an irreversible change?",
+options:[
+"The cake becomes colder.",
+"New substances are formed.",
+"Water evaporates.",
+"The colour changes."
+],
+answer:1,
+hint:"Can cake be converted back into batter?",
+explanation:"Baking forms new substances and cannot be reversed."
+},
+
+{
+question:"Which of the following is a fast change?",
+options:[
+"Growth of a tree",
+"Rusting of iron",
+"Bursting of a cracker",
+"Formation of curd"
+],
+answer:2,
+hint:"It happens within seconds.",
+explanation:"Bursting crackers occurs almost instantly."
+},
+
+{
+question:"Which process is a slow change?",
+options:[
+"Tearing paper",
+"Breaking glass",
+"Germination of seeds",
+"Lighting a matchstick"
+],
+answer:2,
+hint:"It takes days to complete.",
+explanation:"Seed germination occurs gradually over time."
+},
+{
+question:"A student dissolves sugar in water.\n\nWhy is this a physical change?",
+options:[
+"A new substance is formed.",
+"Sugar can be recovered by evaporation.",
+"Heat is released.",
+"The colour changes."
+],
+answer:1,
+hint:"The original substance still exists.",
+explanation:"Sugar remains unchanged and can be separated again."
+},
+
+{
+question:"Which of the following is a chemical change?",
+options:[
+"Melting ice",
+"Dissolving salt",
+"Cooking an egg",
+"Freezing water"
+],
+answer:2,
+hint:"A new substance is formed.",
+explanation:"Cooking causes permanent chemical changes in the egg."
+},
+
+{
+question:"A scientist wants to obtain pure salt crystals from salt solution.\n\nWhich process should be used?",
+options:[
+"Filtration",
+"Sedimentation",
+"Crystallisation",
+"Churning"
+],
+answer:2,
+hint:"Pure solids are obtained from solutions.",
+explanation:"Crystallisation helps obtain pure solid crystals."
+},
+
+{
+question:"Which method helps prevent rusting of iron?",
+image:"assets/prevention-of-rusting.png",
+options:[
+"Keeping iron wet",
+"Scratching the surface",
+"Painting or galvanising the surface",
+"Heating continuously"
+],
+answer:2,
+hint:"Rusting requires contact with air and moisture.",
+explanation:"Painting and galvanisation create a protective layer that prevents rusting."
+},
+
+{
+question:`Study the diagram:
+
+Ice Cube → Water → Steam
+
+Which process changes liquid water into water vapour?`,
+image:"assets/change-of-state.png",
+options:[
+"Condensation",
+"Freezing",
+"Boiling/Evaporation",
+"Melting"
+],
+answer:2,
+hint:"Think about water in a kettle.",
+explanation:"Boiling or evaporation converts liquid water into water vapour."
+},
+
+{
+question:"Rohan accidentally pours cold water into a very hot glass tumbler and it cracks.\n\nWhy did the glass crack?",
+options:[
+"The inner and outer surfaces expanded equally.",
+"The outer surface cooled and contracted faster than the inner surface.",
+"Glass melted.",
+"Water reacted chemically with glass."
+],
+answer:1,
+hint:"Recall the textbook example of hot glass under running water.",
+explanation:"The sudden temperature difference causes uneven contraction, leading to cracks."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+
+document.getElementById('logoScreen').style.display='none';
+
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="🧪 Excellent! You have mastered physical and chemical changes, rusting, crystallisation and change of state.";
+
+}else if(percentage>=40){
+
+message="🧊 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🔥 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
