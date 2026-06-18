@@ -1,1 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Respiration in Organisms</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#eefcff 0%,
+#f0fdf4 40%,
+#ffffff 100%
+);
+position:relative;
+}
+
+/* BACKGROUND */
+
+.bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
+}
+
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.16;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-4;
+}
+
+.lungs{left:8%;top:15%;}
+.oxygen{right:12%;top:18%;animation-delay:2s;}
+.runner{left:18%;bottom:18%;animation-delay:4s;}
+.fish{right:18%;bottom:22%;animation-delay:6s;}
+.heart{left:50%;top:10%;animation-delay:1s;}
+.leaf{right:38%;top:12%;animation-delay:3s;}
+.air{left:40%;bottom:10%;animation-delay:5s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-20px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.spark{
+position:absolute;
+font-size:26px;
+opacity:.12;
+animation:sparkle linear infinite;
+}
+
+.s1{left:10%;top:25%;animation-duration:10s;}
+.s2{left:30%;top:70%;animation-duration:12s;}
+.s3{left:60%;top:20%;animation-duration:11s;}
+.s4{left:80%;top:65%;animation-duration:13s;}
+.s5{left:50%;top:45%;animation-duration:9s;}
+
+@keyframes sparkle{
+
+0%{
+transform:scale(.7);
+opacity:.05;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.18;
+}
+
+100%{
+transform:scale(.7);
+opacity:.05;
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.95);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#0f766e;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#1d4ed8;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #ddd;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
+.options{
+display:grid;
+gap:12px;
+}
+
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
+}
+
+.optionBtn:hover{
+background:#dbeafe;
+}
+
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
+}
+
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
+}
+
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
+}
+
+.correctFeedback{
+background:#d4f7d9;
+}
+
+.wrongFeedback{
+background:#ffd9d9;
+}
+
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+
+<div class="spark s1">✨</div>
+<div class="spark s2">✨</div>
+<div class="spark s3">✨</div>
+<div class="spark s4">✨</div>
+<div class="spark s5">✨</div>
+
+</div>
+
+<div class="floatIcon lungs">🫁</div>
+<div class="floatIcon oxygen">🫧</div>
+<div class="floatIcon runner">🏃</div>
+<div class="floatIcon fish">🐟</div>
+<div class="floatIcon heart">❤️</div>
+<div class="floatIcon leaf">🍃</div>
+<div class="floatIcon air">💨</div>
+
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
+
+<div class="container">
+
+<div id="introScreen" class="card">
+
+<h1>Respiration in Organisms</h1>
+
+<h2>Grade 7 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore breathing, cellular respiration,
+aerobic and anaerobic respiration, lungs,
+alveoli and gaseous exchange through
+12 competency-based challenges.
+</p>
+
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
+
+</div>
+
+<div id="quizScreen" class="card hidden">
+
+<div class="topBar">
+
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
+
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
+
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
+
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
+
+</div>
+
+<img id="questionImage" class="questionImage hidden">
+
+<div id="questionText" class="question"></div>
+
+<div id="optionsContainer" class="options"></div>
+
+<div id="hintBox" class="hintBox"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
+
+</div>
+
+<div id="resultScreen" class="card hidden">
+
+<h1>Quiz Completed!</h1>
+
+<h2 id="finalScore"></h2>
+
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
+
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
+
+</div>
+
+</div>
+
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
+
+<script>
+
+const questions = [
+{
+question:"A student says, 'Respiration means only breathing.'\n\nWhich statement correctly explains respiration?",
+options:[
+"Respiration and breathing are exactly the same.",
+"Respiration only occurs in the lungs.",
+"Respiration releases energy from food inside cells.",
+"Respiration occurs only during exercise."
+],
+answer:2,
+hint:"Think about what happens to food inside body cells.",
+explanation:"Respiration is the process of releasing energy from food. Breathing is only one part of this process."
+},
+
+{
+question:"Which substances are produced during aerobic cellular respiration?",
+options:[
+"Glucose and oxygen",
+"Carbon dioxide, water, and energy",
+"Lactic acid and alcohol",
+"Nitrogen and water"
+],
+answer:1,
+hint:"Look at the cellular respiration equation.",
+explanation:"Glucose reacts with oxygen to produce carbon dioxide, water, and energy."
+},
+
+{
+question:"Why do humans normally perform aerobic respiration?",
+options:[
+"It occurs without oxygen.",
+"It produces more energy.",
+"It produces alcohol.",
+"It occurs only in plants."
+],
+answer:1,
+hint:"Compare aerobic and anaerobic respiration.",
+explanation:"Aerobic respiration uses oxygen and releases more energy than anaerobic respiration."
+},
+
+{
+question:"A student runs a long-distance race and develops muscle cramps.\n\nWhat is the main reason?",
+options:[
+"Excess oxygen",
+"Accumulation of lactic acid in muscles",
+"Excess glucose",
+"Lack of water only"
+],
+answer:1,
+hint:"What forms in muscles when oxygen becomes insufficient?",
+explanation:"During vigorous exercise, muscles may undergo anaerobic respiration, producing lactic acid which causes cramps."
+},
+
+{
+question:"Why does breathing rate increase during exercise?",
+options:[
+"To reduce body temperature only",
+"To supply more oxygen to cells for energy production",
+"To increase digestion",
+"To produce more carbon dioxide"
+],
+answer:1,
+hint:"Muscles need more energy during exercise.",
+explanation:"More oxygen is required for increased cellular respiration during physical activity."
+},
+
+{
+question:"Why are alveoli important in the lungs?",
+options:[
+"They pump blood.",
+"They produce oxygen.",
+"They are the site of gaseous exchange.",
+"They filter food particles."
+],
+answer:2,
+hint:"Think about where oxygen enters blood.",
+explanation:"Oxygen enters blood and carbon dioxide leaves blood through the alveoli."
+},
+{
+question:"Compared to inhaled air, exhaled air contains:",
+options:[
+"More oxygen",
+"Less carbon dioxide",
+"More carbon dioxide",
+"No water vapour"
+],
+answer:2,
+hint:"Cells continuously release a waste gas.",
+explanation:"Cellular respiration produces carbon dioxide, which is expelled during exhalation."
+},
+
+{
+question:"Why does smoking affect respiration negatively?",
+options:[
+"It increases oxygen transport.",
+"It strengthens alveoli.",
+"It damages respiratory organs and reduces lung efficiency.",
+"It increases lung capacity."
+],
+answer:2,
+hint:"Consider the effect of smoke on lungs and alveoli.",
+explanation:"Smoking damages respiratory tissues and reduces the efficiency of gaseous exchange."
+},
+
+{
+question:"Why can't fish survive for long outside water?",
+options:[
+"Their lungs stop working.",
+"Their gills collapse and cannot absorb dissolved oxygen efficiently.",
+"Their heart stops beating.",
+"Their blood becomes acidic immediately."
+],
+answer:1,
+hint:"Fish use a special organ for respiration.",
+explanation:"Fish obtain oxygen through gills, which function effectively only in water."
+},
+
+{
+question:"Which structure helps the lungs expand and contract during breathing?",
+image:"assets/human-respiratory-system.png",
+options:[
+"Nose",
+"Bronchi",
+"Diaphragm",
+"Trachea"
+],
+answer:2,
+hint:"It is a muscular sheet below the lungs.",
+explanation:"The diaphragm moves downward during inhalation and upward during exhalation."
+},
+
+{
+question:"What process is shown in the diagram?",
+image:"assets/alveoli-gaseous-exchange.png",
+options:[
+"Digestion",
+"Circulation",
+"Gaseous exchange",
+"Excretion"
+],
+answer:2,
+hint:"Two gases move in opposite directions.",
+explanation:"Oxygen diffuses into blood while carbon dioxide diffuses into the alveoli."
+},
+
+{
+question:"A fish bowl contains healthy fish. One day, someone replaces the water with warm water. After some time, the fish appear distressed.\n\nWhich is the best explanation?",
+options:[
+"Warm water contains more dissolved oxygen.",
+"Warm water contains less dissolved oxygen, making respiration difficult.",
+"Fish stop breathing in warm water.",
+"Warm water increases photosynthesis."
+],
+answer:1,
+hint:"Think about oxygen availability in water.",
+explanation:"Warm water holds less dissolved oxygen than cooler water. Reduced oxygen availability makes respiration difficult for fish."
+}
+
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
+
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
+
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
+
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
+
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
+
+setTimeout(()=>{
+
+document.getElementById('logoScreen').style.display='none';
+
+},5000);
+
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+clearInterval(timer);
+
+timeLeft=45;
+timerEl.textContent=timeLeft;
+
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
+}
+
+q.options.forEach((option,index)=>{
+
+const btn=document.createElement('button');
+
+btn.classList.add('optionBtn');
+
+btn.textContent=option;
+
+btn.onclick=()=>checkAnswer(index,btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+startTimer();
+
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
+});
+
+}else{
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="🫁 Excellent! You have mastered respiration, breathing, gaseous exchange and respiratory adaptations.";
+
+}else if(percentage>=40){
+
+message="💨 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="📚 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
+</script>
+
+</body>
+</html>
