@@ -21,17 +21,6 @@ overflow-x:hidden;
 
 background:
 linear-gradient(
-rgba(220,245,230,0.78),
-rgba(210,235,220,0.82)
-),
-
-body{
-font-family:Arial,sans-serif;
-min-height:100vh;
-overflow-x:hidden;
-
-background:
-linear-gradient(
 rgba(255,248,220,0.82),
 rgba(235,255,235,0.82)
 ),
@@ -40,13 +29,16 @@ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1800' h
 
 background-size:cover;
 background-attachment:fixed;
-
-animation:forestMove 25s linear infinite;
+animation:healthMove 25s linear infinite;
 }
-background-size:cover;
-background-attachment:fixed;
 
-animation:forestMove 25s linear infinite;
+@keyframes healthMove{
+0%{background-position:0 0;}
+100%{background-position:250px 120px;}
+}
+
+.hidden{
+display:none;
 }
 
 #logoScreen{
@@ -143,18 +135,18 @@ background:#e8eefc;
 }
 
 .correct{
-background:#d4f7d9 !important;
+background:#d4f7d9!important;
 border:2px solid green;
 }
 
 .wrong{
-background:#ffd9d9 !important;
+background:#ffd9d9!important;
 border:2px solid red;
 }
 
 .questionImage{
 width:100%;
-max-height:300px;
+max-height:320px;
 object-fit:contain;
 margin-bottom:20px;
 border-radius:12px;
@@ -188,10 +180,6 @@ border-left:5px solid orange;
 border-radius:8px;
 }
 
-.hidden{
-display:none;
-}
-
 .audioBtn{
 background:#666;
 color:white;
@@ -206,7 +194,6 @@ position:fixed;
 width:12px;
 height:12px;
 background:gold;
-clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
 animation:fall 2s linear forwards;
 z-index:999;
 }
@@ -236,14 +223,8 @@ animation:fade 1s forwards;
 0%{opacity:1;}
 100%{opacity:0;}
 }
-  
-@keyframes forestMove{
-0%{background-position:0 0;}
-100%{background-position:250px 120px;}
-}
-  
-</style>
 
+</style>
 </head>
 
 <body>
@@ -427,7 +408,7 @@ explanation:"Omnivores eat both plant and animal-based food."
 },
 
 {
-question:"Assertion: Roughage does not provide nutrients to the body. Reason: Roughage helps food move through the digestive system.",
+question:"Assertion: Roughage does not provide nutrients to the body.\n\nReason: Roughage helps food move through the digestive system.",
 options:[
 "Both are correct and the reason explains the assertion.",
 "Both are correct but the reason does not explain the assertion.",
@@ -520,7 +501,9 @@ const wrongSound=document.getElementById('wrongSound');
 const clapSound=document.getElementById('clapSound');
 
 setTimeout(()=>{
+
 document.getElementById('logoScreen').style.display='none';
+
 },5000);
 
 document.getElementById('muteBtn').onclick=()=>{
@@ -628,7 +611,6 @@ showCorrectAnswer();
 },1000);
 
 }
-
 function checkAnswer(selected,btn){
 
 const q=questions[currentQuestion];
@@ -769,6 +751,7 @@ showResults();
 };
 
 }
+
 function showResults(){
 
 quizScreen.classList.add('hidden');
@@ -783,15 +766,15 @@ let message="";
 
 if(percentage>=75){
 
-message="🎉 Good Job! You have a strong understanding of this chapter.";
+message="🎉 Excellent! You have a strong understanding of Food, Nutrition, Balanced Diet, Deficiency Diseases and Healthy Eating Habits.";
 
 }else if(percentage>=40){
 
-message="📘 Review this chapter and try again.";
+message="📘 Good effort! Revise nutrients, food tests, deficiency diseases and balanced diet concepts.";
 
 }else{
 
-message="💪 Let's practise more and improve your understanding.";
+message="💪 Keep practising! Review the chapter and try the challenge again.";
 
 }
 
