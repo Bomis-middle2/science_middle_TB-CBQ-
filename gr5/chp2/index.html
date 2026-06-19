@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>States of Matter</title>
 
 <style>
@@ -19,21 +20,21 @@ overflow-x:hidden;
 min-height:100vh;
 color:#222;
 
-background-color:#eef7ff;
+background-color:#eef9ff;
 
 background-image:
 
 linear-gradient(
 rgba(255,255,255,0.82),
-rgba(255,255,255,0.86)
+rgba(255,255,255,0.88)
 ),
 
-url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1000' viewBox='0 0 1400 1000'%3E%3Cg opacity='0.22'%3E%3Ctext x='100' y='120' font-size='80'%3E⚗️%3C/text%3E%3Ctext x='350' y='220' font-size='70'%3E🧪%3C/text%3E%3Ctext x='650' y='130' font-size='80'%3E⚛️%3C/text%3E%3Ctext x='950' y='220' font-size='75'%3E🧫%3C/text%3E%3Ctext x='150' y='430' font-size='75'%3E🧪%3C/text%3E%3Ctext x='450' y='370' font-size='80'%3E⚗️%3C/text%3E%3Ctext x='760' y='430' font-size='70'%3E⚛️%3C/text%3E%3Ctext x='1080' y='370' font-size='80'%3E🧫%3C/text%3E%3Ctext x='200' y='700' font-size='80'%3E⚗️%3C/text%3E%3Ctext x='600' y='650' font-size='75'%3E🧪%3C/text%3E%3Ctext x='980' y='700' font-size='80'%3E⚛️%3C/text%3E%3C/g%3E%3C/svg%3E");
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1200'%3E%3Cg opacity='0.18'%3E%3Ctext x='100' y='120' font-size='85'%3E🧊%3C/text%3E%3Ctext x='380' y='220' font-size='80'%3E💧%3C/text%3E%3Ctext x='700' y='130' font-size='85'%3E☁️%3C/text%3E%3Ctext x='1050' y='220' font-size='80'%3E🌡️%3C/text%3E%3Ctext x='180' y='450' font-size='80'%3E🧊%3C/text%3E%3Ctext x='520' y='380' font-size='85'%3E💧%3C/text%3E%3Ctext x='860' y='450' font-size='80'%3E☁️%3C/text%3E%3Ctext x='1220' y='380' font-size='85'%3E🌡️%3C/text%3E%3Ctext x='200' y='800' font-size='85'%3E🧊%3C/text%3E%3Ctext x='620' y='720' font-size='80'%3E💧%3C/text%3E%3Ctext x='980' y='820' font-size='85'%3E☁️%3C/text%3E%3C/g%3E%3C/svg%3E");
 
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
-animation:bgMove 25s linear infinite;
+animation:bgMove 30s linear infinite;
 }
 
 @keyframes bgMove{
@@ -41,8 +42,30 @@ animation:bgMove 25s linear infinite;
 background-position:0 0;
 }
 100%{
-background-position:200px 100px;
+background-position:200px 120px;
 }
+}
+
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.15;
+pointer-events:none;
+z-index:-1;
+animation:float 12s ease-in-out infinite;
+}
+
+.ice{left:8%;top:12%;}
+.water{right:12%;top:20%;animation-delay:2s;}
+.steam{left:18%;bottom:20%;animation-delay:4s;}
+.thermo{right:18%;bottom:18%;animation-delay:6s;}
+.ice2{left:50%;top:8%;animation-delay:3s;}
+.water2{right:40%;top:10%;animation-delay:5s;}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+100%{transform:translateY(0);}
 }
 
 #logoScreen{
@@ -57,55 +80,62 @@ z-index:9999;
 
 #logoScreen img{
 width:180px;
-animation:pop 1s ease;
+animation:zoomIn 1s ease;
 }
 
-@keyframes pop{
-0%{
-transform:scale(0.5);
+@keyframes zoomIn{
+from{
+transform:scale(.5);
 opacity:0;
 }
-100%{
+to{
 transform:scale(1);
 opacity:1;
 }
 }
 
 .container{
-max-width:900px;
-margin:20px auto;
+max-width:950px;
+margin:25px auto;
 padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.94);
-padding:24px;
-border-radius:22px;
-box-shadow:0 8px 25px rgba(0,0,0,0.12);
-backdrop-filter:blur(4px);
+background:rgba(255,255,255,.95);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
 }
 
 h1{
 text-align:center;
+font-size:2.4rem;
 color:#0d4c92;
-margin-bottom:10px;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
 }
 
 .btn{
-background:#0d6efd;
+background:#2563eb;
 color:white;
 border:none;
-padding:14px 24px;
+padding:14px 28px;
 border-radius:12px;
 cursor:pointer;
 font-size:1rem;
-margin-top:20px;
-transition:0.3s;
 }
 
 .btn:hover{
-background:#084298;
-transform:scale(1.03);
+background:#1d4ed8;
+}
+
+.hidden{
+display:none;
 }
 
 .topBar{
@@ -116,124 +146,116 @@ gap:10px;
 margin-bottom:20px;
 }
 
+.questionBox,
 .scoreBox,
-.timerBox,
-.questionBox{
-background:#eef5ff;
-padding:10px 16px;
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
 border-radius:12px;
 font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
 }
 
 .question{
-font-size:1.2rem;
-line-height:1.5;
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #ddd;
+border-radius:16px;
+padding:10px;
 margin-bottom:20px;
 }
 
 .options{
 display:grid;
-gap:14px;
+gap:12px;
 }
 
 .optionBtn{
 padding:14px;
 border:none;
-border-radius:14px;
-background:#f3f7ff;
+border-radius:12px;
+background:#f8fafc;
 cursor:pointer;
 font-size:1rem;
 text-align:left;
-transition:0.3s;
-border:2px solid transparent;
+transition:.3s;
 }
 
 .optionBtn:hover{
-background:#dfeeff;
+background:#dbeafe;
 }
 
 .correct{
-background:#d1ffd8 !important;
-border-color:#1f9d47 !important;
+background:#d4f7d9 !important;
+border:2px solid green;
 }
 
 .wrong{
-background:#ffd8d8 !important;
-border-color:#d62828 !important;
+background:#ffd9d9 !important;
+border:2px solid red;
 }
 
 .feedback{
-margin-top:20px;
-padding:14px;
+display:none;
+padding:15px;
+margin-top:15px;
 border-radius:12px;
 font-weight:bold;
-display:none;
-}
-
-.feedback.show{
-display:block;
+line-height:1.6;
 }
 
 .correctFeedback{
-background:#d8ffe0;
-color:#166534;
+background:#d4f7d9;
 }
 
 .wrongFeedback{
-background:#ffe2e2;
-color:#991b1b;
+background:#ffd9d9;
 }
 
-.questionImage{
-width:100%;
-max-height:320px;
-object-fit:contain;
-background:white;
-border-radius:18px;
-margin-bottom:18px;
-padding:10px;
-box-shadow:0 4px 14px rgba(0,0,0,0.12);
-}
-
-.resultScore{
-font-size:2rem;
-text-align:center;
-margin:20px 0;
-color:#0d4c92;
-}
-
-.challenge{
-background:#fff8db;
+.hintBox{
+display:none;
+margin-top:15px;
 padding:14px;
-border-radius:14px;
-border:2px dashed #ffbf00;
-margin-bottom:20px;
-text-align:center;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
 font-weight:bold;
-display:none;
-}
-
-.hidden{
-display:none;
 }
 
 .confetti{
 position:fixed;
 width:12px;
 height:12px;
-background:gold;
-clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+border-radius:50%;
 animation:fall 2s linear forwards;
 z-index:999;
 }
 
 @keyframes fall{
 0%{
-transform:translateY(-20px) rotate(0deg);
+transform:translateY(-20px);
 opacity:1;
 }
 100%{
-transform:translateY(100vh) rotate(720deg);
+transform:translateY(100vh);
 opacity:0;
 }
 }
@@ -243,10 +265,10 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:70px;
+font-size:80px;
 color:red;
 animation:fade 1s forwards;
-z-index:1000;
+z-index:999;
 }
 
 @keyframes fade{
@@ -254,39 +276,41 @@ z-index:1000;
 100%{opacity:0;}
 }
 
-@media(max-width:600px){
-
-.question{
-font-size:1.05rem;
-}
-
-.optionBtn{
-font-size:0.95rem;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
+<div class="floatIcon ice">🧊</div>
+<div class="floatIcon water">💧</div>
+<div class="floatIcon steam">☁️</div>
+<div class="floatIcon thermo">🌡️</div>
+<div class="floatIcon ice2">🧊</div>
+<div class="floatIcon water2">💧</div>
+
 <div id="logoScreen">
-<img src="assets/innovine-logo.png" alt="Innovine Logo">
+<img src="assets/innovine-logo.png">
 </div>
 
 <div class="container">
 
-<div id="introScreen" class="card hidden">
+<div id="introScreen" class="card">
 
 <h1>States of Matter</h1>
 
+<h2>Grade 5 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore solids, liquids, gases,
+particle arrangement, change of state,
+compression and condensation through
+12 competency-based challenges.
+</p>
+
 <div style="text-align:center;margin-top:30px;">
-
 <button class="btn" onclick="startQuiz()">
-Start Quiz
+Start Challenge
 </button>
-
 </div>
 
 </div>
@@ -304,13 +328,13 @@ Score: <span id="score">0</span>
 </div>
 
 <div class="timerBox">
-Time: <span id="timer">45</span>s
+⏳ <span id="timer">45</span>s
 </div>
 
-</div>
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
 
-<div id="challenge" class="challenge">
-⭐ Final Challenge Questions
 </div>
 
 <img id="questionImage" class="questionImage hidden">
@@ -319,7 +343,15 @@ Time: <span id="timer">45</span>s
 
 <div id="optionsContainer" class="options"></div>
 
+<div id="hintBox" class="hintBox"></div>
+
 <div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
 
 </div>
 
@@ -327,12 +359,16 @@ Time: <span id="timer">45</span>s
 
 <h1>Quiz Completed!</h1>
 
-<div class="resultScore" id="finalScore"></div>
+<h2 id="finalScore"></h2>
 
-<p id="resultMessage" style="text-align:center;font-size:1.1rem;"></p>
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
 
-<div style="text-align:center;">
-<button class="btn" onclick="restartQuiz()">Play Again</button>
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
 </div>
 
 </div>
@@ -346,264 +382,305 @@ Time: <span id="timer">45</span>s
 <script>
 
 const questions = [
+{
+question:"A bottle filled completely with water is placed in a freezer overnight. The next morning, the bottle appears slightly bulged.\n\nWhat is the best explanation?",
+options:[
+"Ice becomes heavier than water.",
+"Water expands when it freezes.",
+"Water loses mass when cooled.",
+"Ice has no particles."
+],
+answer:1,
+hint:"Think about what happens to water when it changes into ice.",
+explanation:"Water expands on freezing. This increase in volume can cause containers to bulge or even crack."
+},
 
 {
-question:"Neha pours water from a bottle into different containers. The shape of the water changes each time. What does this show?",
+question:"A room freshener is sprayed in one corner of a classroom. Within a few minutes, people throughout the room can smell it.\n\nWhat does this observation show?",
 options:[
-"Liquids have fixed shape",
-"Liquids take the shape of their container",
-"Liquids have no volume",
-"Liquids are solid"
+"Gas particles remain fixed.",
+"Gas particles spread out and move freely.",
+"Gas particles are larger than solids.",
+"Gas particles have no mass."
+],
+answer:1,
+hint:"How did the smell reach all parts of the room?",
+explanation:"Gas particles move freely in all directions and spread throughout the available space."
+},
+
+{
+question:"A steel ruler and a balloon are placed on a table. When pressure is applied, the ruler keeps its shape while the balloon changes shape.\n\nWhich property of solids does the ruler demonstrate?",
+options:[
+"Solids have a fixed shape.",
+"Solids have no volume.",
+"Solids flow easily.",
+"Solids fill containers."
+],
+answer:0,
+hint:"Think about how solids behave when moved or pressed.",
+explanation:"Solids maintain their shape because their particles are tightly packed."
+},
+
+{
+question:"The same amount of juice is poured from a bottle into a bowl.\n\nWhat changes and what remains the same?",
+options:[
+"Shape remains the same, volume changes.",
+"Shape changes, volume remains the same.",
+"Both shape and volume change.",
+"Neither shape nor volume changes."
 ],
 answer:1,
 hint:"Think about how liquids behave in containers.",
-explanation:"Liquids do not have a fixed shape. They take the shape of the container."
+explanation:"Liquids take the shape of the container but keep the same volume."
 },
 
 {
-question:"A wooden block keeps its shape even when moved from one place to another. Why?",
+question:"A football is filled with air using a pump.\n\nWhy can more air be pushed into the football?",
 options:[
-"It has no mass",
-"Its particles are tightly packed",
-"It can flow easily",
-"It has no volume"
+"Air has no particles.",
+"Air particles have spaces between them.",
+"Air is a liquid.",
+"Air particles are fixed."
 ],
 answer:1,
-hint:"Think about how particles are arranged in solids.",
-explanation:"Solid particles are tightly packed, so solids keep their shape."
+hint:"Think about why gases can be compressed.",
+explanation:"The large spaces between gas particles allow gases to be compressed."
 },
 
 {
-question:"Gas fills the entire space of a container because:",
+question:"Ice cream is left outside on a warm afternoon.\n\nWhat is most likely to happen first?",
 options:[
-"Its particles are very close",
-"Its particles move freely and are far apart",
-"It has no particles",
-"It is heavier than solids"
+"It will freeze.",
+"It will melt into a liquid.",
+"It will become steam immediately.",
+"It will disappear."
 ],
 answer:1,
-hint:"How are gas particles arranged?",
-explanation:"Gas particles move freely and spread throughout the container."
+hint:"What effect does heat have on ice cream?",
+explanation:"Heat energy causes solids like ice cream to melt and become liquids."
 },
-
 {
-question:"Which statement is correct?",
+question:"Cooking gas is stored in cylinders and transported over long distances.\n\nWhy is this possible?",
 options:[
-"Solids have no fixed shape",
-"Liquids have fixed shape",
-"Gases have no fixed shape or volume",
-"Gases have fixed volume"
-],
-answer:2,
-hint:"Think carefully about the properties of gases.",
-explanation:"Gases have neither fixed shape nor fixed volume."
-},
-
-{
-question:"Ice is left outside on a hot day and slowly turns into water. What causes this change?",
-options:[
-"Loss of particles",
-"Gain of heat energy",
-"Increase in size of particles",
-"Change in colour"
+"Gases have no volume.",
+"Gases can be compressed into smaller spaces.",
+"Gases are solids.",
+"Gas particles do not move."
 ],
 answer:1,
-hint:"What happens when ice is heated?",
-explanation:"Ice melts because it gains heat energy."
+hint:"Think about one property that makes storage easier.",
+explanation:"Gases are compressible because there are large spaces between their particles."
 },
 
 {
-question:"Assertion (A): Gases can be compressed easily. Reason (R): There is a lot of space between gas particles.",
+question:"Assertion (A):\nGases can fill an entire room.\n\nReason (R):\nGas particles move freely in all directions.",
 options:[
-"Both (A) and (R) are true and (R) is the correct explanation of (A).",
-"Both (A) and (R) are true but (R) is not the correct explanation of (A).",
-"(A) is true but (R) is false.",
-"(A) is false but (R) is true."
+"Both A and R are true, and R correctly explains A.",
+"Both A and R are true, but R does not explain A.",
+"A is true, but R is false.",
+"A is false, but R is true."
 ],
 answer:0,
-hint:"Think about spaces between particles in gases.",
-explanation:"Large spaces between gas particles make gases compressible."
+hint:"Think about how gases spread.",
+explanation:"Because gas particles move freely, they spread and occupy all available space."
 },
 
 {
-question:"Gold can be beaten into thin sheets. Which property does this show?",
+question:"Three containers have different shapes but contain the same amount of water.\n\nWhich statement is correct?",
 options:[
-"Elasticity",
-"Plasticity",
-"Malleability",
-"Density"
-],
-answer:2,
-hint:"Which property allows metals to form thin sheets?",
-explanation:"Malleability is the property of being beaten into sheets."
-},
-
-{
-question:"A piece of wood floats on water while a stone sinks. Why?",
-options:[
-"Wood has more mass",
-"Wood has lower density than water",
-"Stone has no mass",
-"Water pushes stone down"
+"Water has different volumes in each container.",
+"Water keeps the same volume but changes shape.",
+"Water becomes solid.",
+"Water becomes gas."
 ],
 answer:1,
-hint:"Think about density.",
-explanation:"Wood floats because its density is lower than water."
+hint:"Does changing the container change the amount of water?",
+explanation:"Liquids do not have a fixed shape but have a fixed volume."
 },
 
 {
-question:"Which sequence correctly shows heating of water?",
-options:[
-"Ice → Steam → Water",
-"Water → Ice → Steam",
-"Ice → Water → Steam",
-"Steam → Ice → Water"
-],
-answer:2,
-hint:"What happens when ice is heated continuously?",
-explanation:"Heating changes ice into water and then into steam."
-},
-
-{
-question:"Which statement BEST explains the difference between these three?",
+question:"The image shows ice, water, and steam.\n\nA pot containing ice is heated continuously.\n\nWhich sequence correctly describes the changes that occur?",
 image:"assets/states-of-water.png",
 options:[
-"They are made of different substances",
-"They are different states of the same substance",
-"They have different colours",
-"They cannot change into each other"
-],
-answer:1,
-hint:"Think about ice, water, and steam.",
-explanation:"Ice, water, and steam are three states of the same substance."
-},
-
-{
-question:"Which option correctly matches the arrangement?",
-image:"assets/particles.png",
-options:[
-"Solid – far apart, Gas – tightly packed",
-"Solid – tightly packed, Gas – far apart",
-"Liquid – tightly packed, Solid – far apart",
-"All have same arrangement"
-],
-answer:1,
-hint:"Compare particle arrangement in solids and gases.",
-explanation:"Solid particles are tightly packed while gas particles are far apart."
-},
-
-{
-question:"When water vapour cools down and forms droplets on a cold surface, what process is this?",
-options:[
-"Melting",
-"Freezing",
-"Condensation",
-"Sublimation"
+"Steam → Water → Ice",
+"Ice → Steam → Water",
+"Ice → Water → Steam",
+"Water → Ice → Steam"
 ],
 answer:2,
-hint:"What is the process of gas changing into liquid?",
-explanation:"Condensation is the change of gas into liquid."
+hint:"Think about what happens when heat is continuously supplied.",
+explanation:"Heating changes ice into water and then water into steam."
+},
+
+{
+question:"The image shows particle arrangements in three states of matter.\n\nWhich state would be easiest to compress?",
+image:"assets/particles.png",
+options:[
+"Solid",
+"Liquid",
+"Gas",
+"All are equally compressible."
+],
+answer:2,
+hint:"Look for the arrangement with the largest spaces between particles.",
+explanation:"Gas particles are far apart, making gases highly compressible."
+},
+
+{
+question:"Tiny water droplets appear on the outside of a cold water bottle taken out of a refrigerator.\n\nWhere did these droplets come from?",
+options:[
+"Water leaked through the bottle.",
+"Water vapour in the air cooled and condensed.",
+"The bottle produced water.",
+"Water passed through the plastic."
+],
+answer:1,
+hint:"Think about what happens when warm air touches a cold surface.",
+explanation:"Water vapour present in the air cools when it touches the cold bottle and changes into liquid water droplets. This process is called condensation."
 }
 
 ];
-
-let currentQuestion = 0;
-let score = 0;
-let retryUsed = false;
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
 let timer;
-let timeLeft = 45;
+let timeLeft=45;
+let soundEnabled=true;
 
-const introScreen = document.getElementById('introScreen');
-const quizScreen = document.getElementById('quizScreen');
-const resultScreen = document.getElementById('resultScreen');
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
 
-const qNo = document.getElementById('qNo');
-const scoreEl = document.getElementById('score');
-const timerEl = document.getElementById('timer');
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
 
-const questionText = document.getElementById('questionText');
-const optionsContainer = document.getElementById('optionsContainer');
-const feedback = document.getElementById('feedback');
-const questionImage = document.getElementById('questionImage');
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
 
-const finalScore = document.getElementById('finalScore');
-const resultMessage = document.getElementById('resultMessage');
-
-const correctSound = document.getElementById('correctSound');
-const wrongSound = document.getElementById('wrongSound');
-const clapSound = document.getElementById('clapSound');
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
 
 setTimeout(()=>{
+
 document.getElementById('logoScreen').style.display='none';
-introScreen.classList.remove('hidden');
+
 },5000);
 
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
 function startQuiz(){
+
+shuffleQuestions();
+
 introScreen.classList.add('hidden');
 quizScreen.classList.remove('hidden');
+
 loadQuestion();
+
 }
 
 function loadQuestion(){
 
 clearInterval(timer);
 
-timeLeft = 45;
-timerEl.textContent = timeLeft;
+timeLeft=45;
+timerEl.textContent=timeLeft;
 
-retryUsed = false;
+retryUsed=false;
 
-startTimer();
+feedback.innerHTML="";
+feedback.style.display="none";
 
-const q = questions[currentQuestion];
+hintBox.innerHTML="";
+hintBox.style.display="none";
 
-qNo.textContent = currentQuestion + 1;
+nextBtn.classList.add('hidden');
 
-questionText.textContent = q.question;
+const q=questions[currentQuestion];
 
-optionsContainer.innerHTML = "";
+qNo.textContent=currentQuestion+1;
 
-feedback.className = "feedback";
-feedback.innerHTML = "";
+questionText.innerHTML=q.question;
 
-if(currentQuestion >= 9){
-document.getElementById('challenge').style.display = 'block';
-}else{
-document.getElementById('challenge').style.display = 'none';
-}
+optionsContainer.innerHTML="";
 
 if(q.image){
-questionImage.src = q.image;
+
+questionImage.src=q.image;
+questionImage.style.display="block";
 questionImage.classList.remove('hidden');
+
 }else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
 questionImage.classList.add('hidden');
+
 }
 
 q.options.forEach((option,index)=>{
 
-const btn = document.createElement('button');
+const btn=document.createElement('button');
 
 btn.classList.add('optionBtn');
 
-btn.textContent = option;
+btn.textContent=option;
 
-btn.onclick = ()=>checkAnswer(index,btn);
+btn.onclick=()=>checkAnswer(index,btn);
 
 optionsContainer.appendChild(btn);
 
 });
 
-}
+startTimer();
 
+}
 function startTimer(){
 
-timer = setInterval(()=>{
+timer=setInterval(()=>{
 
 timeLeft--;
 
-timerEl.textContent = timeLeft;
+timerEl.textContent=timeLeft;
 
-if(timeLeft <= 0){
+if(timeLeft<=0){
 
 clearInterval(timer);
 
@@ -617,69 +694,81 @@ showCorrectAnswer();
 
 function checkAnswer(selected,btn){
 
-const q = questions[currentQuestion];
+const q=questions[currentQuestion];
 
-const buttons = document.querySelectorAll('.optionBtn');
+const buttons=document.querySelectorAll('.optionBtn');
 
 buttons.forEach(b=>b.disabled=true);
 
-if(selected === q.answer){
+if(selected===q.answer){
 
 btn.classList.add('correct');
 
 score++;
 
-scoreEl.textContent = score;
+scoreEl.textContent=score;
 
-feedback.className = "feedback correctFeedback show";
+feedback.className=
+"feedback correctFeedback";
 
-feedback.innerHTML = "✅ Correct! " + q.explanation;
+feedback.style.display="block";
 
-correctSound.play();
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
 
 createConfetti();
 
 clearInterval(timer);
 
-setTimeout(()=>{
-nextQuestion();
-},1800);
+showNextButton();
 
 }else{
 
 btn.classList.add('wrong');
 
-wrongSound.play();
+playSound(wrongSound);
 
 showCross();
 
 if(!retryUsed){
 
-retryUsed = true;
+retryUsed=true;
 
-feedback.className = "feedback wrongFeedback show";
+hintBox.style.display="block";
 
-feedback.innerHTML = "❌ Try Again! Hint: " + q.hint;
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
 
 buttons.forEach((b,index)=>{
-if(index !== selected){
+
+if(index!==selected){
+
 b.disabled=false;
+
 }
+
 });
 
 }else{
 
-feedback.className = "feedback wrongFeedback show";
-
-feedback.innerHTML = "❌ Correct Answer: <b>" + q.options[q.answer] + "</b><br>" + q.explanation;
-
 buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
 
 clearInterval(timer);
 
-setTimeout(()=>{
-nextQuestion();
-},2600);
+showNextButton();
 
 }
 
@@ -689,27 +778,48 @@ nextQuestion();
 
 function showCorrectAnswer(){
 
-const q = questions[currentQuestion];
+const q=questions[currentQuestion];
 
-const buttons = document.querySelectorAll('.optionBtn');
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
 
 buttons[q.answer].classList.add('correct');
 
-feedback.className = "feedback wrongFeedback show";
+feedback.className=
+"feedback wrongFeedback";
 
-feedback.innerHTML = "⏰ Time Up! Correct Answer: <b>" + q.options[q.answer] + "</b><br>" + q.explanation;
+feedback.style.display="block";
 
-setTimeout(()=>{
-nextQuestion();
-},2600);
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
 
 }
 
-function nextQuestion(){
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
 
 currentQuestion++;
 
-if(currentQuestion < questions.length){
+if(currentQuestion<questions.length){
 
 loadQuestion();
 
@@ -719,6 +829,8 @@ showResults();
 
 }
 
+};
+
 }
 
 function showResults(){
@@ -727,70 +839,62 @@ quizScreen.classList.add('hidden');
 
 resultScreen.classList.remove('hidden');
 
-finalScore.textContent = score + " / " + questions.length;
+const percentage=
+Math.round((score/questions.length)*100);
 
-if(score >= 10){
+let message="";
 
-resultMessage.textContent = "🌟 Excellent work! You understand states of matter very well.";
+if(percentage>=75){
 
-clapSound.play();
+message="🧊 Excellent! You have mastered solids, liquids, gases, particle arrangement, changes of state and condensation.";
 
-createConfettiBurst();
+}else if(percentage>=40){
 
-}else if(score >= 7){
-
-resultMessage.textContent = "👍 Good job! You understand most concepts well.";
+message="💧 Good effort! Review the chapter and try again.";
 
 }else{
 
-resultMessage.textContent = "📘 Keep practicing the concepts of states of matter.";
+message="📚 Keep learning! Revise the concepts of states of matter and attempt again.";
 
 }
 
-}
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
 
-function restartQuiz(){
+document.getElementById('resultMessage').innerHTML=
+message;
 
-currentQuestion = 0;
-score = 0;
-
-scoreEl.textContent = 0;
-
-resultScreen.classList.add('hidden');
-
-quizScreen.classList.remove('hidden');
-
-loadQuestion();
+playSound(clapSound);
 
 }
 
 function createConfetti(){
 
-for(let i=0;i<18;i++){
+for(let i=0;i<25;i++){
 
-const confetti = document.createElement('div');
+const piece=document.createElement('div');
 
-confetti.classList.add('confetti');
+piece.classList.add('confetti');
 
-confetti.style.left = Math.random()*100 + 'vw';
+piece.style.left=
+Math.random()*100+'vw';
 
-confetti.style.animationDuration = (Math.random()*2 + 1) + 's';
+piece.style.background=
+[
+'#38bdf8',
+'#0ea5e9',
+'#a5f3fc',
+'#7dd3fc'
+][Math.floor(Math.random()*4)];
 
-document.body.appendChild(confetti);
+document.body.appendChild(piece);
 
 setTimeout(()=>{
-confetti.remove();
+
+piece.remove();
+
 },2500);
-
-}
-
-}
-
-function createConfettiBurst(){
-
-for(let i=0;i<40;i++){
-
-createConfetti();
 
 }
 
@@ -798,16 +902,18 @@ createConfetti();
 
 function showCross(){
 
-const cross = document.createElement('div');
+const cross=document.createElement('div');
 
 cross.classList.add('cross');
 
-cross.innerHTML = '✖';
+cross.innerHTML='✖';
 
 document.body.appendChild(cross);
 
 setTimeout(()=>{
+
 cross.remove();
+
 },1000);
 
 }
