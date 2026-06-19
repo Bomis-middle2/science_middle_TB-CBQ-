@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Food, Health and Hygiene</title>
 
 <style>
@@ -15,30 +16,46 @@ box-sizing:border-box;
 
 body{
 font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
 
-background-color:#eef9f0;
+background-color:#f8fff5;
 
 background-image:
 
 linear-gradient(
 rgba(255,255,255,0.82),
-rgba(255,255,255,0.86)
+rgba(255,255,255,0.88)
 ),
 
-url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' viewBox='0 0 1200 900'%3E%3Cg opacity='0.22'%3E%3Ctext x='80' y='120' font-size='75'%3E🧬%3C/text%3E%3Ctext x='300' y='200' font-size='70'%3E🔬%3C/text%3E%3Ctext x='550' y='120' font-size='72'%3E🧫%3C/text%3E%3Ctext x='850' y='200' font-size='74'%3E🦠%3C/text%3E%3Ctext x='150' y='420' font-size='72'%3E🌿%3C/text%3E%3Ctext x='450' y='350' font-size='70'%3E🧪%3C/text%3E%3Ctext x='750' y='420' font-size='68'%3E🫀%3C/text%3E%3Ctext x='980' y='350' font-size='72'%3E🧠%3C/text%3E%3Ctext x='220' y='650' font-size='75'%3E🧬%3C/text%3E%3Ctext x='600' y='620' font-size='72'%3E🔬%3C/text%3E%3Ctext x='950' y='650' font-size='74'%3E🌱%3C/text%3E%3Ctext x='100' y='850' font-size='72'%3E🧫%3C/text%3E%3Ctext x='450' y='820' font-size='72'%3E🦠%3C/text%3E%3Ctext x='850' y='820' font-size='72'%3E🧪%3C/text%3E%3C/g%3E%3C/svg%3E");
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='1000'%3E%3Cg opacity='0.15'%3E%3Ctext x='80' y='120' font-size='70'%3E🍎%3C/text%3E%3Ctext x='320' y='220' font-size='70'%3E🥕%3C/text%3E%3Ctext x='620' y='140' font-size='70'%3E🥛%3C/text%3E%3Ctext x='980' y='200' font-size='70'%3E🍌%3C/text%3E%3Ctext x='180' y='450' font-size='70'%3E💧%3C/text%3E%3Ctext x='520' y='380' font-size='70'%3E🍇%3C/text%3E%3Ctext x='850' y='500' font-size='70'%3E🥗%3C/text%3E%3Ctext x='1120' y='420' font-size='70'%3E🍞%3C/text%3E%3Ctext x='150' y='780' font-size='70'%3E🥜%3C/text%3E%3Ctext x='550' y='820' font-size='70'%3E🍉%3C/text%3E%3Ctext x='950' y='760' font-size='70'%3E🧼%3C/text%3E%3C/g%3E%3C/svg%3E");
 
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
-
-overflow-x:hidden;
-min-height:100vh;
-color:#222;
 }
 
-@keyframes bgMove{
-0%{transform:translate(0,0);}
-100%{transform:translate(-200px,-200px);}
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.15;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-1;
+}
+
+.apple{left:8%;top:12%;}
+.carrot{right:12%;top:16%;animation-delay:2s;}
+.milk{left:18%;bottom:18%;animation-delay:4s;}
+.water{right:18%;bottom:22%;animation-delay:6s;}
+.salad{left:45%;top:8%;animation-delay:1s;}
+.soap{right:35%;top:12%;animation-delay:3s;}
+.fruit{left:55%;bottom:10%;animation-delay:5s;}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-20px);}
+100%{transform:translateY(0px);}
 }
 
 #logoScreen{
@@ -53,55 +70,62 @@ z-index:9999;
 
 #logoScreen img{
 width:180px;
-animation:pop 1s ease;
+animation:zoomIn 1s ease;
 }
 
-@keyframes pop{
-0%{
-transform:scale(0.5);
+@keyframes zoomIn{
+from{
+transform:scale(.5);
 opacity:0;
 }
-100%{
+to{
 transform:scale(1);
 opacity:1;
 }
 }
 
 .container{
-max-width:900px;
-margin:20px auto;
+max-width:950px;
+margin:25px auto;
 padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.94);
-padding:24px;
-border-radius:22px;
-box-shadow:0 8px 25px rgba(0,0,0,0.12);
-backdrop-filter:blur(4px);
+background:rgba(255,255,255,.95);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
 }
 
 h1{
 text-align:center;
-color:#0d4c92;
-margin-bottom:10px;
+font-size:2.4rem;
+color:#15803d;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
 }
 
 .btn{
-background:#0d6efd;
+background:#2563eb;
 color:white;
 border:none;
-padding:14px 24px;
+padding:14px 28px;
 border-radius:12px;
 cursor:pointer;
 font-size:1rem;
-margin-top:20px;
-transition:0.3s;
 }
 
 .btn:hover{
-background:#084298;
-transform:scale(1.03);
+background:#1d4ed8;
+}
+
+.hidden{
+display:none;
 }
 
 .topBar{
@@ -112,124 +136,116 @@ gap:10px;
 margin-bottom:20px;
 }
 
+.questionBox,
 .scoreBox,
-.timerBox,
-.questionBox{
-background:#eef5ff;
-padding:10px 16px;
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
 border-radius:12px;
 font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
 }
 
 .question{
-font-size:1.2rem;
-line-height:1.5;
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #ddd;
+border-radius:16px;
+padding:10px;
 margin-bottom:20px;
 }
 
 .options{
 display:grid;
-gap:14px;
+gap:12px;
 }
 
 .optionBtn{
 padding:14px;
 border:none;
-border-radius:14px;
-background:#f3f7ff;
+border-radius:12px;
+background:#f8fafc;
 cursor:pointer;
 font-size:1rem;
 text-align:left;
-transition:0.3s;
-border:2px solid transparent;
+transition:.3s;
 }
 
 .optionBtn:hover{
-background:#dfeeff;
+background:#dbeafe;
 }
 
 .correct{
-background:#d1ffd8 !important;
-border-color:#1f9d47 !important;
+background:#d4f7d9 !important;
+border:2px solid green;
 }
 
 .wrong{
-background:#ffd8d8 !important;
-border-color:#d62828 !important;
+background:#ffd9d9 !important;
+border:2px solid red;
 }
 
 .feedback{
-margin-top:20px;
-padding:14px;
+display:none;
+padding:15px;
+margin-top:15px;
 border-radius:12px;
 font-weight:bold;
-display:none;
-}
-
-.feedback.show{
-display:block;
+line-height:1.6;
 }
 
 .correctFeedback{
-background:#d8ffe0;
-color:#166534;
+background:#d4f7d9;
 }
 
 .wrongFeedback{
-background:#ffe2e2;
-color:#991b1b;
+background:#ffd9d9;
 }
 
-.questionImage{
-width:100%;
-max-height:320px;
-object-fit:contain;
-background:white;
-border-radius:18px;
-margin-bottom:18px;
-padding:10px;
-box-shadow:0 4px 14px rgba(0,0,0,0.12);
-}
-
-.resultScore{
-font-size:2rem;
-text-align:center;
-margin:20px 0;
-color:#0d4c92;
-}
-
-.challenge{
-background:#fff8db;
+.hintBox{
+display:none;
+margin-top:15px;
 padding:14px;
-border-radius:14px;
-border:2px dashed #ffbf00;
-margin-bottom:20px;
-text-align:center;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
 font-weight:bold;
-display:none;
-}
-
-.hidden{
-display:none;
 }
 
 .confetti{
 position:fixed;
 width:12px;
 height:12px;
-background:gold;
-clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+border-radius:50%;
 animation:fall 2s linear forwards;
 z-index:999;
 }
 
 @keyframes fall{
 0%{
-transform:translateY(-20px) rotate(0deg);
+transform:translateY(-20px);
 opacity:1;
 }
 100%{
-transform:translateY(100vh) rotate(720deg);
+transform:translateY(100vh);
 opacity:0;
 }
 }
@@ -239,10 +255,10 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:70px;
+font-size:80px;
 color:red;
 animation:fade 1s forwards;
-z-index:1000;
+z-index:999;
 }
 
 @keyframes fade{
@@ -250,39 +266,42 @@ z-index:1000;
 100%{opacity:0;}
 }
 
-@media(max-width:600px){
-
-.question{
-font-size:1.05rem;
-}
-
-.optionBtn{
-font-size:0.95rem;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
+<div class="floatIcon apple">🍎</div>
+<div class="floatIcon carrot">🥕</div>
+<div class="floatIcon milk">🥛</div>
+<div class="floatIcon water">💧</div>
+<div class="floatIcon salad">🥗</div>
+<div class="floatIcon soap">🧼</div>
+<div class="floatIcon fruit">🍉</div>
+
 <div id="logoScreen">
-<img src="assets/innovine-logo.png" alt="Innovine Logo">
+<img src="assets/innovine-logo.png">
 </div>
 
 <div class="container">
 
-<div id="introScreen" class="card hidden">
+<div id="introScreen" class="card">
 
 <h1>Food, Health and Hygiene</h1>
 
+<h2>Grade 5 Science</h2>
+
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore balanced diet, nutrients,
+healthy eating habits, hygiene,
+safe food practices and water intake
+through 12 competency-based challenges.
+</p>
+
 <div style="text-align:center;margin-top:30px;">
-
 <button class="btn" onclick="startQuiz()">
-Start Quiz
+Start Challenge
 </button>
-
 </div>
 
 </div>
@@ -300,13 +319,13 @@ Score: <span id="score">0</span>
 </div>
 
 <div class="timerBox">
-Time: <span id="timer">45</span>s
+⏳ <span id="timer">45</span>s
 </div>
 
-</div>
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
 
-<div id="challenge" class="challenge">
-⭐ Final Challenge Questions
 </div>
 
 <img id="questionImage" class="questionImage hidden">
@@ -315,7 +334,15 @@ Time: <span id="timer">45</span>s
 
 <div id="optionsContainer" class="options"></div>
 
+<div id="hintBox" class="hintBox"></div>
+
 <div id="feedback" class="feedback"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
 
 </div>
 
@@ -323,12 +350,16 @@ Time: <span id="timer">45</span>s
 
 <h1>Quiz Completed!</h1>
 
-<div class="resultScore" id="finalScore"></div>
+<h2 id="finalScore"></h2>
 
-<p id="resultMessage" style="text-align:center;font-size:1.1rem;"></p>
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
 
-<div style="text-align:center;">
-<button class="btn" onclick="restartQuiz()">Play Again</button>
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
 </div>
 
 </div>
@@ -342,264 +373,305 @@ Time: <span id="timer">45</span>s
 <script>
 
 const questions = [
-
 {
-question:"Riya often skips healthy meals and prefers eating packaged chips and sugary snacks whenever she feels hungry. One day, after returning from school, she wanted to play with her friends but felt very tired and weak by evening. Select the most likely reason for this. ?",
+question:"A student skips breakfast every morning because they wake up late. During the first two classes at school, the student finds it difficult to concentrate and feels tired.\n\nWhat is the most likely reason?",
 options:[
-"Chips digest slowly and block energy release",
-"Chips do not provide all nutrients needed for energy and strength",
-"Sugary food increases strength for a longer time",
-"Chips contain too much roughage"
+"Breakfast makes children sleepy.",
+"The body is not getting enough energy after a long gap without food.",
+"Water causes tiredness.",
+"School bags reduce concentration."
 ],
 answer:1,
-hint:"Think about whether chips provide all nutrients needed.",
-explanation:"Healthy meals provide balanced nutrients needed for energy and strength."
+hint:"Think about the body's energy needs after sleeping all night.",
+explanation:"Breakfast provides energy needed for daily activities and concentration."
 },
 
 {
-question:"Which of the following does NOT belong to the same group based on source?",
+question:"A child eats only noodles and chips every day because they are favourite foods.\n\nWhich health problem is most likely to occur over time?",
 options:[
-"Milk",
-"Eggs",
-"Spinach",
-"Fish"
-],
-answer:2,
-hint:"Think carefully about the source of each food item.",
-explanation:"Spinach is plant-based while the others are animal products."
-},
-
-{
-question:"After an injury, a doctor advises Aarav to eat more dal, eggs, and nuts. Why?",
-options:[
-"To increase body heat",
-"To provide quick energy",
-"To help in growth and repair of body tissues",
-"To improve taste of food"
-],
-answer:2,
-hint:"Which nutrient helps in repair of the body?",
-explanation:"Proteins help in growth and repair of body tissues."
-},
-
-{
-question:"Which student is thinking correctly?",
-options:[
-"Fats are harmful and should be completely avoided.",
-"Only vitamins are needed for good health.",
-"All nutrients are needed in the right amount for good health.",
-"Proteins are only needed by athletes."
-],
-answer:2,
-hint:"Does the body need only one nutrient?",
-explanation:"All nutrients are important in the right amount."
-},
-
-{
-question:"A child drinks very little water and faces digestion problems. Why?",
-options:[
-"Lack of vitamins",
-"Water helps in digestion and transport of nutrients",
-"Too much fat intake",
-"Lack of carbohydrates"
-],
-answer:1,
-hint:"Think about the role of water in the body.",
-explanation:"Water helps in digestion and transport of nutrients."
-},
-
-{
-question:"Meena eats only rice and butter daily and falls sick often. Why?",
-options:[
-"Rice gives too much energy",
-"Butter is harmful",
-"She is not getting all nutrients needed for immunity",
-"She eats too much"
-],
-answer:2,
-hint:"Can one or two foods provide all nutrients?",
-explanation:"A balanced diet is needed for immunity and good health."
-},
-
-{
-question:"You see uncovered food with flies on it. What should you do?",
-options:[
-"Eat it quickly",
-"Avoid eating it as it may contain germs",
-"Remove flies and eat",
-"Only drink water"
-],
-answer:1,
-hint:"Can flies spread germs?",
-explanation:"Flies can spread germs and contaminate food."
-},
-
-{
-question:"Assertion (A): Eating fruits and vegetables daily helps us stay healthy. Reason (R): They provide vitamins and minerals that protect us from diseases.",
-options:[
-"Both A and R are true, and R explains A",
-"Both true but not related",
-"A true, R false",
-"A false, R true"
+"Lack of nutrients needed for healthy growth",
+"Increased immunity",
+"Stronger bones automatically",
+"Better digestion"
 ],
 answer:0,
-hint:"Do vitamins and minerals help protect the body?",
-explanation:"Fruits and vegetables provide protective nutrients."
+hint:"Can one type of food provide all nutrients?",
+explanation:"The body requires different nutrients from different foods for proper growth."
 },
 
 {
-question:"Students fall sick after sharing an unclean water bottle. Why?",
+question:"A football coach advises children to drink water regularly during practice.\n\nWhy?",
 options:[
-"Water increases heat",
-"Germs spread through contaminated water",
-"Water reduces immunity",
-"Drinking water is harmful"
+"Water adds flavour to food.",
+"Water helps replace fluid lost through sweating.",
+"Water increases height instantly.",
+"Water contains proteins."
 ],
 answer:1,
-hint:"How do germs spread from one person to another?",
-explanation:"Dirty bottles can spread germs and infections."
+hint:"What happens when we sweat?",
+explanation:"Water prevents dehydration and helps maintain body functions."
 },
 
 {
-question:"Which is BEST for long-term health?",
+question:"Two students bring lunch to school.\n\nStudent A: Rice, dal, vegetables, curd\nStudent B: Chips, soft drink, chocolate\n\nWhose lunch is more likely to provide balanced nutrition?",
 options:[
-"Chips, soft drink",
-"Rice, dal, vegetables, curd",
-"Only fruits",
-"Bread and butter"
+"Student A",
+"Student B",
+"Both equally",
+"Neither"
+],
+answer:0,
+hint:"Look for variety in food groups.",
+explanation:"A balanced meal contains different nutrients required by the body."
+},
+
+{
+question:"A young athlete is recovering from an injury. The doctor advises eating milk, eggs, pulses, and nuts.\n\nWhy?",
+options:[
+"To improve food colour",
+"To help repair body tissues",
+"To increase sweetness in food",
+"To reduce water intake"
 ],
 answer:1,
-hint:"Which meal contains different nutrients?",
-explanation:"A balanced meal contains a variety of nutrients."
+hint:"Which nutrient helps repair the body?",
+explanation:"Protein-rich foods support growth and repair."
 },
 
 {
-question:"What does this plate BEST represent?",
+question:"A family stores cooked food uncovered on the dining table during summer.\n\nWhich is the biggest risk?",
+options:[
+"Food may become contaminated by germs.",
+"Food becomes healthier.",
+"Food gains more nutrients.",
+"Food loses colour only."
+],
+answer:0,
+hint:"Think about flies and dust.",
+explanation:"Uncovered food can be contaminated by microorganisms."
+},
+{
+question:"A student buys cut fruits from a roadside stall where flies are sitting on the fruits.\n\nWhy should the student avoid eating them?",
+options:[
+"Flies may carry disease-causing germs.",
+"Fruits become sweeter.",
+"Fruits contain less water.",
+"Fruits become heavier."
+],
+answer:0,
+hint:"What can flies transfer from dirty places?",
+explanation:"Flies can spread harmful germs onto food."
+},
+
+{
+question:"Assertion (A):\nWashing hands before eating helps prevent diseases.\n\nReason (R):\nHands may carry germs that can enter the body through food.",
+options:[
+"Both A and R are true and R explains A.",
+"Both true but R does not explain A.",
+"A true, R false.",
+"A false, R true."
+],
+answer:0,
+hint:"Can germs on hands enter the body while eating?",
+explanation:"Handwashing removes germs and reduces disease transmission."
+},
+
+{
+question:"During a sports competition, a student drinks only soft drinks and very little water. By afternoon, the student feels tired and thirsty.\n\nWhich habit would be healthier?",
+options:[
+"Drinking more soft drinks",
+"Drinking water regularly",
+"Avoiding all liquids",
+"Drinking only juice"
+],
+answer:1,
+hint:"Which drink is essential for body functions?",
+explanation:"Water is necessary for digestion, transport, and temperature regulation."
+},
+
+{
+question:"A class is planning a Healthy Tiffin Day.\n\nWhich lunch box best supports the goal?",
+options:[
+"Chips and soft drink",
+"Chocolate and biscuits",
+"Rice, vegetables, dal, and fruit",
+"Candy and juice"
+],
+answer:2,
+hint:"Choose the meal with the greatest variety.",
+explanation:"Balanced meals provide multiple nutrients."
+},
+
+{
+question:"A student wants to stay healthy and active.\n\nWhat important feature is shown in this plate?",
 image:"assets/balanced-diet.png",
 options:[
-"Junk food",
-"Balanced diet",
-"Protein-only diet",
-"Fat-rich diet"
+"Only one food group is needed.",
+"Different food groups should be included in meals.",
+"Sugary foods should be eaten most.",
+"Water is unnecessary."
 ],
 answer:1,
-hint:"Does the plate contain different food groups?",
-explanation:"A balanced diet contains all nutrients in the right amount."
+hint:"Observe the variety of foods.",
+explanation:"Balanced meals contain foods from different groups."
 },
 
 {
-question:"What is the biggest concern in this situation?",
+question:"A family notices flies repeatedly sitting on uncovered food.\n\nWhat should they do first?",
 image:"assets/unhygenic-food.png",
 options:[
-"Food is too hot",
-"Food may be contaminated with germs",
-"Food has fewer nutrients",
-"Food is expensive"
+"Ignore the flies",
+"Cover the food properly",
+"Add more spices",
+"Eat the food quickly"
 ],
 answer:1,
-hint:"What happens when food is left uncovered?",
-explanation:"Uncovered food may get contaminated with germs."
+hint:"How can contamination be prevented?",
+explanation:"Covering food prevents germs carried by flies from contaminating it."
 }
 
 ];
-
-let currentQuestion = 0;
-let score = 0;
-let retryUsed = false;
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
 let timer;
-let timeLeft = 45;
+let timeLeft=45;
+let soundEnabled=true;
 
-const introScreen = document.getElementById('introScreen');
-const quizScreen = document.getElementById('quizScreen');
-const resultScreen = document.getElementById('resultScreen');
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
 
-const qNo = document.getElementById('qNo');
-const scoreEl = document.getElementById('score');
-const timerEl = document.getElementById('timer');
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
 
-const questionText = document.getElementById('questionText');
-const optionsContainer = document.getElementById('optionsContainer');
-const feedback = document.getElementById('feedback');
-const questionImage = document.getElementById('questionImage');
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
 
-const finalScore = document.getElementById('finalScore');
-const resultMessage = document.getElementById('resultMessage');
-
-const correctSound = document.getElementById('correctSound');
-const wrongSound = document.getElementById('wrongSound');
-const clapSound = document.getElementById('clapSound');
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
 
 setTimeout(()=>{
+
 document.getElementById('logoScreen').style.display='none';
-introScreen.classList.remove('hidden');
+
 },5000);
 
+document.getElementById('muteBtn').onclick=()=>{
+
+soundEnabled=!soundEnabled;
+
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
+};
+
+function playSound(audio){
+
+if(soundEnabled){
+
+audio.currentTime=0;
+audio.play();
+
+}
+
+}
+
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
+}
+
+}
+
 function startQuiz(){
+
+shuffleQuestions();
+
 introScreen.classList.add('hidden');
 quizScreen.classList.remove('hidden');
+
 loadQuestion();
+
 }
 
 function loadQuestion(){
 
 clearInterval(timer);
 
-timeLeft = 45;
-timerEl.textContent = timeLeft;
+timeLeft=45;
+timerEl.textContent=timeLeft;
 
-retryUsed = false;
+retryUsed=false;
 
-startTimer();
+feedback.innerHTML="";
+feedback.style.display="none";
 
-const q = questions[currentQuestion];
+hintBox.innerHTML="";
+hintBox.style.display="none";
 
-qNo.textContent = currentQuestion + 1;
+nextBtn.classList.add('hidden');
 
-questionText.textContent = q.question;
+const q=questions[currentQuestion];
 
-optionsContainer.innerHTML = "";
+qNo.textContent=currentQuestion+1;
 
-feedback.className = "feedback";
-feedback.innerHTML = "";
+questionText.innerHTML=q.question;
 
-if(currentQuestion >= 9){
-document.getElementById('challenge').style.display = 'block';
-}else{
-document.getElementById('challenge').style.display = 'none';
-}
+optionsContainer.innerHTML="";
 
 if(q.image){
-questionImage.src = q.image;
+
+questionImage.src=q.image;
+questionImage.style.display="block";
 questionImage.classList.remove('hidden');
+
 }else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
 questionImage.classList.add('hidden');
+
 }
 
 q.options.forEach((option,index)=>{
 
-const btn = document.createElement('button');
+const btn=document.createElement('button');
 
 btn.classList.add('optionBtn');
 
-btn.textContent = option;
+btn.textContent=option;
 
-btn.onclick = ()=>checkAnswer(index,btn);
+btn.onclick=()=>checkAnswer(index,btn);
 
 optionsContainer.appendChild(btn);
 
 });
 
-}
+startTimer();
 
+}
 function startTimer(){
 
-timer = setInterval(()=>{
+timer=setInterval(()=>{
 
 timeLeft--;
 
-timerEl.textContent = timeLeft;
+timerEl.textContent=timeLeft;
 
-if(timeLeft <= 0){
+if(timeLeft<=0){
 
 clearInterval(timer);
 
@@ -613,69 +685,81 @@ showCorrectAnswer();
 
 function checkAnswer(selected,btn){
 
-const q = questions[currentQuestion];
+const q=questions[currentQuestion];
 
-const buttons = document.querySelectorAll('.optionBtn');
+const buttons=document.querySelectorAll('.optionBtn');
 
 buttons.forEach(b=>b.disabled=true);
 
-if(selected === q.answer){
+if(selected===q.answer){
 
 btn.classList.add('correct');
 
 score++;
 
-scoreEl.textContent = score;
+scoreEl.textContent=score;
 
-feedback.className = "feedback correctFeedback show";
+feedback.className=
+"feedback correctFeedback";
 
-feedback.innerHTML = "✅ Correct! " + q.explanation;
+feedback.style.display="block";
 
-correctSound.play();
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
 
 createConfetti();
 
 clearInterval(timer);
 
-setTimeout(()=>{
-nextQuestion();
-},1800);
+showNextButton();
 
 }else{
 
 btn.classList.add('wrong');
 
-wrongSound.play();
+playSound(wrongSound);
 
 showCross();
 
 if(!retryUsed){
 
-retryUsed = true;
+retryUsed=true;
 
-feedback.className = "feedback wrongFeedback show";
+hintBox.style.display="block";
 
-feedback.innerHTML = "❌ Try Again! Hint: " + q.hint;
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
 
 buttons.forEach((b,index)=>{
-if(index !== selected){
+
+if(index!==selected){
+
 b.disabled=false;
+
 }
+
 });
 
 }else{
 
-feedback.className = "feedback wrongFeedback show";
-
-feedback.innerHTML = "❌ Correct Answer: <b>" + q.options[q.answer] + "</b><br>" + q.explanation;
-
 buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
 
 clearInterval(timer);
 
-setTimeout(()=>{
-nextQuestion();
-},2600);
+showNextButton();
 
 }
 
@@ -685,27 +769,48 @@ nextQuestion();
 
 function showCorrectAnswer(){
 
-const q = questions[currentQuestion];
+const q=questions[currentQuestion];
 
-const buttons = document.querySelectorAll('.optionBtn');
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
 
 buttons[q.answer].classList.add('correct');
 
-feedback.className = "feedback wrongFeedback show";
+feedback.className=
+"feedback wrongFeedback";
 
-feedback.innerHTML = "⏰ Time Up! Correct Answer: <b>" + q.options[q.answer] + "</b><br>" + q.explanation;
+feedback.style.display="block";
 
-setTimeout(()=>{
-nextQuestion();
-},2600);
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
 
 }
 
-function nextQuestion(){
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
 
 currentQuestion++;
 
-if(currentQuestion < questions.length){
+if(currentQuestion<questions.length){
 
 loadQuestion();
 
@@ -715,6 +820,8 @@ showResults();
 
 }
 
+};
+
 }
 
 function showResults(){
@@ -723,70 +830,62 @@ quizScreen.classList.add('hidden');
 
 resultScreen.classList.remove('hidden');
 
-finalScore.textContent = score + " / " + questions.length;
+const percentage=
+Math.round((score/questions.length)*100);
 
-if(score >= 10){
+let message="";
 
-resultMessage.textContent = "🌟 Excellent work! You have a strong understanding of healthy food and hygiene.";
+if(percentage>=75){
 
-clapSound.play();
+message="🥗 Excellent! You have mastered healthy eating, balanced diets, hygiene and good food habits.";
 
-createConfettiBurst();
+}else if(percentage>=40){
 
-}else if(score >= 7){
-
-resultMessage.textContent = "👍 Good job! You understand most concepts well.";
+message="🍎 Good effort! Review the chapter and try again.";
 
 }else{
 
-resultMessage.textContent = "📘 Keep practicing healthy habits and nutrition concepts.";
+message="📚 Keep learning! Revise the concepts and attempt again.";
 
 }
 
-}
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
 
-function restartQuiz(){
+document.getElementById('resultMessage').innerHTML=
+message;
 
-currentQuestion = 0;
-score = 0;
-
-scoreEl.textContent = 0;
-
-resultScreen.classList.add('hidden');
-
-quizScreen.classList.remove('hidden');
-
-loadQuestion();
+playSound(clapSound);
 
 }
 
 function createConfetti(){
 
-for(let i=0;i<18;i++){
+for(let i=0;i<25;i++){
 
-const confetti = document.createElement('div');
+const piece=document.createElement('div');
 
-confetti.classList.add('confetti');
+piece.classList.add('confetti');
 
-confetti.style.left = Math.random()*100 + 'vw';
+piece.style.left=
+Math.random()*100+'vw';
 
-confetti.style.animationDuration = (Math.random()*2 + 1) + 's';
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#f59e0b',
+'#ef4444'
+][Math.floor(Math.random()*4)];
 
-document.body.appendChild(confetti);
+document.body.appendChild(piece);
 
 setTimeout(()=>{
-confetti.remove();
+
+piece.remove();
+
 },2500);
-
-}
-
-}
-
-function createConfettiBurst(){
-
-for(let i=0;i<40;i++){
-
-createConfetti();
 
 }
 
@@ -794,16 +893,18 @@ createConfetti();
 
 function showCross(){
 
-const cross = document.createElement('div');
+const cross=document.createElement('div');
 
 cross.classList.add('cross');
 
-cross.innerHTML = '✖';
+cross.innerHTML='✖';
 
 document.body.appendChild(cross);
 
 setTimeout(()=>{
+
 cross.remove();
+
 },1000);
 
 }
