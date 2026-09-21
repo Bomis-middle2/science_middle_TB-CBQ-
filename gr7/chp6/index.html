@@ -1,1361 +1,338 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Change Lab — Grade 7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Changes Around Us</title>
 
 <style>
-*{box-sizing:border-box}
-:root{
-  --navy:#173f52;
-  --teal:#16746d;
-  --teal2:#2f9789;
-  --mint:#e9f6f2;
-  --sky:#eaf6fb;
-  --gold:#d59b31;
-  --gold2:#f5c95c;
-  --green:#378c63;
-  --greenSoft:#e7f5eb;
-  --red:#bd5a50;
-  --redSoft:#fff0ec;
-  --ink:#263c49;
-  --muted:#69808a;
-  --line:#d6e3e7;
-  --white:#fff;
-  --shadow:0 14px 34px rgba(34,70,78,.12);
-}
-html,body{
-  margin:0;
-  min-height:100%;
-  font-family:Arial,sans-serif;
-  color:var(--ink);
-  background:
-    radial-gradient(circle at top left,#f4fbf9 0,transparent 34%),
-    linear-gradient(#e8f1f2,#f8fbfb);
-}
-body{overflow-x:hidden}
-button{font:inherit;cursor:pointer;touch-action:manipulation}
-button:focus-visible{outline:3px solid #c77c28;outline-offset:3px}
-button:disabled{cursor:default}
-[hidden]{display:none!important}
-h1,h2,h3,p{margin:0}
-p{line-height:1.42}
 
-.screen{
-  min-height:100vh;
-  min-height:100dvh;
-  padding:14px;
-  display:grid;
-  place-items:center;
-}
-.shell{width:min(1120px,100%)}
-.eyebrow{
-  font-size:10px;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:#55787c;
-  font-weight:900;
-}
-.primary,.secondary{
-  border-radius:12px;
-  min-height:44px;
-  padding:10px 16px;
-  font-weight:900;
-}
-.primary{
-  border:0;
-  background:linear-gradient(#24877d,#17675f);
-  color:#fff;
-  box-shadow:0 4px 0 #105049;
-}
-.primary:active{transform:translateY(2px);box-shadow:0 2px 0 #105049}
-.secondary{
-  border:1px solid #bbced2;
-  background:#fff;
-  color:#355b62;
-}
-.iconBtn{
-  width:40px;height:40px;padding:0;
-  border:0;border-radius:11px;
-  background:#fff;
-  box-shadow:0 5px 14px rgba(35,70,78,.08);
-  color:#245666;
-  font-weight:900;
-}
-.small{font-size:11px;color:var(--muted)}
-
-/* SPLASH */
-#splash{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:grid;
-  place-items:center;
-  background:#fff;
-  transition:opacity .35s ease,visibility .35s ease;
-}
-#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
-#splash img{width:155px;max-width:44vw}
-
-/* INTRO */
-.welcome{
-  width:min(860px,100%);
-  overflow:hidden;
-  border-radius:28px;
-  background:#fff;
-  box-shadow:var(--shadow);
-}
-.hero{
-  position:relative;
-  min-height:340px;
-  padding:76px 24px 22px;
-  text-align:center;
-  background:
-    radial-gradient(circle at 20% 15%,rgba(255,255,255,.9),transparent 35%),
-    linear-gradient(145deg,#e8f7f2,#dbeef3);
-}
-.heroLogo{
-  position:absolute;
-  left:18px;top:15px;
-  width:108px;
-  padding:6px;
-  border-radius:12px;
-  background:#fff;
-  box-shadow:0 7px 18px rgba(32,70,78,.08);
-}
-.hero h1{
-  margin:8px 0 6px;
-  font-size:clamp(48px,8vw,76px);
-  line-height:.9;
-  letter-spacing:-2px;
-  color:var(--navy);
-}
-.hero h1 span{display:block;color:var(--teal)}
-.heroPill{
-  display:inline-block;
-  margin-top:12px;
-  padding:8px 16px;
-  border-radius:999px;
-  color:#fff;
-  background:#215e64;
-  font-size:13px;
-  font-weight:900;
-}
-.heroTiles{
-  width:min(540px,92%);
-  margin:22px auto 0;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-.heroTile{
-  min-height:88px;
-  display:grid;
-  place-items:center;
-  border:2px solid #bdd8d2;
-  border-radius:17px;
-  background:rgba(255,255,255,.82);
-  font-size:34px;
-}
-.introBody{
-  padding:20px 22px 24px;
-  text-align:center;
-}
-.introLead{
-  max-width:680px;
-  margin:auto;
-  color:#536f79;
-  font-size:16px;
-}
-.flow{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin:15px 0 18px;
-}
-.flow div{
-  padding:9px 7px;
-  border:1px solid #d5e3e6;
-  border-radius:12px;
-  background:#f7fbfb;
-  color:#405f66;
-  font-weight:900;
-}
-.safety{margin-top:10px;font-size:10px;color:#6d8088}
-
-/* MAP */
-.pageHead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:11px;
-}
-.pageHead h1{font-size:27px;margin-top:3px}
-.headActions{display:flex;gap:7px;align-items:center}
-.pill{
-  padding:7px 10px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:900;
-}
-.pill.green{background:#d9ece4;color:#1b604f}
-.pill.gold{background:#fff1c9;color:#7d5a18}
-.stationGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:11px;
-}
-.station{
-  position:relative;
-  min-height:220px;
-  padding:14px;
-  border:2px solid #d7e3e6;
-  border-radius:18px;
-  background:#fff;
-  color:var(--ink);
-  text-align:left;
-  box-shadow:0 7px 20px rgba(34,70,78,.06);
-  transition:.2s ease;
-}
-.station:hover{
-  transform:translateY(-3px);
-  border-color:#5c998c;
-  box-shadow:0 11px 28px rgba(34,70,78,.1);
-}
-.station.done{border-color:#6dae88;background:#fbfffc}
-.station.done::after{
-  content:"✓";
-  position:absolute;
-  top:10px;right:10px;
-  width:26px;height:26px;
-  display:grid;place-items:center;
-  border-radius:50%;
-  background:#3b9469;
-  color:#fff;
-  font-weight:900;
-}
-.stationVisual{
-  height:100px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  background:linear-gradient(#f5fafb,#eef5f6);
-  overflow:hidden;
-}
-.stationVisual svg{width:94%;height:90px}
-.station h2{font-size:19px;margin:7px 0 4px}
-.station p{font-size:12px;color:#637b86}
-.stationMeta{
-  display:flex;
-  justify-content:space-between;
-  gap:6px;
-  align-items:center;
-  margin-top:10px;
-}
-.openText{
-  color:#227568;
-  font-size:10px;
-  font-weight:900;
-}
-.stationScore{
-  padding:3px 6px;
-  border-radius:999px;
-  background:#eef5f7;
-  color:#58707a;
-  font-size:8px;
-  font-weight:900;
-}
-.ruleCard{
-  min-height:220px;
-  padding:17px;
-  border-radius:18px;
-  background:linear-gradient(160deg,#245963,#163f47);
-  color:#fff;
-}
-.ruleCard p{margin-top:9px;color:#dcebea;font-size:12px}
-.award{
-  margin-bottom:11px;
-  padding:10px 11px;
-  border:1px solid #9fc4aa;
-  border-radius:11px;
-  background:#e7f3e9;
-  color:#2d624f;
-  font-size:12px;
-}
-.mapFoot{margin-top:12px;text-align:center;font-size:11px;color:#61767e}
-
-/* LAB APP */
-.labApp{
-  width:min(1120px,100%);
-  border-radius:22px;
-  background:#fff;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-.labHeader{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:10px;
-  align-items:center;
-  padding:10px 12px;
-  border-bottom:1px solid #dce7e9;
-  background:linear-gradient(#fff,#f8fbfb);
-}
-.labHeaderTitle{text-align:center}
-.labHeaderTitle h1{font-size:21px}
-.labHeaderTitle .eyebrow{margin-bottom:2px}
-.scoreMini{
-  padding:7px 9px;
-  border-radius:999px;
-  background:#fff0c7;
-  color:#7a5919;
-  font-size:9px;
-  font-weight:900;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-/* phase rail */
-.phaseRail{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:5px;
-  padding:7px 10px;
-  background:#f4f8f9;
-  border-bottom:1px solid #dce7e9;
-}
-.phaseStep{
-  position:relative;
-  padding:6px;
-  border-radius:9px;
-  background:#e8eff1;
-  color:#6e8088;
-  text-align:center;
-  font-size:8px;
-  font-weight:900;
-}
-.phaseStep.active{
-  background:#dff1eb;
-  color:#216b5a;
-}
-.phaseStep.done{
-  background:#e7f5eb;
-  color:#2f7657;
-}
-.phaseStep.done::before{content:"✓ ";}
-
-/* main lab content */
-.labContent{padding:10px}
-.challenge{
-  margin-bottom:8px;
-  padding:8px 10px;
-  border-left:4px solid #3d8a7b;
-  border-radius:8px;
-  background:#eaf4f1;
-  font-size:12px;
-  line-height:1.35;
-}
-.challenge strong{
-  display:block;
-  margin-bottom:2px;
-  font-size:8px;
-  letter-spacing:1px;
-  color:#4f776f;
-}
-.experimentGrid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 180px 285px;
-  gap:8px;
+body{
+font-family:Arial,sans-serif;
+min-height:100vh;
+overflow-x:hidden;
+background:linear-gradient(
+180deg,
+#eefcff 0%,
+#f7fdff 40%,
+#ffffff 100%
+);
+position:relative;
 }
 
-/* LIVE EXPERIMENT */
-.livePanel{
-  min-width:0;
-  border:1px solid #d4e2e5;
-  border-radius:15px;
-  background:#fbfdfd;
-  padding:8px;
-}
-.stage{
-  position:relative;
-  height:300px;
-  overflow:hidden;
-  border:2px solid #cddfe3;
-  border-radius:14px;
-  background:linear-gradient(#f9fcfd 0 77%,#d5e2e4 77% 82%,#eef3f4 82%);
-}
-.stageTop{
-  position:absolute;
-  top:7px;left:7px;
-  z-index:4;
-  display:flex;
-  gap:5px;
-}
-.liveTag,.stateTag{
-  padding:4px 7px;
-  border-radius:999px;
-  font-size:7px;
-  font-weight:900;
-}
-.liveTag{background:#fff;border:1px solid #d0dfe2;color:#57717c}
-.stateTag{background:#e2f1ec;color:#236c60}
-.stageVisual{
-  position:absolute;
-  inset:36px 14px 40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.stageVisual svg{
-  width:92%;
-  height:100%;
-  filter:drop-shadow(0 8px 4px rgba(34,74,82,.08));
-}
-.sampleName{
-  position:absolute;
-  left:0;right:0;bottom:11px;
-  text-align:center;
-  font-size:14px;
-  font-weight:900;
-  color:#385966;
-}
-.actionOverlay{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(247,253,253,.66);
-}
-.stage.busy .actionOverlay{display:flex}
-.actionCard{
-  min-width:145px;
-  padding:11px 15px;
-  border:2px solid #b8d5cf;
-  border-radius:12px;
-  background:#fff;
-  box-shadow:0 7px 18px rgba(31,73,79,.1);
-  color:#1f655e;
-  text-align:center;
-  font-weight:900;
-}
-.actionIcon{display:block;font-size:27px;margin-bottom:3px}
-.stage.busy.heating{background:linear-gradient(#fff4e2 0 77%,#e7cdaa 77% 82%,#f4e4d2 82%)}
-.stage.busy.cooling{background:linear-gradient(#e6f6ff 0 77%,#c4dae7 77% 82%,#e9f3f8 82%)}
-.stage.busy .stageVisual{animation:work .35s ease-in-out infinite alternate}
-@keyframes work{to{transform:translateY(-4px)}}
-.stage.flash{animation:flash .42s ease}
-@keyframes flash{50%{box-shadow:inset 0 0 0 999px rgba(255,255,255,.35)}}
+/* SCIENCE BACKGROUND */
 
-.progressRow{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:8px;
-  align-items:center;
-  margin-top:6px;
-}
-.stepStrip{
-  display:grid;
-  grid-template-columns:repeat(var(--steps,4),1fr);
-  gap:4px;
-}
-.stepStrip span{
-  height:7px;border-radius:999px;background:#dfe9ed;
-}
-.stepStrip span.done{background:#3b947f}
-.stepStrip span.current{background:#d3a23c}
-.stepCaption{font-size:8px;color:#607782}
-
-/* TOOL RAIL RIGHT OF EXPERIMENT */
-.toolPanel{
-  padding:8px;
-  border:1px solid #d4e2e5;
-  border-radius:15px;
-  background:linear-gradient(#f9fcfc,#f1f7f7);
-}
-.toolPanel h2{text-align:center;font-size:12px;color:#315d63}
-.toolPanel p{
-  margin:2px 0 6px;
-  text-align:center;
-  color:#73878e;
-  font-size:7px;
-}
-.tools{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:5px;
-}
-.tool{
-  min-height:52px;
-  padding:6px 4px;
-  border:1.5px solid #cbdcdf;
-  border-radius:9px;
-  background:#fff;
-  color:#315661;
-  text-align:center;
-  font-size:9px;
-  font-weight:900;
-  transition:.18s ease;
-}
-.tool:hover:not(:disabled){
-  transform:translateY(-2px);
-  border-color:#4d9180;
-  background:#eef7f4;
-}
-.toolIcon{display:block;font-size:18px;margin-bottom:2px}
-.tool.recommended{
-  border-color:#d5a33b;
-  background:#fff6df;
-  box-shadow:0 0 0 3px rgba(214,163,61,.1);
-}
-.tool.used{border-color:#6cad86;background:#eaf6ee}
-.tool:disabled{opacity:.6}
-
-/* PANEL 3 */
-.infoPanel{
-  min-width:0;
-  border:1px solid #d4e2e5;
-  border-radius:15px;
-  background:#fff;
-  padding:9px;
-}
-.infoPanel h2{font-size:14px}
-.infoSub{margin-top:2px;font-size:8px;color:#70838b}
-.journal{
-  min-height:82px;
-  margin-top:8px;
-  padding:8px 9px;
-  border-left:4px solid #9ab6bf;
-  border-radius:9px;
-  background:#f3f7f9;
-  font-size:10px;
-  line-height:1.38;
-}
-.journal strong{
-  display:block;
-  margin-bottom:3px;
-  font-size:7px;
-  letter-spacing:1px;
-  color:#5f7882;
-}
-.journal.notice{background:#fff5e3;border-color:#c69438}
-.journal.success{background:#e8f5eb;border-color:#3d8e67}
-.discovery{
-  margin-top:7px;
-  padding:7px 8px;
-  border:1px solid #d9e5e8;
-  border-radius:9px;
-  background:#fff;
-}
-.discoveryLabel{font-size:7px;letter-spacing:1px;font-weight:900;color:#607984}
-.discoveryText{margin-top:3px;font-size:9px;line-height:1.35;color:#536b75}
-.infoActions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5px;
-  margin-top:7px;
-}
-.hintText{
-  margin-top:6px;
-  padding:7px;
-  border-radius:8px;
-  background:#fff5df;
-  color:#7d602a;
-  font-size:9px;
+.bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:-5;
 }
 
-/* assessment */
-.assessmentWrap{display:grid;gap:7px}
-.assessmentTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:6px;
+.floatIcon{
+position:fixed;
+font-size:42px;
+opacity:.16;
+animation:float 14s ease-in-out infinite;
+pointer-events:none;
+z-index:-4;
 }
-.assessmentPill{
-  padding:4px 7px;
-  border-radius:999px;
-  background:#eaf5fb;
-  color:#316f97;
-  font-size:8px;
-  font-weight:900;
+
+.ice{left:8%;top:15%;}
+.water{right:10%;top:20%;animation-delay:2s;}
+.steam{left:15%;bottom:18%;animation-delay:4s;}
+.flask{right:18%;bottom:22%;animation-delay:6s;}
+.fire{left:50%;top:12%;animation-delay:1s;}
+.rust{right:35%;top:10%;animation-delay:3s;}
+.lab{left:35%;bottom:12%;animation-delay:5s;}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
 }
-.qBar{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:4px;
+
+50%{
+transform:translateY(-20px);
 }
-.qBar span{height:6px;border-radius:999px;background:#e1e9ec}
-.qBar span.done{background:#3d8f69}
-.qBar span.current{background:#d5a13a}
-.qType{
-  color:#617a83;
-  font-size:7px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  font-weight:900;
+
+100%{
+transform:translateY(0px);
 }
-.qText{
-  margin-top:4px;
-  font-size:12px;
-  line-height:1.32;
-  font-weight:900;
+
 }
+
+.spark{
+position:absolute;
+font-size:26px;
+opacity:.12;
+animation:sparkle linear infinite;
+}
+
+.s1{left:10%;top:25%;animation-duration:10s;}
+.s2{left:30%;top:70%;animation-duration:12s;}
+.s3{left:60%;top:20%;animation-duration:11s;}
+.s4{left:80%;top:65%;animation-duration:13s;}
+.s5{left:50%;top:45%;animation-duration:9s;}
+
+@keyframes sparkle{
+
+0%{
+transform:scale(.7);
+opacity:.05;
+}
+
+50%{
+transform:scale(1.2);
+opacity:.18;
+}
+
+100%{
+transform:scale(.7);
+opacity:.05;
+}
+
+}
+
+#logoScreen{
+position:fixed;
+inset:0;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+#logoScreen img{
+width:180px;
+animation:zoomIn 1s ease;
+}
+
+@keyframes zoomIn{
+
+from{
+transform:scale(.5);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+.container{
+max-width:950px;
+margin:25px auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.94);
+backdrop-filter:blur(8px);
+padding:28px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+color:#1565c0;
+}
+
+h2{
+text-align:center;
+margin-top:10px;
+color:#444;
+}
+
+.btn{
+background:#1565c0;
+color:white;
+border:none;
+padding:14px 28px;
+border-radius:12px;
+cursor:pointer;
+font-size:1rem;
+}
+
+.btn:hover{
+background:#0d47a1;
+}
+
+.hidden{
+display:none;
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.questionBox,
+.scoreBox,
+.timerBox{
+background:#dbeafe;
+padding:10px 18px;
+border-radius:12px;
+font-weight:bold;
+color:#0d47a1;
+}
+
+.audioBtn{
+background:#555;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.question{
+font-size:1.15rem;
+line-height:1.8;
+margin-bottom:20px;
+white-space:pre-line;
+}
+
+.questionImage{
+width:100%;
+max-height:380px;
+object-fit:contain;
+background:white;
+border:2px solid #bbdefb;
+border-radius:16px;
+padding:10px;
+margin-bottom:20px;
+}
+
 .options{
-  display:grid;
-  gap:5px;
-  margin-top:7px;
-}
-.option{
-  min-height:39px;
-  padding:7px 8px;
-  border:1.5px solid #cedde1;
-  border-radius:8px;
-  background:#fff;
-  color:#355560;
-  text-align:left;
-  font-size:9px;
-  font-weight:900;
-}
-.option:hover:not(:disabled){border-color:#4b9180;background:#eef8f4}
-.option.correct{border-color:#4d9a6a;background:#e5f4e9;color:#2d6747}
-.option.wrong{border-color:#c96b5e;background:#fff0ec;color:#8d453c}
-.assessFeedback{
-  min-height:48px;
-  padding:7px;
-  border-radius:8px;
-  background:#f4f7f8;
-  border:1px solid #dde5e8;
-  font-size:9px;
-  line-height:1.34;
-}
-.assessFeedback.good{background:#e8f5eb;border-color:#8fc4a0}
-.assessFeedback.bad{background:#fff0ec;border-color:#e2a79b}
-.nextQ{
-  width:100%;
-  border:0;
-  border-radius:8px;
-  padding:8px;
-  background:#2e8a61;
-  color:#fff;
-  font-weight:900;
-  font-size:9px;
+display:grid;
+gap:12px;
 }
 
-/* report */
-.reportCard{
-  padding:10px;
-  border:1px solid #cfe2d8;
-  border-radius:10px;
-  background:linear-gradient(#f8fcfb,#eef7f3);
-}
-.reportScore{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin:8px 0;
-}
-.reportScore strong{font-size:27px;color:#246d55}
-.reportMeter{
-  flex:1;
-  height:9px;
-  border-radius:999px;
-  background:#dce8e2;
-  overflow:hidden;
-}
-.reportMeter span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,#3f9a70,#77b98f);
-}
-.reportText{font-size:9px;color:#596e77}
-.reportConclusion{
-  margin-top:7px;
-  padding:7px;
-  border-radius:8px;
-  background:#fff;
-  border:1px solid #d9e5e1;
-  font-size:9px;
-  line-height:1.35;
-}
-.reportActions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5px;
-  margin-top:8px;
+.optionBtn{
+padding:14px;
+border:none;
+border-radius:12px;
+background:#f8fafc;
+cursor:pointer;
+font-size:1rem;
+text-align:left;
+transition:.3s;
 }
 
-/* FINAL */
-.finalCard{
-  width:min(760px,100%);
-  padding:24px;
-  border-radius:24px;
-  background:#fff;
-  box-shadow:var(--shadow);
-  text-align:center;
-}
-.finalCard img{width:92px}
-.finalCard h1{margin:6px 0;color:var(--navy)}
-.finalScore{
-  margin:12px auto 6px;
-  font-size:42px;
-  font-weight:900;
-  color:#236d55;
-}
-.finalBand{
-  display:inline-block;
-  padding:7px 12px;
-  border-radius:999px;
-  background:#fff1c8;
-  color:#755619;
-  font-weight:900;
-}
-.resultGrid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-  margin:15px 0;
-}
-.resultTile{
-  padding:8px 4px;
-  border-radius:9px;
-  background:#f5f8f9;
-  border:1px solid #dce6e8;
-  font-size:8px;
-}
-.resultTile strong{display:block;margin-top:3px;font-size:13px;color:#2e6b55}
-.finalActions{display:flex;justify-content:center;gap:7px}
-
-/* CONFETTI */
-.celebration{
-  position:fixed;
-  inset:0;
-  z-index:900;
-  pointer-events:none;
-  overflow:hidden;
-}
-.celebration i{
-  position:absolute;
-  top:-20px;
-  width:9px;height:14px;
-  animation:fall 2.8s linear forwards;
-}
-@keyframes fall{to{transform:translateY(110vh) rotate(400deg)}}
-
-/* ======================= MOBILE APP MODE ======================= */
-@media(max-width:760px){
-  body{background:#edf5f5}
-  .screen{
-    min-height:100dvh;
-    padding:6px;
-    place-items:start center;
-  }
-
-  /* intro */
-  .welcome{margin:auto;border-radius:20px}
-  .hero{min-height:300px;padding:92px 14px 18px}
-  .heroLogo{
-    left:50%;top:8px;
-    transform:translateX(-50%);
-    width:76px;
-    padding:4px;
-  }
-  .hero h1{font-size:36px}
-  .heroPill{font-size:10px;padding:6px 10px}
-  .heroTiles{margin-top:16px;gap:6px}
-  .heroTile{min-height:62px;border-radius:12px;font-size:24px}
-  .introBody{padding:14px 12px 16px}
-  .introLead{font-size:13px}
-  .flow{grid-template-columns:1fr 1fr;gap:6px;margin:11px 0 14px}
-  .flow div{font-size:10px;padding:7px 5px}
-  .primary,.secondary{min-height:40px;padding:8px 11px;font-size:10px}
-
-  /* map */
-  .pageHead{
-    align-items:flex-start;
-    margin-bottom:7px;
-  }
-  .pageHead h1{font-size:19px}
-  .headActions{gap:4px;flex-wrap:wrap;justify-content:flex-end}
-  .pill{font-size:8px;padding:5px 6px}
-  .stationGrid{grid-template-columns:1fr 1fr;gap:6px}
-  .station,.ruleCard{
-    min-height:162px;
-    padding:8px;
-    border-radius:12px;
-  }
-  .stationVisual{height:56px;border-radius:8px}
-  .stationVisual svg{height:52px}
-  .station h2{font-size:13px;margin:5px 0 3px}
-  .station p{font-size:8px;line-height:1.25}
-  .stationMeta{margin-top:6px;display:block}
-  .openText{font-size:7px}
-  .stationScore{display:inline-block;margin-top:4px;font-size:6px}
-  .ruleCard p{font-size:8px;line-height:1.3}
-  .mapFoot{font-size:8px;margin-top:7px}
-
-  /* app shell */
-  #lab.screen{padding:0}
-  .labApp{
-    width:100%;
-    min-height:100dvh;
-    border-radius:0;
-    box-shadow:none;
-  }
-  .labHeader{
-    grid-template-columns:34px 1fr auto;
-    gap:5px;
-    padding:6px;
-    position:sticky;
-    top:0;
-    z-index:20;
-  }
-  .iconBtn{width:32px;height:32px;border-radius:8px;font-size:11px}
-  .labHeaderTitle h1{font-size:14px}
-  .labHeaderTitle .eyebrow{font-size:6px}
-  .scoreMini{font-size:6px;padding:5px 6px}
-  .phaseRail{padding:4px 5px;gap:3px}
-  .phaseStep{padding:4px 2px;border-radius:6px;font-size:6px}
-  .labContent{padding:5px}
-  .challenge{
-    margin-bottom:5px;
-    padding:6px 7px;
-    font-size:9px;
-    border-radius:6px;
-  }
-  .challenge strong{font-size:6px}
-
-  /* key mobile layout: live experiment + tools right, info below but compact */
-  .experimentGrid{
-    grid-template-columns:minmax(0,1fr) 94px;
-    grid-template-areas:
-      "live tools"
-      "info info";
-    gap:5px;
-  }
-  .livePanel{grid-area:live;padding:4px;border-radius:9px}
-  .toolPanel{grid-area:tools;padding:4px;border-radius:9px}
-  .infoPanel{grid-area:info;padding:6px;border-radius:9px}
-
-  .stage{height:190px;border-radius:8px}
-  .stageTop{top:4px;left:4px;gap:3px}
-  .liveTag,.stateTag{font-size:5px;padding:2px 4px}
-  .stageVisual{inset:24px 6px 27px}
-  .sampleName{bottom:5px;font-size:9px}
-  .actionCard{min-width:105px;padding:8px 10px;font-size:8px}
-  .actionIcon{font-size:20px}
-  .progressRow{margin-top:4px}
-  .stepCaption{font-size:6px}
-  .stepStrip span{height:5px}
-
-  .toolPanel h2{font-size:7px}
-  .toolPanel p{font-size:4.8px;margin:1px 0 3px}
-  .tools{gap:3px}
-  .tool{
-    min-height:34px;
-    padding:3px 1px;
-    border-radius:6px;
-    font-size:5.8px;
-  }
-  .toolIcon{font-size:11px;margin-bottom:1px}
-
-  /* compact info / assessment */
-  .infoPanel h2{font-size:10px}
-  .infoSub{font-size:6px}
-  .journal{
-    min-height:46px;
-    margin-top:5px;
-    padding:5px 6px;
-    font-size:7px;
-    line-height:1.28;
-    border-radius:6px;
-  }
-  .journal strong{font-size:5px}
-  .discovery{margin-top:4px;padding:5px;border-radius:6px}
-  .discoveryLabel{font-size:5px}
-  .discoveryText{font-size:6.5px}
-  .infoActions{margin-top:4px;gap:4px}
-  .infoActions .secondary{min-height:32px;font-size:7px;padding:5px}
-  .hintText{font-size:6.5px;padding:5px}
-
-  .assessmentTop h2{font-size:10px}
-  .assessmentPill{font-size:6px;padding:3px 5px}
-  .qBar span{height:4px}
-  .qType{font-size:5px}
-  .qText{font-size:9px}
-  .options{gap:4px;margin-top:5px}
-  .option{
-    min-height:31px;
-    padding:5px 6px;
-    border-radius:6px;
-    font-size:7px;
-    line-height:1.2;
-  }
-  .assessFeedback{min-height:35px;font-size:6.5px;padding:5px}
-  .nextQ{padding:6px;font-size:7px}
-
-  .reportCard{padding:7px}
-  .reportScore{margin:5px 0}
-  .reportScore strong{font-size:20px}
-  .reportText,.reportConclusion{font-size:6.5px}
-  .reportActions{gap:4px}
-  .reportActions .primary,.reportActions .secondary{min-height:34px;font-size:7px}
-
-  /* final */
-  .finalCard{
-    margin:auto;
-    padding:18px 10px;
-    border-radius:18px;
-  }
-  .finalCard img{width:72px}
-  .finalCard h1{font-size:22px}
-  .finalScore{font-size:34px}
-  .finalBand{font-size:10px}
-  .resultGrid{gap:4px;margin:11px 0}
-  .resultTile{font-size:6px;padding:5px 2px}
-  .resultTile strong{font-size:9px}
+.optionBtn:hover{
+background:#dbeafe;
 }
 
-@media(max-width:380px){
-  .experimentGrid{grid-template-columns:minmax(0,1fr) 86px}
-  .stage{height:176px}
-  .tool{min-height:31px;font-size:5.3px}
+.correct{
+background:#d4f7d9 !important;
+border:2px solid green;
 }
 
-@media(max-width:700px) and (max-height:720px){
-  .stage{height:165px}
-  .tool{min-height:29px}
-  .journal{min-height:40px}
+.wrong{
+background:#ffd9d9 !important;
+border:2px solid red;
 }
 
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
+.feedback{
+display:none;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+font-weight:bold;
+line-height:1.6;
 }
 
-/* ==========================================================
-   READABLE PHONE REDESIGN
-   Keeps experiment tools on the RIGHT of the live experiment,
-   but stops shrinking text to unreadable sizes.
-   ========================================================== */
-
-@media(max-width:760px){
-
-  /* Header */
-  .labHeader{
-    grid-template-columns:38px 1fr auto;
-    padding:8px 7px;
-    gap:6px;
-  }
-
-  .iconBtn{
-    width:36px;
-    height:36px;
-    font-size:14px;
-  }
-
-  .labHeaderTitle h1{
-    font-size:18px;
-    line-height:1.05;
-  }
-
-  .labHeaderTitle .eyebrow{
-    font-size:8px;
-    letter-spacing:1.4px;
-  }
-
-  .scoreMini{
-    font-size:9px;
-    padding:6px 8px;
-  }
-
-  /* Phase strip */
-  .phaseRail{
-    padding:6px;
-    gap:4px;
-  }
-
-  .phaseStep{
-    padding:7px 3px;
-    font-size:9px;
-    border-radius:8px;
-  }
-
-  /* Main challenge */
-  .labContent{
-    padding:7px;
-  }
-
-  .challenge{
-    margin-bottom:7px;
-    padding:9px 10px;
-    font-size:13px;
-    line-height:1.35;
-    border-left-width:5px;
-  }
-
-  .challenge strong{
-    font-size:8px;
-    margin-bottom:3px;
-  }
-
-  /* Live experiment + right tool rail */
-  .experimentGrid{
-    grid-template-columns:minmax(0,1fr) 112px;
-    grid-template-areas:
-      "live tools"
-      "info info";
-    gap:7px;
-  }
-
-  .livePanel{
-    padding:6px;
-    border-radius:12px;
-  }
-
-  .stage{
-    height:225px;
-    border-radius:11px;
-  }
-
-  .stageTop{
-    top:6px;
-    left:6px;
-    gap:4px;
-  }
-
-  .liveTag,
-  .stateTag{
-    font-size:8px;
-    padding:4px 6px;
-  }
-
-  .stageVisual{
-    inset:35px 8px 38px;
-  }
-
-  .sampleName{
-    bottom:8px;
-    font-size:13px;
-  }
-
-  .actionCard{
-    min-width:125px;
-    padding:10px 12px;
-    font-size:11px;
-  }
-
-  .actionIcon{
-    font-size:24px;
-  }
-
-  .progressRow{
-    margin-top:6px;
-  }
-
-  .stepStrip span{
-    height:7px;
-  }
-
-  .stepCaption{
-    font-size:10px;
-    font-weight:700;
-  }
-
-  /* Experiment tools remain on RIGHT and are actually readable */
-  .toolPanel{
-    padding:6px;
-    border-radius:11px;
-  }
-
-  .toolPanel h2{
-    font-size:11px;
-    line-height:1.15;
-  }
-
-  .toolPanel p{
-    margin:3px 0 6px;
-    font-size:8px;
-    line-height:1.2;
-  }
-
-  .tools{
-    gap:5px;
-  }
-
-  .tool{
-    min-height:50px;
-    padding:6px 3px;
-    border-radius:8px;
-    font-size:10px;
-    line-height:1.1;
-  }
-
-  .toolIcon{
-    font-size:18px;
-    margin-bottom:3px;
-  }
-
-  /* Notes: one clear evidence card instead of two tiny duplicated cards */
-  .infoPanel{
-    padding:9px;
-    border-radius:11px;
-  }
-
-  .infoPanel h2{
-    font-size:15px;
-  }
-
-  .infoSub{
-    margin-top:3px;
-    font-size:10px;
-  }
-
-  .journal{
-    min-height:70px;
-    margin-top:7px;
-    padding:9px 10px;
-    border-left-width:4px;
-    border-radius:9px;
-    font-size:13px;
-    line-height:1.4;
-  }
-
-  .journal strong{
-    margin-bottom:5px;
-    font-size:8px;
-    letter-spacing:1.2px;
-  }
-
-  /* The second evidence card repeats the same text on phones */
-  #notebookView .discovery{
-    display:none;
-  }
-
-  .infoActions{
-    gap:7px;
-    margin-top:8px;
-  }
-
-  .infoActions .secondary{
-    min-height:40px;
-    padding:8px;
-    font-size:11px;
-  }
-
-  .hintText{
-    margin-top:7px;
-    padding:8px;
-    font-size:11px;
-    line-height:1.35;
-  }
-
-  /* Assessment */
-  .assessmentWrap{
-    gap:9px;
-  }
-
-  .assessmentTop h2{
-    font-size:15px;
-  }
-
-  .assessmentTop .eyebrow{
-    font-size:8px;
-  }
-
-  .assessmentPill{
-    font-size:9px;
-    padding:5px 7px;
-  }
-
-  .qBar span{
-    height:6px;
-  }
-
-  .qType{
-    font-size:8px;
-  }
-
-  .qText{
-    margin-top:5px;
-    font-size:14px;
-    line-height:1.35;
-  }
-
-  .options{
-    gap:7px;
-    margin-top:9px;
-  }
-
-  .option{
-    min-height:46px;
-    padding:9px 10px;
-    border-radius:9px;
-    font-size:12px;
-    line-height:1.3;
-  }
-
-  .assessFeedback{
-    min-height:52px;
-    padding:9px;
-    font-size:11px;
-    line-height:1.4;
-  }
-
-  .nextQ{
-    min-height:42px;
-    padding:9px;
-    font-size:11px;
-  }
-
-  /* Station report */
-  .reportCard{
-    padding:10px;
-  }
-
-  .reportScore strong{
-    font-size:25px;
-  }
-
-  .reportText,
-  .reportConclusion{
-    font-size:11px;
-    line-height:1.4;
-  }
-
-  .reportActions{
-    gap:7px;
-  }
-
-  .reportActions .primary,
-  .reportActions .secondary{
-    min-height:40px;
-    font-size:10px;
-  }
-
-  /* Map readability */
-  .pageHead h1{
-    font-size:21px;
-  }
-
-  .pill{
-    font-size:9px;
-    padding:6px 7px;
-  }
-
-  .station h2{
-    font-size:16px;
-  }
-
-  .station p{
-    font-size:11px;
-    line-height:1.35;
-  }
-
-  .openText{
-    font-size:9px;
-  }
-
-  .stationScore{
-    font-size:8px;
-  }
-
-  .ruleCard p{
-    font-size:11px;
-    line-height:1.4;
-  }
+.correctFeedback{
+background:#d4f7d9;
 }
 
-/* On normal portrait phones, use one station per row.
-   This intentionally prioritises reading comfort over squeezing everything in. */
-@media(max-width:430px){
-  .stationGrid{
-    grid-template-columns:1fr;
-  }
-
-  .station,
-  .ruleCard{
-    min-height:auto;
-    padding:12px;
-  }
-
-  .station{
-    display:grid;
-    grid-template-columns:92px 1fr;
-    grid-template-areas:
-      "visual eyebrow"
-      "visual title"
-      "visual description"
-      "visual meta";
-    column-gap:11px;
-    align-items:center;
-  }
-
-  .stationVisual{
-    grid-area:visual;
-    height:92px;
-    margin:0;
-  }
-
-  .stationVisual svg{
-    height:84px;
-  }
-
-  .station > .eyebrow{
-    grid-area:eyebrow;
-    align-self:end;
-  }
-
-  .station h2{
-    grid-area:title;
-    margin:2px 0;
-    font-size:17px;
-  }
-
-  .station p{
-    grid-area:description;
-    font-size:11px;
-  }
-
-  .stationMeta{
-    grid-area:meta;
-    margin-top:4px;
-  }
-
-  .ruleCard{
-    min-height:145px;
-  }
-
-  /* Keep the right-side tool rail, but give it a little more width */
-  .experimentGrid{
-    grid-template-columns:minmax(0,1fr) 116px;
-  }
-
-  .stage{
-    height:220px;
-  }
-
-  .tool{
-    min-height:51px;
-  }
+.wrongFeedback{
+background:#ffd9d9;
 }
 
-@media(max-width:370px){
-  .experimentGrid{
-    grid-template-columns:minmax(0,1fr) 104px;
-  }
+.hintBox{
+display:none;
+margin-top:15px;
+padding:14px;
+background:#fff8d6;
+border-left:5px solid orange;
+border-radius:10px;
+font-weight:bold;
+}
 
-  .challenge{
-    font-size:12px;
-  }
+.confetti{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+animation:fall 2s linear forwards;
+z-index:999;
+}
 
-  .tool{
-    font-size:9px;
-  }
+@keyframes fall{
 
-  .journal{
-    font-size:12px;
-  }
+0%{
+transform:translateY(-20px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+.cross{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+color:red;
+animation:fade 1s forwards;
+z-index:999;
+}
+
+@keyframes fade{
+
+0%{
+opacity:1;
+}
+
+100%{
+opacity:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.question{
+font-size:1rem;
+}
+
+.optionBtn{
+font-size:.95rem;
+}
+
 }
 
 </style>
@@ -1363,990 +340,660 @@ p{line-height:1.42}
 
 <body>
 
-<div id="splash">
-  <img src="assets/innovine-logo.png" alt="Innovine">
+<div class="bg">
+
+<div class="spark s1">✨</div>
+<div class="spark s2">✨</div>
+<div class="spark s3">✨</div>
+<div class="spark s4">✨</div>
+<div class="spark s5">✨</div>
+
 </div>
 
-<main>
+<div class="floatIcon ice">🧊</div>
+<div class="floatIcon water">💧</div>
+<div class="floatIcon steam">♨️</div>
+<div class="floatIcon flask">⚗️</div>
+<div class="floatIcon fire">🔥</div>
+<div class="floatIcon rust">🔩</div>
+<div class="floatIcon lab">🧪</div>
 
-<section id="intro" class="screen">
-  <div class="welcome">
-    <div class="hero">
-      <img src="assets/innovine-logo.png" class="heroLogo" alt="Innovine">
-      <div class="eyebrow">Grade 7 • Changes around us</div>
-      <h1>CHANGE <span>LAB</span></h1>
-      <div class="heroPill">Experiment • Observe • Analyse • Assess</div>
+<div id="logoScreen">
+<img src="assets/innovine-logo.png">
+</div>
 
-      <div class="heroTiles" aria-hidden="true">
-        <div class="heroTile">🧊 ⇄ 💧</div>
-        <div class="heroTile">📄 ✂️</div>
-        <div class="heroTile">🧪 🔥</div>
-      </div>
-    </div>
+<div class="container">
 
-    <div class="introBody">
-      <p class="introLead">
-        Run five virtual experiments. Use the evidence to decide whether each change is physical or chemical and whether it can be reversed.
-      </p>
+<div id="introScreen" class="card">
 
-      <div class="flow">
-        <div>1. Experiment</div>
-        <div>2. Observe</div>
-        <div>3. Analyse</div>
-        <div>4. Assess</div>
-      </div>
+<h1>Changes Around Us</h1>
 
-      <button id="start" class="primary" type="button">ENTER THE LAB →</button>
-      <p class="safety">Virtual experiments only. Heating and chemical experiments should not be repeated without teacher supervision.</p>
-    </div>
-  </div>
-</section>
+<h2>Grade 7 Science</h2>
 
-<section id="map" class="screen" hidden>
-  <div class="shell">
+<p style="margin-top:25px;text-align:center;line-height:1.8;">
+Explore reversible and irreversible changes,
+physical and chemical changes, rusting,
+crystallisation and change of state through
+12 competency-based challenges.
+</p>
 
-    <header class="pageHead">
-      <div>
-        <div class="eyebrow">Experiment board</div>
-        <h1>Choose a lab station</h1>
-      </div>
+<div style="text-align:center;margin-top:30px;">
+<button class="btn" onclick="startQuiz()">
+Start Challenge
+</button>
+</div>
 
-      <div class="headActions">
-        <span id="badges" class="pill green">0 / 5 complete</span>
-        <span id="totalScore" class="pill gold">0 / 15</span>
-        <button class="secondary sound" type="button">Sound: on</button>
-      </div>
-    </header>
+</div>
 
-    <div id="award" class="award" hidden>
-      <b>🏆 All five stations completed.</b>
-      <button id="finalReportBtn" class="secondary" type="button" style="margin-left:6px">View final report</button>
-    </div>
+<div id="quizScreen" class="card hidden">
 
-    <div id="stations" class="stationGrid"></div>
+<div class="topBar">
 
-    <p class="mapFoot">
-      Trying a different tool is part of the investigation. Assessment begins only after the experiment is complete.
-    </p>
-  </div>
-</section>
+<div class="questionBox">
+Question <span id="qNo">1</span>/12
+</div>
 
-<section id="lab" class="screen" hidden>
-  <div class="labApp">
+<div class="scoreBox">
+Score: <span id="score">0</span>
+</div>
 
-    <header class="labHeader">
-      <button id="back" class="iconBtn" type="button">←</button>
+<div class="timerBox">
+⏳ <span id="timer">45</span>s
+</div>
 
-      <div class="labHeaderTitle">
-        <div id="stationNumber" class="eyebrow"></div>
-        <h1 id="labTitle"></h1>
-      </div>
+<button id="muteBtn" class="audioBtn">
+🔊 Sound On
+</button>
 
-      <div class="headActions">
-        <span id="stationScoreMini" class="scoreMini">Score 0 / 3</span>
-        <button class="iconBtn soundIcon sound" type="button">🔊</button>
-      </div>
-    </header>
+</div>
 
-    <div class="phaseRail">
-      <div id="phaseExperiment" class="phaseStep active">1. EXPERIMENT</div>
-      <div id="phaseAssess" class="phaseStep">2. ASSESS</div>
-      <div id="phaseReport" class="phaseStep">3. REPORT</div>
-    </div>
+<img id="questionImage" class="questionImage hidden">
 
-    <div class="labContent">
+<div id="questionText" class="question"></div>
 
-      <div class="challenge">
-        <strong>YOUR CHALLENGE</strong>
-        <span id="task"></span>
-      </div>
+<div id="optionsContainer" class="options"></div>
 
-      <div class="experimentGrid">
+<div id="hintBox" class="hintBox"></div>
 
-        <section class="livePanel">
-          <div id="stage" class="stage">
+<div id="feedback" class="feedback"></div>
 
-            <div class="stageTop">
-              <span class="liveTag">LIVE EXPERIMENT</span>
-              <span id="stateTag" class="stateTag"></span>
-            </div>
+<div style="text-align:center;margin-top:20px;">
+<button id="nextBtn" class="btn hidden">
+Next Question
+</button>
+</div>
 
-            <div id="stageVisual" class="stageVisual" aria-hidden="true"></div>
-            <div id="sampleName" class="sampleName"></div>
+</div>
 
-            <div class="actionOverlay">
-              <div class="actionCard">
-                <span id="actionIcon" class="actionIcon">⚗️</span>
-                <span id="actionText">Working…</span>
-              </div>
-            </div>
+<div id="resultScreen" class="card hidden">
 
-          </div>
+<h1>Quiz Completed!</h1>
 
-          <div class="progressRow">
-            <div id="stepStrip" class="stepStrip"></div>
-            <div id="stepCaption" class="stepCaption"></div>
-          </div>
-        </section>
+<h2 id="finalScore"></h2>
 
-        <aside class="toolPanel">
-          <h2>Experiment tools</h2>
-          <p>Tap a tool to change the sample</p>
-          <div id="tools" class="tools"></div>
-        </aside>
+<p id="resultMessage"
+style="text-align:center;margin-top:20px;font-size:1.1rem;">
+</p>
 
-        <aside class="infoPanel">
+<div style="text-align:center;margin-top:25px;">
+<button class="btn" onclick="location.reload()">
+Play Again
+</button>
+</div>
 
-          <div id="notebookView">
-            <h2>📘 Lab notes</h2>
-            <p class="infoSub">Watch what changes and what stays the same.</p>
+</div>
 
-            <div id="journal" class="journal">
-              <strong>OBSERVATION</strong>
-              <span id="note"></span>
-            </div>
+</div>
 
-            <div class="discovery">
-              <div class="discoveryLabel">CURRENT EVIDENCE</div>
-              <div id="discoveryNow" class="discoveryText"></div>
-            </div>
-
-            <div class="infoActions">
-              <button id="hint" class="secondary" type="button">Clue</button>
-              <button id="reset" class="secondary" type="button">New sample ↺</button>
-            </div>
-
-            <div id="hintText" class="hintText" hidden></div>
-          </div>
-
-          <div id="assessmentView" hidden>
-            <div class="assessmentWrap">
-
-              <div class="assessmentTop">
-                <div>
-                  <div class="eyebrow">Evidence check</div>
-                  <h2>Analyse the experiment</h2>
-                </div>
-                <span id="qCounter" class="assessmentPill">1 / 3</span>
-              </div>
-
-              <div id="qBar" class="qBar"></div>
-
-              <div>
-                <div id="qType" class="qType"></div>
-                <div id="qText" class="qText"></div>
-                <div id="options" class="options"></div>
-              </div>
-
-              <div id="assessFeedback" class="assessFeedback">
-                Choose the answer that best matches the evidence you observed.
-              </div>
-
-              <button id="nextQ" class="nextQ" type="button" hidden>NEXT QUESTION →</button>
-            </div>
-          </div>
-
-          <div id="reportView" hidden>
-            <div class="eyebrow">Station report</div>
-            <h2 id="reportTitle"></h2>
-
-            <div class="reportCard">
-              <div class="reportScore">
-                <strong id="reportScore"></strong>
-                <div class="reportMeter"><span id="reportMeterFill"></span></div>
-              </div>
-
-              <div id="reportMessage" class="reportText"></div>
-              <div id="reportConclusion" class="reportConclusion"></div>
-            </div>
-
-            <div class="reportActions">
-              <button id="nextStation" class="primary" type="button">NEXT STATION →</button>
-              <button id="mapBtn" class="secondary" type="button">Lab map</button>
-            </div>
-          </div>
-
-        </aside>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="final" class="screen" hidden>
-  <div class="finalCard">
-    <img src="assets/innovine-logo.png" alt="Innovine">
-    <div class="eyebrow">Change Lab mastery report</div>
-    <h1>Investigation Complete</h1>
-
-    <div id="finalScore" class="finalScore">0 / 15</div>
-    <div id="finalBand" class="finalBand"></div>
-
-    <p id="finalMessage" style="margin-top:11px;color:#546d77"></p>
-
-    <div id="resultGrid" class="resultGrid"></div>
-
-    <div class="finalActions">
-      <button id="finalMap" class="secondary" type="button">Back to lab map</button>
-      <button id="playAgain" class="primary" type="button">Start again</button>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<div id="confetti" class="celebration" aria-hidden="true"></div>
-
-<audio id="correctAudio" src="assets/correct.mp3" preload="auto"></audio>
-<audio id="wrongAudio" src="assets/wrong.mp3" preload="auto"></audio>
-<audio id="clapAudio" src="assets/freesound_community-claps-44774.mp3" preload="auto"></audio>
+<audio id="correctSound" src="assets/correct.mp3"></audio>
+<audio id="wrongSound" src="assets/wrong.mp3"></audio>
+<audio id="clapSound" src="assets/freesound_community-claps-44774.mp3"></audio>
 
 <script>
-'use strict';
 
-document.addEventListener('DOMContentLoaded',()=>{
+const questions = [
+{
+question:"Priya keeps ice cubes outside the freezer. After some time, they turn into water.\n\nWhat caused this change?",
+options:[
+"Cooling",
+"Heat from the surroundings",
+"Rusting",
+"Crystallisation"
+],
+answer:1,
+hint:"Ice absorbs heat from its surroundings.",
+explanation:"Heat causes ice to melt and change from solid to liquid."
+},
 
-const $=id=>document.getElementById(id);
+{
+question:`Railway tracks have small gaps between metal rails.
 
-function drawing(type){
-  const shapes={
-    ice:'<path d="M65 24 110 13 153 33 109 49Z" fill="#d7f3ff"/><path d="M65 24v54l44 24V49Z" fill="#a2d9ef"/><path d="m109 49 44-16v51l-44 18Z" fill="#75bedc"/><path d="m78 31 17 9m24 18 21-8" stroke="white" stroke-width="4"/>',
-    water:'<path d="M52 25h116l-9 70H61Z" fill="#eef8fe" stroke="#7296ab" stroke-width="3"/><path d="M58 57q25-9 48 0t55 0l-5 34H64Z" fill="#8dcfe9"/><path d="M61 26h98" stroke="#7296ab" stroke-width="3"/>',
-    paper:'<path d="M76 12h57l17 17v73H76Z" fill="#fcfbf5" stroke="#829bad" stroke-width="2"/><path d="M133 12v19h17M88 46h49M88 60h49M88 74h38" fill="none" stroke="#b2c2ce" stroke-width="3"/>',
-    strips:'<g fill="#fcfbf5" stroke="#829bad" stroke-width="2"><path d="m54 21 17-4 15 78-17 4Z"/><path d="M95 15h18v81H95Z"/><path d="m139 18 18 3-16 78-18-3Z"/></g>',
-    nail:'<g transform="rotate(-28 110 55)"><path d="M103 22h14v61l-7 18-7-18Z" fill="#91a8b5" stroke="#617987" stroke-width="2"/><rect x="90" y="15" width="40" height="12" rx="3" fill="#adc1cc" stroke="#617987" stroke-width="2"/></g>',
-    rust:'<g transform="rotate(-28 110 55)"><path d="M103 22h14v61l-7 18-7-18Z" fill="#b66e48" stroke="#935639" stroke-width="2"/><rect x="90" y="15" width="40" height="12" rx="3" fill="#bd7c4f" stroke="#935639" stroke-width="2"/><g fill="#824b37"><circle cx="107" cy="45" r="4"/><circle cx="112" cy="70" r="4"/><circle cx="119" cy="21" r="3"/></g></g>',
-    batter:'<path d="M53 44h114q-8 58-57 58T53 44" fill="#a8c5d4"/><ellipse cx="110" cy="44" rx="57" ry="16" fill="#dbc297"/><path d="m129 42 27-31" stroke="#927559" stroke-width="8" stroke-linecap="round"/><path d="M81 44q20-8 33 0t22 0" fill="none" stroke="#b49466" stroke-width="3"/>',
-    cake:'<ellipse cx="110" cy="95" rx="68" ry="10" fill="#d9e2e8"/><path d="M54 51h112v38q-57 23-112 0Z" fill="#b28558"/><ellipse cx="110" cy="51" rx="56" ry="19" fill="#d9b17c"/><path d="M59 66q50 19 102 0" stroke="#e5c999" stroke-width="7" fill="none"/>'
-  };
-  return '<svg viewBox="0 0 220 115" xmlns="http://www.w3.org/2000/svg">'+shapes[type]+'</svg>';
+Why are these gaps provided?`,
+options:[
+"To save metal",
+"To allow expansion during hot weather",
+"To increase friction",
+"To make tracks flexible"
+],
+answer:1,
+hint:"Metals expand when heated.",
+explanation:"The gaps prevent bending or damage due to thermal expansion."
+},
+
+{
+question:"Which of the following is a reversible change?",
+options:[
+"Burning paper",
+"Cooking rice",
+"Melting chocolate",
+"Ripening mangoes"
+],
+answer:2,
+hint:"Can the original substance be obtained again?",
+explanation:"Melted chocolate can solidify again on cooling."
+},
+
+{
+question:"A baker prepares a cake by baking batter.\n\nWhy is this an irreversible change?",
+options:[
+"The cake becomes colder.",
+"New substances are formed.",
+"Water evaporates.",
+"The colour changes."
+],
+answer:1,
+hint:"Can cake be converted back into batter?",
+explanation:"Baking forms new substances and cannot be reversed."
+},
+
+{
+question:"Which of the following is a fast change?",
+options:[
+"Growth of a tree",
+"Rusting of iron",
+"Bursting of a cracker",
+"Formation of curd"
+],
+answer:2,
+hint:"It happens within seconds.",
+explanation:"Bursting crackers occurs almost instantly."
+},
+
+{
+question:"Which process is a slow change?",
+options:[
+"Tearing paper",
+"Breaking glass",
+"Germination of seeds",
+"Lighting a matchstick"
+],
+answer:2,
+hint:"It takes days to complete.",
+explanation:"Seed germination occurs gradually over time."
+},
+{
+question:"A student dissolves sugar in water.\n\nWhy is this a physical change?",
+options:[
+"A new substance is formed.",
+"Sugar can be recovered by evaporation.",
+"Heat is released.",
+"The colour changes."
+],
+answer:1,
+hint:"The original substance still exists.",
+explanation:"Sugar remains unchanged and can be separated again."
+},
+
+{
+question:"Which of the following is a chemical change?",
+options:[
+"Melting ice",
+"Dissolving salt",
+"Cooking an egg",
+"Freezing water"
+],
+answer:2,
+hint:"A new substance is formed.",
+explanation:"Cooking causes permanent chemical changes in the egg."
+},
+
+{
+question:"A scientist wants to obtain pure salt crystals from salt solution.\n\nWhich process should be used?",
+options:[
+"Filtration",
+"Sedimentation",
+"Crystallisation",
+"Churning"
+],
+answer:2,
+hint:"Pure solids are obtained from solutions.",
+explanation:"Crystallisation helps obtain pure solid crystals."
+},
+
+{
+question:"Which method helps prevent rusting of iron?",
+image:"assets/prevention-of-rusting.png",
+options:[
+"Keeping iron wet",
+"Scratching the surface",
+"Painting or galvanising the surface",
+"Heating continuously"
+],
+answer:2,
+hint:"Rusting requires contact with air and moisture.",
+explanation:"Painting and galvanisation create a protective layer that prevents rusting."
+},
+
+{
+question:`Study the diagram:
+
+Ice Cube → Water → Steam
+
+Which process changes liquid water into water vapour?`,
+image:"assets/change-of-state.png",
+options:[
+"Condensation",
+"Freezing",
+"Boiling/Evaporation",
+"Melting"
+],
+answer:2,
+hint:"Think about water in a kettle.",
+explanation:"Boiling or evaporation converts liquid water into water vapour."
+},
+
+{
+question:"Rohan accidentally pours cold water into a very hot glass tumbler and it cracks.\n\nWhy did the glass crack?",
+options:[
+"The inner and outer surfaces expanded equally.",
+"The outer surface cooled and contracted faster than the inner surface.",
+"Glass melted.",
+"Water reacted chemically with glass."
+],
+answer:1,
+hint:"Recall the textbook example of hot glass under running water.",
+explanation:"The sudden temperature difference causes uneven contraction, leading to cracks."
 }
 
-function extraDrawing(type){
-  let body='';
+];
+let currentQuestion=0;
+let score=0;
+let retryUsed=false;
+let timer;
+let timeLeft=45;
+let soundEnabled=true;
 
-  if(type==='vapour'){
-    body='<rect x="49" y="16" width="122" height="84" rx="8" fill="#edf6fa" stroke="#8bafbf" stroke-width="2"/>'+
-    [[70,38],[113,29],[150,42],[88,63],[133,73],[65,86],[151,91]]
-      .map(([x,y])=>'<circle cx="'+x+'" cy="'+y+'" r="4" fill="#83bace"/>').join('')+
-    '<text x="110" y="112" text-anchor="middle" font-size="10" fill="#668696">Particle model: vapour is invisible</text>';
-  }
+const introScreen=document.getElementById('introScreen');
+const quizScreen=document.getElementById('quizScreen');
+const resultScreen=document.getElementById('resultScreen');
 
-  if(type==='solution'){
-    body='<path d="M58 20h104l-7 76H65Z" fill="#e9f6fb" stroke="#86a8b8" stroke-width="3"/>'+
-    '<path d="M62 47h96l-5 46H67Z" fill="#a2d5e5"/>'+
-    '<path d="M73 54h74" stroke="#cdebf2" stroke-width="3"/>';
-  }
+const qNo=document.getElementById('qNo');
+const scoreEl=document.getElementById('score');
+const timerEl=document.getElementById('timer');
 
-  if(type==='salt'){
-    body='<ellipse cx="110" cy="89" rx="75" ry="17" fill="#d8e7ed" stroke="#9db9c3" stroke-width="2"/>'+
-    [[76,68],[101,62],[124,71],[95,83],[144,82],[63,86],[119,89]]
-      .map(([x,y])=>'<rect x="'+x+'" y="'+y+'" width="14" height="13" rx="1" fill="white" stroke="#b2c4cd" transform="rotate(12 '+x+' '+y+')"/>').join('');
-  }
+const questionText=document.getElementById('questionText');
+const optionsContainer=document.getElementById('optionsContainer');
+const feedback=document.getElementById('feedback');
+const hintBox=document.getElementById('hintBox');
+const questionImage=document.getElementById('questionImage');
+const nextBtn=document.getElementById('nextBtn');
 
-  if(type==='folded'){
-    body='<path d="M70 17h54l20 72H82Z" fill="#fffdf1" stroke="#8ba2b0" stroke-width="2"/>'+
-    '<path d="M70 17v82h57l-3-82Z" fill="#f6f0da" stroke="#8ba2b0" stroke-width="2"/>';
-  }
+const correctSound=document.getElementById('correctSound');
+const wrongSound=document.getElementById('wrongSound');
+const clapSound=document.getElementById('clapSound');
 
-  if(type==='creased'){
-    return drawing('paper').replace('</svg>','<path d="M76 57h74" stroke="#b59c79" stroke-width="2" stroke-dasharray="4 4"/></svg>');
-  }
+setTimeout(()=>{
 
-  if(type==='taped'){
-    body='<g fill="#fffcf2" stroke="#8099a7" stroke-width="2">'+
-      '<path d="M71 15h23v83H71Z"/><path d="M97 15h23v83H97Z"/><path d="M123 15h23v83h-23Z"/></g>'+
-      '<rect x="65" y="35" width="88" height="17" fill="#ddc16b" opacity=".55"/>'+
-      '<rect x="65" y="71" width="88" height="17" fill="#ddc16b" opacity=".55"/>';
-  }
+document.getElementById('logoScreen').style.display='none';
 
-  if(type==='wetnail'){
-    return drawing('nail').replace('</svg>','<path d="M69 48q-15 21 0 22 15-1 0-22m81 30q-12 18 0 18 12 0 0-18" fill="#6bb7d3"/></svg>');
-  }
+},5000);
 
-  if(type==='painted'||type==='paintedwet'){
-    let svg=drawing('nail').replaceAll('#91a8b5','#448e82').replaceAll('#adc1cc','#6fa99b');
-    if(type==='paintedwet'){
-      svg=svg.replace('</svg>','<path d="M69 48q-15 21 0 22 15-1 0-22m81 30q-12 18 0 18 12 0 0-18" fill="#6bb7d3"/></svg>');
-    }
-    return svg;
-  }
+document.getElementById('muteBtn').onclick=()=>{
 
-  return body
-    ? '<svg viewBox="0 0 220 115" xmlns="http://www.w3.org/2000/svg">'+body+'</svg>'
-    : drawing(type);
-}
+soundEnabled=!soundEnabled;
 
-const tools={
-  heat:['♨','Heat'],
-  cool:['❄','Cool'],
-  water:['💧','Add water'],
-  fold:['⌑','Fold'],
-  unfold:['↔','Unfold'],
-  cut:['✂','Cut'],
-  tape:['▱','Tape'],
-  coat:['▥','Paint'],
-  wet:['◌','Air + water'],
-  wait:['◷','Wait'],
-  fresh:['↺','New nail']
+document.getElementById('muteBtn').textContent=
+soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+
 };
 
-const routes=[
-  ['heat','heat','cool','cool'],
-  ['heat','water'],
-  ['fold','unfold','cut','tape'],
-  ['heat','cool'],
-  ['wet','wait','fresh','coat','wet','wait']
-];
+function playSound(audio){
 
-const labs=[
-  {
-    title:'Water loop',
-    preview:'ice',
-    brief:'Take ice on a complete round trip.',
-    goal:'Turn ice into water vapour, then bring it all the way back to ice.',
-    badge:'State Shifter',
-    summary:'Melting, vaporisation, condensation and freezing are physical changes. Water remains water, and the changes in state can be reversed.',
-    tools:['heat','cool'],
-    states:[['ice','Ice'],['water','Liquid water'],['vapour','Water vapour'],['water','Condensed water'],['ice','Ice again']],
-    hints:['Apply heat to melt the ice.','Keep heating to turn liquid water into water vapour.','Cool the water vapour to condense it.','Cool the water further to freeze it.'],
-    questions:[
-      ['Classify the change','What type of change did you observe during the water loop?',['Physical change','Chemical change','Both physical and chemical','No change occurred'],0,'Only the state changed. No new substance formed.'],
-      ['Reversibility','Why is the water loop reversible in this model?',['Heating and cooling can change water between solid, liquid and vapour','Water becomes a new substance and changes back','The mass disappears during heating','Only solids can be reversible'],0,'The substance remains water and the state changes can be reversed.'],
-      ['Use the evidence','Which observation best supports your conclusion?',['The material remained water throughout the experiment','The ice changed colour permanently','Gas bubbles proved a new substance formed','Water could not return to ice'],0,'The identity of the substance did not change.']
-    ]
-  },
-  {
-    title:'Salt recovery',
-    preview:'solution',
-    brief:'Recover salt from a salt solution.',
-    goal:'Recover salt crystals from salt solution, then make salt solution again.',
-    badge:'Recovery Expert',
-    summary:'Evaporation removes water and leaves salt behind. Adding water dissolves the salt again. This is a reversible physical change in the model.',
-    tools:['heat','water','cool'],
-    states:[['solution','Salt solution'],['salt','Recovered salt crystals'],['solution','Salt solution again']],
-    hints:['Evaporate the water by applying heat.','Add water to dissolve the recovered salt crystals.'],
-    questions:[
-      ['Classify the change','Recovering salt from salt solution is best described as:',['A physical change','A chemical change','Combustion','Rusting'],0,'The salt remains salt; no new substance forms.'],
-      ['Reversibility','What showed that the change could be reversed?',['Adding water formed salt solution again','The salt changed into a gas','The crystals became a new substance','Cooling destroyed the salt'],0,'The recovered salt dissolved again when water was added.'],
-      ['Use the evidence','What happened to the salt while it was dissolved?',['It was still present in the solution','It was destroyed','It turned into water','It changed into a gas'],0,'Dissolving does not destroy the solute.']
-    ]
-  },
-  {
-    title:'Paper workshop',
-    preview:'paper',
-    brief:'Find the limit of the undo button.',
-    goal:'Fold and unfold the paper. Then cut it, attempt a repair and inspect the result.',
-    badge:'Material Detective',
-    summary:'Folding and cutting are physical changes because paper remains paper. Folding can largely be reversed, but cutting cannot restore the original uncut sheet.',
-    tools:['fold','unfold','cut','tape'],
-    states:[['paper','Uncut sheet'],['folded','Folded sheet'],['creased','Unfolded sheet'],['strips','Cut strips'],['taped','Strips joined with tape — cuts remain']],
-    hints:['Start by folding the sheet.','Use Unfold to open it again.','Cut the unfolded sheet into strips.','Try joining the strips with tape.'],
-    questions:[
-      ['Classify the change','Which statement best describes the paper changes?',['They are physical changes because paper remains paper','They are chemical changes because the shape changes','Cutting always forms a new substance','Folding is a chemical reaction'],0,'The material remains paper; only shape or size changes.'],
-      ['Compare reversibility','Which comparison is correct?',['Folding can be reversed by unfolding, but cutting cannot restore the original uncut sheet','Both folding and cutting are fully reversible','Cutting is reversible but folding is not','Neither folding nor cutting changes paper'],0,'Unfolding reopens the sheet, while taping does not remove the cuts.'],
-      ['Use the evidence','Why did taping the strips not truly reverse the cutting?',['The cuts were still present beneath the tape','The tape changed paper into metal','The strips disappeared','The paper became a liquid'],0,'Joining pieces is not the same as restoring the original uncut sheet.']
-    ]
-  },
-  {
-    title:'Baking bench',
-    preview:'batter',
-    brief:'Can cooling undo baking?',
-    goal:'Bake the batter, cool the cake and inspect whether the original batter returns.',
-    badge:'Reaction Tracker',
-    summary:'Baking is a chemical change because new substances form. Cooling the cake does not return it to batter, so the change is irreversible.',
-    tools:['heat','cool','water'],
-    states:[['batter','Cake batter'],['cake','Freshly baked cake'],['cake','Cooled cake — still cake']],
-    hints:['Use heat to bake the batter.','Cool the baked cake and compare it with the original batter.'],
-    questions:[
-      ['Classify the change','Baking the batter into cake is a:',['Chemical change','Physical change only','Change of state only','Reversible shape change'],0,'Baking forms new substances.'],
-      ['Reversibility','What did cooling the cake show?',['Cooling does not turn cake back into batter','Cooling completely reverses baking','Cooling changes cake into water','Cooling destroys all new substances'],0,'The cooled cake remained cake.'],
-      ['Use the evidence','Which evidence best supports that baking is chemical?',['A material with different properties formed','The cake simply became colder','The batter changed container','The cake was cut into pieces'],0,'Formation of materials with new properties supports a chemical change.']
-    ]
-  },
-  {
-    title:'Rust defence',
-    preview:'nail',
-    brief:'Observe rust, then test protection.',
-    goal:'Observe rust forming. Use a new nail to test whether painting prevents rust.',
-    badge:'Rust Defender',
-    summary:'Rusting is a chemical change because iron reacts with oxygen and moisture to form rust. Paint helps prevent rust by blocking oxygen and moisture from the iron surface.',
-    tools:['wet','wait','fresh','coat'],
-    states:[['nail','Bare iron nail'],['wetnail','Nail exposed to air and water'],['rust','Rust has formed'],['nail','New, un-rusted iron nail'],['painted','Nail with intact paint'],['paintedwet','Coated nail exposed to air and water'],['painted','Coated nail — no rust in this model']],
-    hints:['Expose the bare nail to air and water.','Allow time to pass. Real rusting is much slower than this animation.','Use New nail to replace the rusty nail.','Paint the new nail to protect its surface.','Expose the painted nail to air and water.','Allow time to pass and observe the protected nail.'],
-    questions:[
-      ['Classify the change','Rusting of iron is a:',['Chemical change','Physical change only','Reversible state change','Change in shape only'],0,'Rust is a new substance formed when iron reacts with oxygen and moisture.'],
-      ['Cause and prevention','Why did the painted nail not rust in this model?',['The paint blocked oxygen and moisture from reaching the iron','Paint changed iron into plastic','Paint removed oxygen from the room','The nail became colder'],0,'An intact paint layer acts as a barrier.'],
-      ['Use the evidence','Why was a new nail used before testing paint?',['Painting a rusty nail would not turn rust back into iron','New nails always rust faster','Paint only works on hot iron','Rust can be washed away completely'],0,'A fresh nail lets prevention be tested without pretending rusting was reversed.']
-    ]
-  }
-];
+if(soundEnabled){
 
-const observations=[
-  ['', 'The ice melts. Solid water becomes liquid water.','Further heating changes liquid water into water vapour. The dots are a particle model; real water vapour is invisible.','Cooling condenses water vapour into liquid water.','Further cooling freezes the water. The round trip is complete.'],
-  ['', 'The water evaporates, leaving salt crystals behind. The salt has not changed into a new substance.','The recovered crystals dissolve in added water. Salt solution forms again.'],
-  ['', 'The paper changes shape when folded. It is still paper.','The sheet opens again. Its shape is restored, although a crease may remain.','Cutting changes the paper’s size and shape. No new substance forms.','Tape joins the strips, but the cuts remain. The original uncut sheet has not been restored.'],
-  ['', 'Baking transforms the batter into cake. New substances form.','The cake becomes cooler, but it remains cake. Cooling does not restore the original batter.'],
-  ['', 'Air supplies oxygen, and the water supplies moisture.','Rust forms over time. This model speeds up the process.','A new nail replaces the rusty nail. The rusty nail has not been reversed.','The intact paint coating forms a protective barrier.','The coated nail faces the same air and water exposure.','In this model, the intact coating prevents oxygen and moisture reaching the iron, so no rust forms.']
-];
+audio.currentTime=0;
+audio.play();
 
-let current=0;
-let step=0;
-let busy=false;
-let muted=false;
-let timer=null;
-let epoch=0;
-let qIndex=0;
-let qAttempt=1;
-let stationScore=0;
-let audioUnlocked=false;
-
-const completed=new Set();
-const stationScores=[null,null,null,null,null];
-
-function show(id){
-  ['intro','map','lab','final'].forEach(x=>$(x).hidden=x!==id);
 }
 
-function unlockAudio(){
-  if(audioUnlocked)return;
-  audioUnlocked=true;
-
-  ['correctAudio','wrongAudio','clapAudio'].forEach(id=>{
-    const a=$(id);
-    a.muted=true;
-    try{
-      const p=a.play();
-      if(p&&p.then){
-        p.then(()=>{
-          a.pause();
-          a.currentTime=0;
-          a.muted=false;
-        }).catch(()=>{a.muted=false});
-      }else a.muted=false;
-    }catch(e){a.muted=false}
-  });
 }
 
-function stopSounds(){
-  ['correctAudio','wrongAudio','clapAudio'].forEach(id=>{
-    const a=$(id);
-    a.pause();
-    try{a.currentTime=0}catch(e){}
-  });
+function shuffleQuestions(){
+
+for(let i=questions.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[questions[i],questions[j]]=
+[questions[j],questions[i]];
+
 }
 
-function playSound(id){
-  stopSounds();
-  if(muted)return;
-
-  const a=$(id);
-
-  try{
-    a.muted=false;
-    a.currentTime=0;
-    a.volume=1;
-    const p=a.play();
-    if(p&&p.catch)p.catch(()=>{});
-  }catch(e){}
 }
 
-function totalScore(){
-  return stationScores.reduce((sum,v)=>sum+(v||0),0);
+function startQuiz(){
+
+shuffleQuestions();
+
+introScreen.classList.add('hidden');
+quizScreen.classList.remove('hidden');
+
+loadQuestion();
+
 }
 
-function setPhase(name){
-  const ids=['phaseExperiment','phaseAssess','phaseReport'];
-  ids.forEach(id=>$(id).className='phaseStep');
+function loadQuestion(){
 
-  if(name==='experiment'){
-    $('phaseExperiment').classList.add('active');
-  }
+clearInterval(timer);
 
-  if(name==='assess'){
-    $('phaseExperiment').classList.add('done');
-    $('phaseAssess').classList.add('active');
-  }
+timeLeft=45;
+timerEl.textContent=timeLeft;
 
-  if(name==='report'){
-    $('phaseExperiment').classList.add('done');
-    $('phaseAssess').classList.add('done');
-    $('phaseReport').classList.add('active');
-  }
+retryUsed=false;
+
+feedback.innerHTML="";
+feedback.style.display="none";
+
+hintBox.innerHTML="";
+hintBox.style.display="none";
+
+nextBtn.classList.add('hidden');
+
+const q=questions[currentQuestion];
+
+qNo.textContent=currentQuestion+1;
+
+questionText.innerHTML=q.question;
+
+optionsContainer.innerHTML="";
+
+if(q.image){
+
+questionImage.src=q.image;
+questionImage.style.display="block";
+questionImage.classList.remove('hidden');
+
+}else{
+
+questionImage.removeAttribute("src");
+questionImage.style.display="none";
+questionImage.classList.add('hidden');
+
 }
 
-function cancelWork(){
-  epoch++;
-  clearTimeout(timer);
-  busy=false;
-  stopSounds();
-}
+q.options.forEach((option,index)=>{
 
-function renderMap(){
-  cancelWork();
-  show('map');
+const btn=document.createElement('button');
 
-  $('stations').replaceChildren();
+btn.classList.add('optionBtn');
 
-  labs.forEach((lab,i)=>{
-    const b=document.createElement('button');
-    b.type='button';
-    b.className='station'+(completed.has(i)?' done':'');
+btn.textContent=option;
 
-    b.innerHTML=
-      '<div class="stationVisual" aria-hidden="true">'+extraDrawing(lab.preview)+'</div>'+
-      '<div class="eyebrow">Station 0'+(i+1)+'</div>'+
-      '<h2>'+lab.title+'</h2>'+
-      '<p>'+lab.brief+'</p>'+
-      '<div class="stationMeta">'+
-        '<span class="openText">'+(completed.has(i)?'✓ Replay station':'Open station →')+'</span>'+
-        (stationScores[i]!==null?'<span class="stationScore">'+stationScores[i]+' / 3</span>':'')+
-      '</div>';
+btn.onclick=()=>checkAnswer(index,btn);
 
-    b.addEventListener('click',()=>openLab(i));
-    $('stations').appendChild(b);
-  });
+optionsContainer.appendChild(btn);
 
-  const info=document.createElement('div');
-  info.className='ruleCard';
-  info.innerHTML=
-    '<div class="eyebrow" style="color:#afd5ce">Science rule</div>'+
-    '<h2 style="margin-top:6px">Observe before you conclude</h2>'+
-    '<p>A change in appearance alone does not prove a chemical change.</p>'+
-    '<p>Look for evidence of a new substance and whether the original material can be recovered.</p>';
-  $('stations').appendChild(info);
-
-  $('badges').textContent=completed.size+' / 5 complete';
-  $('totalScore').textContent=totalScore()+' / 15';
-  $('award').hidden=completed.size!==5;
-}
-
-function openLab(i){
-  cancelWork();
-
-  current=i;
-  step=0;
-  qIndex=0;
-  qAttempt=1;
-  stationScore=0;
-
-  show('lab');
-  setPhase('experiment');
-
-  $('labTitle').textContent=labs[i].title;
-  $('stationNumber').textContent='Station 0'+(i+1);
-  $('task').textContent=labs[i].goal;
-  $('stationScoreMini').textContent='Score 0 / 3';
-
-  $('notebookView').hidden=false;
-  $('assessmentView').hidden=true;
-  $('reportView').hidden=true;
-  $('hintText').hidden=true;
-
-  renderStage();
-
-  $('note').textContent='Your sample is ready. Use the highlighted tool to begin.';
-  $('journal').className='journal';
-  $('discoveryNow').textContent='Begin the experiment to collect evidence.';
-}
-
-function renderTools(){
-  const lab=labs[current];
-  const route=routes[current];
-
-  $('tools').replaceChildren();
-
-  lab.tools.forEach(key=>{
-    const b=document.createElement('button');
-    b.type='button';
-    b.className='tool';
-    b.innerHTML='<span class="toolIcon">'+tools[key][0]+'</span>'+tools[key][1];
-
-    if(key===route[step])b.classList.add('recommended');
-    if(route.slice(0,step).includes(key))b.classList.add('used');
-
-    b.addEventListener('click',()=>act(key));
-    $('tools').appendChild(b);
-  });
-}
-
-function renderStage(){
-  const lab=labs[current];
-  const state=lab.states[step];
-  const totalChanges=lab.states.length-1;
-
-  $('stageVisual').innerHTML=extraDrawing(state[0]);
-  $('sampleName').textContent=state[1];
-  $('stateTag').textContent='State '+(step+1)+' / '+lab.states.length;
-  $('stage').className='stage';
-
-  $('stepStrip').style.setProperty('--steps',totalChanges);
-  $('stepStrip').innerHTML=Array.from({length:totalChanges},(_,i)=>{
-    let cls='';
-    if(i<step)cls='done';
-    else if(i===step && step<totalChanges)cls='current';
-    return '<span class="'+cls+'"></span>';
-  }).join('');
-
-  $('stepCaption').textContent=step+' / '+totalChanges;
-
-  renderTools();
-}
-
-function offTrack(tool){
-  if(tool==='fresh'){
-    return 'First observe rust forming. A new nail replaces the sample; it does not remove rust.';
-  }
-
-  if(current===0){
-    return step<2
-      ? 'Reach water vapour before reversing the process. Try heat.'
-      : 'Now remove heat. Try cooling.';
-  }
-
-  if(current===1){
-    return step===0
-      ? 'Recover the salt by removing water.'
-      : 'Now add water to make salt solution again.';
-  }
-
-  if(current===2){
-    return [
-      'Fold the sheet first.',
-      'Now unfold it.',
-      'Now cut the sheet.',
-      'Try joining the pieces with tape.'
-    ][step];
-  }
-
-  if(current===3){
-    return step===0
-      ? 'Bake the batter using heat.'
-      : 'Now cool the cake and compare it with the original batter.';
-  }
-
-  return [
-    'Expose the bare nail to air and water.',
-    'Allow time to pass.',
-    'Use a new nail before testing protection.',
-    'Paint the fresh nail.',
-    'Expose the painted nail to air and water.',
-    'Allow time to pass.'
-  ][step];
-}
-
-function actionMeta(tool){
-  return {
-    heat:['♨','Applying heat…','heating'],
-    cool:['❄','Cooling…','cooling'],
-    water:['💧','Adding water…',''],
-    fold:['⌑','Folding…',''],
-    unfold:['↔','Unfolding…',''],
-    cut:['✂','Cutting…',''],
-    tape:['▱','Joining pieces…',''],
-    scan:['⌕','Inspecting…',''],
-    wet:['💧','Adding water…',''],
-    wait:['◷','Time passes…',''],
-    coat:['▥','Applying paint…',''],
-    fresh:['↺','Replacing sample…','']
-  }[tool];
-}
-
-function act(tool){
-  if(busy||$('assessmentView').hidden===false||$('reportView').hidden===false)return;
-
-  const lab=labs[current];
-  const route=routes[current];
-
-  if(!lab.tools.includes(tool))return;
-
-  unlockAudio();
-
-  if(tool!==route[step]){
-    const msg=offTrack(tool);
-
-    $('note').textContent=msg;
-    $('discoveryNow').textContent='Try a different tool for this step.';
-    $('journal').className='journal notice';
-
-    playSound('wrongAudio');
-    return;
-  }
-
-  busy=true;
-
-  const token=++epoch;
-  const [icon,label,mode]=actionMeta(tool);
-
-  $('actionIcon').textContent=icon;
-  $('actionText').textContent=label;
-  $('stage').className='stage busy '+mode;
-
-  document.querySelectorAll('.tool').forEach(b=>b.disabled=true);
-  $('hintText').hidden=true;
-
-  timer=setTimeout(()=>{
-    if(token!==epoch)return;
-
-    step++;
-    busy=false;
-
-    renderStage();
-    $('stage').classList.add('flash');
-
-    const obs=observations[current][step];
-
-    $('note').textContent=obs;
-    $('discoveryNow').textContent=obs;
-    $('journal').className='journal success';
-
-    playSound('correctAudio');
-
-    if(step===lab.states.length-1){
-      setTimeout(beginAssessment,380);
-    }
-
-  },tool==='wait'?1200:720);
-}
-
-function beginAssessment(){
-  setPhase('assess');
-
-  $('notebookView').hidden=true;
-  $('assessmentView').hidden=false;
-  $('reportView').hidden=true;
-
-  qIndex=0;
-  qAttempt=1;
-  stationScore=0;
-
-  renderQuestion();
-}
-
-function renderQuestion(){
-  const q=labs[current].questions[qIndex];
-
-  $('qCounter').textContent=(qIndex+1)+' / 3';
-  $('qType').textContent=q[0];
-  $('qText').textContent=q[1];
-
-  $('qBar').innerHTML=Array.from({length:3},(_,i)=>{
-    let cls='';
-    if(i<qIndex)cls='done';
-    else if(i===qIndex)cls='current';
-    return '<span class="'+cls+'"></span>';
-  }).join('');
-
-  $('options').replaceChildren();
-
-  q[2].forEach((text,i)=>{
-    const b=document.createElement('button');
-    b.type='button';
-    b.className='option';
-    b.textContent=text;
-    b.addEventListener('click',()=>answerQuestion(i,b));
-    $('options').appendChild(b);
-  });
-
-  $('assessFeedback').className='assessFeedback';
-  $('assessFeedback').textContent='Choose the answer that best matches the experiment evidence.';
-  $('nextQ').hidden=true;
-  qAttempt=1;
-}
-
-function answerQuestion(choice,btn){
-  const q=labs[current].questions[qIndex];
-  const buttons=[...document.querySelectorAll('.option')];
-
-  if(buttons.some(b=>b.disabled))return;
-
-  if(choice===q[3]){
-    btn.classList.add('correct');
-    buttons.forEach(b=>b.disabled=true);
-
-    if(qAttempt===1){
-      stationScore++;
-      $('stationScoreMini').textContent='Score '+stationScore+' / 3';
-    }
-
-    $('assessFeedback').className='assessFeedback good';
-    $('assessFeedback').innerHTML='✅ <b>Correct.</b> '+q[4];
-
-    playSound('correctAudio');
-    $('nextQ').hidden=false;
-  }else{
-    btn.classList.add('wrong');
-    playSound('wrongAudio');
-
-    if(qAttempt===1){
-      qAttempt=2;
-
-      $('assessFeedback').className='assessFeedback bad';
-      $('assessFeedback').textContent='Not quite. Use the experiment evidence and try once more.';
-
-      setTimeout(()=>btn.classList.remove('wrong'),400);
-    }else{
-      buttons.forEach(b=>b.disabled=true);
-
-      const correct=buttons[q[3]];
-      if(correct)correct.classList.add('correct');
-
-      $('assessFeedback').className='assessFeedback good';
-      $('assessFeedback').innerHTML='💡 <b>Correct answer:</b> '+q[2][q[3]]+'<br>'+q[4];
-
-      $('nextQ').hidden=false;
-    }
-  }
-}
-
-function nextQuestion(){
-  qIndex++;
-
-  if(qIndex<3){
-    renderQuestion();
-  }else{
-    finishStation();
-  }
-}
-
-function finishStation(){
-  setPhase('report');
-
-  stationScores[current]=stationScore;
-  completed.add(current);
-
-  $('assessmentView').hidden=true;
-  $('reportView').hidden=false;
-
-  $('reportTitle').textContent=labs[current].badge;
-  $('reportScore').textContent=stationScore+' / 3';
-  $('reportMeterFill').style.width=(stationScore/3*100)+'%';
-
-  let msg='Replay this station if you want to strengthen your evidence-based reasoning.';
-  if(stationScore===3)msg='Excellent. You used the evidence accurately in all three questions.';
-  else if(stationScore===2)msg='Good understanding. One idea needs a little more attention.';
-  else if(stationScore===1)msg='You identified part of the evidence correctly. Replaying this station will help.';
-
-  $('reportMessage').textContent=msg;
-  $('reportConclusion').textContent=labs[current].summary;
-
-  $('nextStation').textContent=findNextIncomplete()===null?'VIEW FINAL REPORT →':'NEXT STATION →';
-
-  if(stationScore===3)playSound('clapAudio');
-}
-
-function findNextIncomplete(){
-  for(let i=0;i<labs.length;i++){
-    if(!completed.has(i))return i;
-  }
-  return null;
-}
-
-function goNext(){
-  const next=findNextIncomplete();
-  if(next===null)showFinal();
-  else openLab(next);
-}
-
-function showFinal(){
-  show('final');
-
-  const total=totalScore();
-
-  $('finalScore').textContent=total+' / 15';
-
-  let band='Developing Investigator';
-  let msg='Replay lower-scoring stations and compare the evidence more carefully.';
-
-  if(total>=13){
-    band='Master Lab Investigator';
-    msg='Excellent. You consistently used evidence to distinguish physical and chemical changes and judge reversibility.';
-  }else if(total>=10){
-    band='Confident Investigator';
-    msg='Strong understanding. Revisit any lower-scoring station to strengthen the remaining idea.';
-  }else if(total>=7){
-    band='Growing Investigator';
-    msg='You understand several key ideas. Revisit the lower-scoring stations and compare the observations carefully.';
-  }
-
-  $('finalBand').textContent=band;
-  $('finalMessage').textContent=msg;
-
-  $('resultGrid').innerHTML=labs.map((lab,i)=>
-    '<div class="resultTile">'+
-      'Station '+(i+1)+
-      '<strong>'+((stationScores[i]??0))+' / 3</strong>'+
-    '</div>'
-  ).join('');
-
-  if(total>=13){
-    playSound('clapAudio');
-    celebrate();
-  }
-}
-
-function celebrate(){
-  $('confetti').replaceChildren();
-
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-
-  for(let i=0;i<34;i++){
-    const c=document.createElement('i');
-    c.style.left=Math.random()*100+'%';
-    c.style.background=['#519d8a','#d8ac55','#879fce'][i%3];
-    c.style.animationDelay=Math.random()*.45+'s';
-    $('confetti').appendChild(c);
-  }
-
-  setTimeout(()=>$('confetti').replaceChildren(),3200);
-}
-
-function toggleSound(){
-  muted=!muted;
-
-  ['correctAudio','wrongAudio','clapAudio'].forEach(id=>$(id).muted=muted);
-
-  document.querySelectorAll('.sound').forEach(btn=>{
-    if(btn.classList.contains('soundIcon')){
-      btn.textContent=muted?'🔇':'🔊';
-    }else{
-      btn.textContent='Sound: '+(muted?'off':'on');
-    }
-  });
-}
-
-$('start').addEventListener('click',()=>{
-  unlockAudio();
-  renderMap();
 });
 
-$('back').addEventListener('click',renderMap);
-$('mapBtn').addEventListener('click',renderMap);
-$('finalMap').addEventListener('click',renderMap);
-$('finalReportBtn').addEventListener('click',showFinal);
-$('nextStation').addEventListener('click',goNext);
-$('nextQ').addEventListener('click',nextQuestion);
+startTimer();
 
-$('hint').addEventListener('click',()=>{
-  $('hintText').hidden=!$('hintText').hidden;
-  $('hintText').textContent=labs[current].hints[step]||'The experiment is complete. Analyse the evidence next.';
+}
+function startTimer(){
+
+timer=setInterval(()=>{
+
+timeLeft--;
+
+timerEl.textContent=timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(timer);
+
+showCorrectAnswer();
+
+}
+
+},1000);
+
+}
+
+function checkAnswer(selected,btn){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+if(selected===q.answer){
+
+btn.classList.add('correct');
+
+score++;
+
+scoreEl.textContent=score;
+
+feedback.className=
+"feedback correctFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"✅ Correct!<br><br>"+q.explanation;
+
+playSound(correctSound);
+
+createConfetti();
+
+clearInterval(timer);
+
+showNextButton();
+
+}else{
+
+btn.classList.add('wrong');
+
+playSound(wrongSound);
+
+showCross();
+
+if(!retryUsed){
+
+retryUsed=true;
+
+hintBox.style.display="block";
+
+hintBox.innerHTML=
+"💡 Hint: "+q.hint;
+
+buttons.forEach((b,index)=>{
+
+if(index!==selected){
+
+b.disabled=false;
+
+}
+
 });
 
-$('reset').addEventListener('click',()=>{
-  openLab(current);
-  $('note').textContent='A fresh sample has replaced the previous one. An irreversible change was not reversed.';
-  $('journal').className='journal';
-});
+}else{
 
-$('playAgain').addEventListener('click',()=>location.reload());
+buttons[q.answer].classList.add('correct');
 
-document.querySelectorAll('.sound').forEach(btn=>{
-  btn.addEventListener('click',toggleSound);
-});
+feedback.className=
+"feedback wrongFeedback";
 
-setTimeout(()=>$('splash').classList.add('hide'),1200);
+feedback.style.display="block";
 
-});
+feedback.innerHTML=
+"❌ Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+clearInterval(timer);
+
+showNextButton();
+
+}
+
+}
+
+}
+
+function showCorrectAnswer(){
+
+const q=questions[currentQuestion];
+
+const buttons=document.querySelectorAll('.optionBtn');
+
+buttons.forEach(b=>b.disabled=true);
+
+buttons[q.answer].classList.add('correct');
+
+feedback.className=
+"feedback wrongFeedback";
+
+feedback.style.display="block";
+
+feedback.innerHTML=
+"⏰ Time Up!<br><br>Correct Answer: <b>"
++q.options[q.answer]+
+"</b><br><br>"
++q.explanation;
+
+showNextButton();
+
+}
+
+function showNextButton(){
+
+nextBtn.classList.remove('hidden');
+
+if(currentQuestion===questions.length-1){
+
+nextBtn.textContent="Submit Quiz";
+
+}else{
+
+nextBtn.textContent="Next Question";
+
+}
+
+nextBtn.onclick=()=>{
+
+currentQuestion++;
+
+if(currentQuestion<questions.length){
+
+loadQuestion();
+
+}else{
+
+showResults();
+
+}
+
+};
+
+}
+
+function showResults(){
+
+quizScreen.classList.add('hidden');
+
+resultScreen.classList.remove('hidden');
+
+const percentage=
+Math.round((score/questions.length)*100);
+
+let message="";
+
+if(percentage>=75){
+
+message="🧪 Excellent! You have mastered physical and chemical changes, rusting, crystallisation and change of state.";
+
+}else if(percentage>=40){
+
+message="🧊 Good effort! Review the chapter and try again.";
+
+}else{
+
+message="🔥 Keep learning! Revise the concepts and attempt again.";
+
+}
+
+document.getElementById('finalScore').innerHTML=
+`Your Score: ${score} / ${questions.length}<br><br>
+Percentage: ${percentage}%`;
+
+document.getElementById('resultMessage').innerHTML=
+message;
+
+playSound(clapSound);
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<25;i++){
+
+const piece=document.createElement('div');
+
+piece.classList.add('confetti');
+
+piece.style.left=
+Math.random()*100+'vw';
+
+piece.style.background=
+[
+'#22c55e',
+'#84cc16',
+'#0ea5e9',
+'#facc15'
+][Math.floor(Math.random()*4)];
+
+document.body.appendChild(piece);
+
+setTimeout(()=>{
+
+piece.remove();
+
+},2500);
+
+}
+
+}
+
+function showCross(){
+
+const cross=document.createElement('div');
+
+cross.classList.add('cross');
+
+cross.innerHTML='✖';
+
+document.body.appendChild(cross);
+
+setTimeout(()=>{
+
+cross.remove();
+
+},1000);
+
+}
+
 </script>
 
 </body>
